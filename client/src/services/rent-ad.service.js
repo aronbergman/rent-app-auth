@@ -13,6 +13,14 @@ class RentService {
                 return response.data;
             });
     }
+
+    fetchAll() {
+        return axios
+            .post(API_URL + "fetch-all")
+            .then(response => {
+                return response.data;
+            });
+    }
 }
 
 export default new RentService()

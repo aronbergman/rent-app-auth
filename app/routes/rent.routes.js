@@ -13,4 +13,9 @@ module.exports = function(app) {
         "/api/rent/create-ad",
         controller.createAd
     );
+
+    app.post(
+        "/api/rent/fetch-all",
+        controller.fetchAll
+    );
 };

@@ -17,3 +17,15 @@ exports.createAd = (req, res) => {
             res.status(500).send({message: err.message});
         });
 };
+
+exports.fetchAll = (req, res) => {
+    Rent.findAll({
+        limit: 10
+    })
+        .then(response => {
+            res.status(200).send(response);
+        })
+        .catch(err => {
+            res.status(500).send({message: err.message});
+        });
+}

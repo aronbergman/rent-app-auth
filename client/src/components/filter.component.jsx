@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 
-import UserService from "../services/user.service";
+import RentService from "../services/rent-ad.service";
 
 export default class Filter extends Component {
     constructor(props) {
@@ -12,11 +12,13 @@ export default class Filter extends Component {
     }
 
     componentDidMount() {
-        UserService.getPublicContent().then(
-            response => {
+        RentService.fetchAll().then(
+            ({response}) => {
+                console.log('response in filter', response)
                 this.setState({
-                    content: response.data
+                    content: response
                 });
+                console.log('content', response)
             },
             error => {
                 this.setState({
@@ -34,7 +36,11 @@ export default class Filter extends Component {
             <div className="container">
                 <header className="jumbotron">
                     <h1>Страница с лентой и фильтром</h1>
-                    <h3>{this.state.content}</h3>
+                    {/*<h3>{this.state.content}</h3>*/}
+                    {this.state.content ? this.state.content.map(ad => {
+                        return <div>{ad.email}</div>
+                    }) : null
+                    }
                 </header>
             </div>
         );
