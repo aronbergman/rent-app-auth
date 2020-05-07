@@ -1,48 +1,33 @@
-import React, {Component} from "react";
+import React, {useEffect} from "react";
+import {fetchAll} from "../services/rent-ad.service";
+import {connect} from "react-redux";
+import Loader from "./Loader/Loader";
 
-import RentService from "../services/rent-ad.service";
+const Filter = props => {
 
-export default class Filter extends Component {
-    constructor(props) {
-        super(props);
+    useEffect(() => {
+        props.fetchAlldispatch()
+    }, [])
 
-        this.state = {
-            content: ""
-        };
-    }
+    return (<div className="container">
+            <header className="jumbotron">
+                <h1>Страница с лентой и фильтром</h1>
+            </header>
 
-    componentDidMount() {
-        RentService.fetchAll().then(
-            ({response}) => {
-                console.log('response in filter', response)
-                this.setState({
-                    content: response
-                });
-                console.log('content', response)
-            },
-            error => {
-                this.setState({
-                    content:
-                        (error.response && error.response.data) ||
-                        error.message ||
-                        error.toString()
-                });
+            {props.rentAds.length ? props.rentAds.map(ad => {
+                return <div>{ad.email}</div>
+            }) : <Loader/>
             }
-        );
-    }
-
-    render() {
-        return (
-            <div className="container">
-                <header className="jumbotron">
-                    <h1>Страница с лентой и фильтром</h1>
-                    {/*<h3>{this.state.content}</h3>*/}
-                    {this.state.content ? this.state.content.map(ad => {
-                        return <div>{ad.email}</div>
-                    }) : null
-                    }
-                </header>
-            </div>
-        );
-    }
+        </div>
+    );
 }
+
+const mapState = state => ({
+    rentAds: state.rent.ads
+})
+
+const mapDispatch = dispatch => ({
+    fetchAlldispatch: () => dispatch(fetchAll())
+})
+
+export default connect(mapState, mapDispatch)(Filter);

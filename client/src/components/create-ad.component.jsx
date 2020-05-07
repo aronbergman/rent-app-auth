@@ -4,7 +4,7 @@ import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import {isEmail} from "validator";
 
-import RentService from "../services/rent-ad.service";
+// import RentService from "../services/rent-ad.service";
 
 const required = value => {
     if (!value) {
@@ -90,18 +90,18 @@ export default class Register extends Component {
 
         this.form.validateAll();
 
-        if (this.checkBtn.context._errors.length === 0) {
-            RentService.create(
-                this.state.username,
-                this.state.email
-            ).then(response => {
-                    this.setState({
-                        message: response.message,
-                        successful: true
-                    });
-                }
-            );
-        }
+        // if (this.checkBtn.context._errors.length === 0) {
+        //     RentService.create(
+        //         this.state.username,
+        //         this.state.email
+        //     ).then(response => {
+        //             this.setState({
+        //                 message: response.message,
+        //                 successful: true
+        //             });
+        //         }
+        //     );
+        // }
     }
 
     render() {
