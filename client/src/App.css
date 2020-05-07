@@ -1,9 +1,4 @@
-label {
-  display: block;
-  margin-top: 10px;
-}
-
-.bg-dark:before {
+nav.bg-dark:before {
   content: "";
   position: absolute;
   width: 100%;

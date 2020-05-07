@@ -1,4 +1,3 @@
-import React from 'react'
 import {configureStore, getDefaultMiddleware} from '@reduxjs/toolkit'
 import rootReducer from './reducer'
 // We'll use redux-logger just as an example of adding another middleware

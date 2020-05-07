@@ -12,8 +12,8 @@ import Profile from "./components/profile.component";
 import BoardUser from "./components/board-user.component";
 import BoardModerator from "./components/board-moderator.component";
 import BoardAdmin from "./components/board-admin.component";
-import Filter from "./components/filter.component";
-import CreateAd from "./components/create-ad.component";
+import Filter from "./components/Rent/filter.component";
+import CreateAd from "./components/Rent/create-ad.component";
 
 class App extends Component {
     constructor(props) {
@@ -56,38 +56,38 @@ class App extends Component {
                         <div className="navbar-nav mr-auto">
                             <li className="nav-item">
                                 <Link to={"/filter"} className="nav-link">
-                                    Лента
+                                    Лента объявлений
                                 </Link>
                             </li>
                             <li className="nav-item">
                                 <Link to={"/create-ad"} className="nav-link">
-                                    Создать
+                                    Создать новое
                                 </Link>
                             </li>
 
-                            {showModeratorBoard && (
-                                <li className="nav-item">
-                                    <Link to={"/mod"} className="nav-link">
-                                        Moderator Board
-                                    </Link>
-                                </li>
-                            )}
+                            {/*{showModeratorBoard && (*/}
+                            {/*    <li className="nav-item">*/}
+                            {/*        <Link to={"/mod"} className="nav-link">*/}
+                            {/*            Moderator Board*/}
+                            {/*        </Link>*/}
+                            {/*    </li>*/}
+                            {/*)}*/}
 
-                            {showAdminBoard && (
-                                <li className="nav-item">
-                                    <Link to={"/admin"} className="nav-link">
-                                        Admin Board
-                                    </Link>
-                                </li>
-                            )}
+                            {/*{showAdminBoard && (*/}
+                            {/*    <li className="nav-item">*/}
+                            {/*        <Link to={"/admin"} className="nav-link">*/}
+                            {/*            Admin Board*/}
+                            {/*        </Link>*/}
+                            {/*    </li>*/}
+                            {/*)}*/}
 
-                            {currentUser && (
-                                <li className="nav-item">
-                                    <Link to={"/user"} className="nav-link">
-                                        User
-                                    </Link>
-                                </li>
-                            )}
+                            {/*{currentUser && (*/}
+                            {/*    <li className="nav-item">*/}
+                            {/*        <Link to={"/user"} className="nav-link">*/}
+                            {/*            User*/}
+                            {/*        </Link>*/}
+                            {/*    </li>*/}
+                            {/*)}*/}
                         </div>
 
                         {currentUser ? (

@@ -18,4 +18,9 @@ module.exports = function(app) {
         "/api/rent/fetch-all",
         controller.fetchAll
     );
+
+    app.post(
+        "/api/rent/fetch-user",
+        controller.fetchUser
+    );
 };
