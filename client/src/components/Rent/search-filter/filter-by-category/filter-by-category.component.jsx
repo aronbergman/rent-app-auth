@@ -5,19 +5,25 @@ export default class FilterByCategory extends React.Component {
         super(props);
         this.handleFilterCategoryChange = this.handleFilterCategoryChange.bind(this);
         this.handleFilterCityChange = this.handleFilterCityChange.bind(this);
+        this.handleFilterSizeChange = this.handleFilterSizeChange.bind(this);
     }
 
     handleFilterCategoryChange(category) {
         this.props.onFilterCategoryChange(category);
     }
 
-    handleFilterCityChange(category) {
-        this.props.onFilterCityChange(category);
+    handleFilterCityChange(city) {
+        this.props.onFilterCityChange(city);
+    }
+
+    handleFilterSizeChange(size) {
+        this.props.onFilterSizeChange(size);
     }
 
     render() {
         const itemsCategories = [];
         const itemsCities = [];
+        const itemsSizes = [];
 
         this.props.categories.forEach(category => {
             itemsCategories.push(
@@ -26,7 +32,7 @@ export default class FilterByCategory extends React.Component {
                     key={category}
                     onClick={() => this.handleFilterCategoryChange(category)}
                 >
-                    {category}
+                    {category === 0 ? 'Я хочу снять' : category === 1 ? 'Я хочу сдать' : 'Все'}
                 </button>
             );
         });
@@ -38,7 +44,19 @@ export default class FilterByCategory extends React.Component {
                     key={city}
                     onClick={() => this.handleFilterCityChange(city)}
                 >
-                    {city}
+                    {city === 77 ? 'Москва' : city === 78 ? 'Санкт-Петербург' : city === 66 ? 'Екатеринбург' : 'Любой'}
+                </button>
+            );
+        });
+
+        this.props.sizes.forEach(size => {
+            itemsSizes.push(
+                <button
+                    className="category__item"
+                    key={size}
+                    onClick={() => this.handleFilterSizeChange(size)}
+                >
+                    {size}
                 </button>
             );
         });
@@ -51,6 +69,9 @@ export default class FilterByCategory extends React.Component {
                 <br/>
                 Город:
                 {itemsCities}
+                <br/>
+                Размер:
+                {itemsSizes}
                 <br/>
                 <br/>
             </div>

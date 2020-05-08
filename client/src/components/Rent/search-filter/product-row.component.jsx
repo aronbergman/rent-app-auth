@@ -4,9 +4,9 @@ export default class ProductRow extends React.Component {
     render() {
         const product = this.props.product;
         const name = product.stocked ? (
-            product.name
+            product.username
         ) : (
-            <span style={{color: "red"}}>{product.name}</span>
+            <span style={{color: "red"}}>{product.username}</span>
         );
 
         return (
