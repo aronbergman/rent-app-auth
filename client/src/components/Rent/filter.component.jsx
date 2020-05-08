@@ -60,8 +60,9 @@ const Filter = props => {
     // category items array
     const uniqItems = (x, i, array) => array.indexOf(x) === i;
     const PRODUCT_CATEGORIES = PRODUCTS.map(prod => prod.category).filter(uniqItems);
-    const CITY_CATEGORIES = PRODUCTS.map(prod => prod.city).filter(uniqItems);
+    const CITIES_CATEGORIES = PRODUCTS.map(prod => prod.city).filter(uniqItems);
     PRODUCT_CATEGORIES.unshift("all");
+    CITIES_CATEGORIES.unshift("all");
 
     return (<div className="container">
             <header className="jumbotron">
@@ -69,7 +70,7 @@ const Filter = props => {
             </header>
 
             <FilterableProductTable
-                cityCategories={CITY_CATEGORIES}
+                cityCategories={CITIES_CATEGORIES}
                 productCategories={PRODUCT_CATEGORIES}
                 products={PRODUCTS}
             />

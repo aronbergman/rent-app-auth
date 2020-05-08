@@ -7,6 +7,7 @@ export default class ProductTable extends React.Component {
         const filterText = this.props.filterText;
         const inStockOnly = this.props.inStockOnly;
         const filterCategory = this.props.filterCategory;
+        const filterCity = this.props.filterCity;
 
         this.props.products.forEach(product => {
             const name = product.name.toLowerCase();
@@ -14,6 +15,9 @@ export default class ProductTable extends React.Component {
                 return;
             }
             if (filterCategory !== product.category && filterCategory !== 'all') {
+                return;
+            }
+            if (filterCity !== product.city && filterCity !== 'all') {
                 return;
             }
             if (inStockOnly && !product.stocked) {

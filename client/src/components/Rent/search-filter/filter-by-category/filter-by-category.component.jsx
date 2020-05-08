@@ -4,17 +4,23 @@ export default class FilterByCategory extends React.Component {
     constructor(props) {
         super(props);
         this.handleFilterCategoryChange = this.handleFilterCategoryChange.bind(this);
+        this.handleFilterCityChange = this.handleFilterCityChange.bind(this);
     }
 
     handleFilterCategoryChange(category) {
         this.props.onFilterCategoryChange(category);
     }
 
+    handleFilterCityChange(category) {
+        this.props.onFilterCityChange(category);
+    }
+
     render() {
-        const items = [];
+        const itemsCategories = [];
+        const itemsCities = [];
 
         this.props.categories.forEach(category => {
-            items.push(
+            itemsCategories.push(
                 <button
                     className="category__item"
                     key={category}
@@ -25,10 +31,28 @@ export default class FilterByCategory extends React.Component {
             );
         });
 
+        this.props.cities.forEach(city => {
+            itemsCities.push(
+                <button
+                    className="category__item"
+                    key={city}
+                    onClick={() => this.handleFilterCityChange(city)}
+                >
+                    {city}
+                </button>
+            );
+        });
+
         return (
             <div className="categories">
-                <h2>Filter By Category</h2>
-                {items}
+                <h2>Filter By Categories</h2>
+                Категория
+                {itemsCategories}
+                <br/>
+                Город:
+                {itemsCities}
+                <br/>
+                <br/>
             </div>
         );
     }

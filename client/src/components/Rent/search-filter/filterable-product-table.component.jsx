@@ -12,12 +12,14 @@ export default class FilterableProductTable extends React.Component {
         super(props);
         this.state = {
             filterCategory: "all",
+            filterCity: "all",
             filterText: "",
             inStockOnly: false
         };
         this.handleFilterTextChange = this.handleFilterTextChange.bind(this);
         this.handleInStockChange = this.handleInStockChange.bind(this);
         this.handleFilterCategoryChange = this.handleFilterCategoryChange.bind(this);
+        this.handleFilterCityChange = this.handleFilterCityChange.bind(this);
     }
 
     handleFilterTextChange(filterText) {
@@ -38,6 +40,12 @@ export default class FilterableProductTable extends React.Component {
         })
     }
 
+    handleFilterCityChange(filterCity) {
+        this.setState({
+            filterCity: filterCity
+        })
+    }
+
     render() {
         return (
             <div className="container">
@@ -46,6 +54,7 @@ export default class FilterableProductTable extends React.Component {
                     cities={this.props.cityCategories}
                     filterCategory={this.state.filterCategory}
                     onFilterCategoryChange={this.handleFilterCategoryChange}
+                    onFilterCityChange={this.handleFilterCityChange}
                 />
                 <div className="products">
                     <SearchBar
@@ -57,6 +66,7 @@ export default class FilterableProductTable extends React.Component {
                     <ProductTable
                         products={this.props.products}
                         filterCategory={this.state.filterCategory}
+                        filterCity={this.state.filterCity}
                         filterText={this.state.filterText}
                         inStockOnly={this.state.inStockOnly}
                     />
