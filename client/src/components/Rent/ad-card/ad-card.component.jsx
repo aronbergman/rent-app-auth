@@ -3,7 +3,6 @@ import classes from './styles.module.scss'
 import {Card} from 'antd';
 
 const AdCardComponent = ({ad}) => {
-    console.log(ad)
 
     // createdAt: "2020-05-07T18:03:03.000Z"
     // deposit: 1
@@ -36,8 +35,6 @@ const AdCardComponent = ({ad}) => {
     ${ad.typeOfObject === 'room' ? `в ${ad.sizeOfObject} комнатной квартире` : ''}
     ${ad.price ? `за ${ad.price} рублей` : ''}
     `
-
-    console.log(title)
 
     return (
         <Card title={title}>
