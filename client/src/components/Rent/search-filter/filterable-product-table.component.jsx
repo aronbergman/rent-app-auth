@@ -4,10 +4,21 @@ import SearchBar from './search-bar/search-bar.component';
 import FilterByCategory from './filter-by-category/filter-by-category.component';
 import {connect} from 'react-redux';
 import * as reducer from "../../../redux/reducers/rent.reducer";
+import {Link} from "react-router-dom";
+import {Button} from "antd";
+import classes from './styles.module.scss'
 
 const FilterableProductTable = props => {
     return (
         <div className="container">
+            <div className={classes.CreateAd}>
+                <Link to='/rent/create-ad'>
+                    <Button type="primary" shape="round" size='large'>
+                        Создать объявление
+                    </Button>
+                </Link>
+            </div>
+
             <FilterByCategory
                 onFilterCategoryChange={props.onFilterCategoryChange}
                 onFilterCityChange={props.onFilterCityChange}
@@ -25,7 +36,7 @@ const FilterableProductTable = props => {
                     inStockOnly={props.inStockOnly}
                 />
                 <ProductTable
-                    products={props.products}
+                    rentAds={props.rentAds}
                     filterCategory={props.filterCategory}
                     filterCity={props.filterCity}
                     filterSize={props.filterSize}

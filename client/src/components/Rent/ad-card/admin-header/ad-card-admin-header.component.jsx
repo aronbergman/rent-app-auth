@@ -1,11 +1,6 @@
 import React from 'react';
-import moment from 'moment';
 import classes from './styles.module.scss'
-
-moment.locale('ru');
-
-const dateParser = (date) => moment(date).format('LLL');
-
+import dateParser from "../../../../helpers/dateParser";
 
 const AdCardAdminHeader = ({ad}) => {
     return (

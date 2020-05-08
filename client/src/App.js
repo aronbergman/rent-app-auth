@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route, Link, NavLink} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
@@ -12,8 +12,11 @@ import Profile from "./components/profile.component";
 import BoardUser from "./components/board-user.component";
 import BoardModerator from "./components/board-moderator.component";
 import BoardAdmin from "./components/board-admin.component";
-import Filter from "./components/Rent/filter.component";
-import CreateAd from "./components/Rent/create-ad.component";
+import RentFilter from "./components/Rent/filter.component";
+import CreateAdRent from "./components/Rent/create-ad.component";
+import LoveFilter from "./components/Love/LoveFilter.component";
+import News from "./components/News/News.component";
+import SingleRentAd from "./components/Rent/single-rent-ad/single-rent-ad";
 
 class App extends Component {
     constructor(props) {
@@ -51,18 +54,19 @@ class App extends Component {
                 <div>
                     <nav className="navbar navbar-expand navbar-dark bg-dark">
                         <Link to={"/"} className="navbar-brand">
-                            LGBT RENT
+                            {/* eslint-disable-next-line jsx-a11y/accessible-emoji */}
+                            <span role="img">🏳️‍🌈</span> CONNECT
                         </Link>
                         <div className="navbar-nav mr-auto">
+
                             <li className="nav-item">
-                                <Link to={"/filter"} className="nav-link">
-                                    Лента объявлений
-                                </Link>
+                                <NavLink to="/rent" className="nav-link" activeClassName="active">АРЕНДА</NavLink>
                             </li>
                             <li className="nav-item">
-                                <Link to={"/create-ad"} className="nav-link">
-                                    Создать новое
-                                </Link>
+                                <NavLink to="/love" className="nav-link" activeClassName="active">ЗНАКОМСТВА</NavLink>
+                            </li>
+                            <li className="nav-item">
+                                <NavLink to="/news" className="nav-link" activeClassName="active">СТАТЬИ</NavLink>
                             </li>
 
                             {/*{showModeratorBoard && (*/}
@@ -123,8 +127,15 @@ class App extends Component {
                     <div className="container mt-3">
                         <Switch>
                             <Route exact path={"/"} component={Home}/>
-                            <Route exact path={"/filter"} component={Filter}/>
-                            <Route exact path={"/create-ad"} component={CreateAd}/>
+
+                            <Route exact path={"/rent"} component={RentFilter}/>
+                            <Route exact path={"/rent/create-ad"} component={CreateAdRent}/>
+                            <Route exact path={"/rent/:id"} component={SingleRentAd}/>
+
+                            <Route exact path={"/love"} component={LoveFilter}/>
+                            {/*<Route exact path={"/rent/create-ad"} component={CreateAdLove}/>*/}
+
+                            <Route exact path={"/news"} component={News}/>
 
                             <Route exact path="/login" component={Login}/>
                             <Route exact path="/register" component={Register}/>

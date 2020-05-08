@@ -1,5 +1,6 @@
 import React from "react";
-import ProductRow from "../product-row.component";
+import AdCardComponent from "../../ad-card/ad-card.component";
+import classes from './styles.module.scss'
 
 const ProductTable = props => {
     const rows = [];
@@ -9,8 +10,8 @@ const ProductTable = props => {
     const filterCity = props.filterCity;
     const filterSize = props.filterSize;
 
-    props.products.forEach(product => {
-        const name = product.username.toLowerCase();
+    props.rentAds.forEach(product => {
+        const name = product.title.toLowerCase();
         if (name.indexOf(filterText.toLowerCase())) {
             return;
         }
@@ -23,22 +24,17 @@ const ProductTable = props => {
         if (filterSize !== product.typeOfObject && filterSize !== 'all') {
             return;
         }
-        if (inStockOnly && !product.stocked) {
+        if (inStockOnly && product.userId === 0) {
             return;
         }
-        rows.push(<ProductRow product={product} key={product.id}/>);
+        rows.push(<AdCardComponent ad={product} key={product.id}/>);
     });
 
     return (
-        <table>
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Price</th>
-            </tr>
-            </thead>
-            <tbody>{rows}</tbody>
-        </table>
+        <div>
+            <div className={classes.SearchLength}> Всего найдено: {rows.length}</div>
+            {rows}
+        </div>
     );
 };
 

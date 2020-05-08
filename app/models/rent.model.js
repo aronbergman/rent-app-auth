@@ -1,5 +1,8 @@
 module.exports = (sequelize, Sequelize) => {
     const Rent = sequelize.define("rent-ad", {
+        title: { // Сгенерированная строка из состояния объявления
+            type: Sequelize.STRING
+        },
         username: { // Ник в телеграмм
             type: Sequelize.STRING
         },

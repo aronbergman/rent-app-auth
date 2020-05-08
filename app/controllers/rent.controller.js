@@ -8,6 +8,7 @@ const Op = db.Sequelize.Op;
 exports.createAd = (req, res) => {
 
     const {
+        title,
         username,
         email,
         typeOfApplicant,
@@ -26,6 +27,7 @@ exports.createAd = (req, res) => {
     } = req.body
 
     Rent.create({
+        title,
         username,
         email,
         typeOfApplicant,
@@ -53,7 +55,22 @@ exports.createAd = (req, res) => {
 
 exports.fetchAll = (req, res) => {
     Rent.findAll({
-        limit: 10
+        limit: 1000
+    })
+        .then(response => {
+            res.status(200).send(response);
+        })
+        .catch(err => {
+            res.status(500).send({message: err.message});
+        });
+}
+
+exports.fetchSingleAd = (req, res) => {
+    Rent.findOne({
+        where: {
+            id: req.body.id,
+            active: 1
+        }
     })
         .then(response => {
             res.status(200).send(response);

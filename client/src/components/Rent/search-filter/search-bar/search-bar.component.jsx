@@ -1,4 +1,6 @@
 import React from 'react';
+import {Input, Switch} from "antd";
+import classes from './styles.module.scss'
 
 const SearchBar = props => {
 
@@ -7,27 +9,17 @@ const SearchBar = props => {
     }
 
     const handleInStockChange = e => {
-        props.onInStockChange(e.target.checked);
+        props.onInStockChange(e);
     }
 
     return (
-        <div className="search">
-            <form>
-                <input
-                    type="text"
-                    placeholder="Search..."
-                    value={props.filterText}
-                    onChange={handleFilterTextChange}
-                />
-                <p>
-                    <input
-                        type="checkbox"
-                        checked={props.inStockOnly}
-                        onChange={handleInStockChange}
-                    />{" "}
-                    Only show products in stock
-                </p>
-            </form>
+        <div className={classes.SearchBar}>
+
+            <Input placeholder="Найти по заголовку..." onChange={handleFilterTextChange}/>
+
+            <Switch defaultChecked={props.inStockOnly} onChange={handleInStockChange}/> Объявления только
+            зарегистрированных пользователей
+
         </div>
     );
 };

@@ -23,4 +23,9 @@ module.exports = function(app) {
         "/api/rent/fetch-user",
         controller.fetchUser
     );
+
+    app.post(
+        "/api/rent/fetch-single-ad",
+        controller.fetchSingleAd
+    );
 };

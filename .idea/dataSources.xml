@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="MySQL - @localhost" uuid="1fb36810-e1ec-4f2f-972c-fcc156d81ea8">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/rent_app</jdbc-url>
+      <driver-properties>
+        <property name="serverTimezone" value="US/Eastern" />
+      </driver-properties>
+    </data-source>
+  </component>
+</project>

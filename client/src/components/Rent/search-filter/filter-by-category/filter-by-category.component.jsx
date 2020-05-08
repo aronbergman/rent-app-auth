@@ -1,4 +1,8 @@
 import React from 'react';
+import {Select} from 'antd';
+import classes from './styles.module.scss'
+
+const {Option} = Select;
 
 const FilterByCategory = props => {
 
@@ -20,53 +24,69 @@ const FilterByCategory = props => {
 
     props.categories.forEach(category => {
         itemsCategories.push(
-            <button
+            <div
                 className="category__item"
                 key={category}
                 onClick={() => handleFilterCategoryChange(category)}
             >
-                {category === 0 ? 'Я хочу снять' : category === 1 ? 'Я хочу сдать' : 'Все'}
-            </button>
+                {category === 0 ? 'сдать' : category === 1 ? 'снять' : 'снять и сдать'}
+            </div>
         );
     });
 
     props.cities.forEach(city => {
         itemsCities.push(
-            <button
+            <div
                 className="category__item"
                 key={city}
                 onClick={() => handleFilterCityChange(city)}
             >
-                {city === 77 ? 'Москва' : city === 78 ? 'Санкт-Петербург' : city === 66 ? 'Екатеринбург' : 'Любой'}
-            </button>
+                {city === 77 ? 'в Москве' : city === 78 ? 'в Санкт-Петербурге' : city === 66 ? 'в Екатеринбурге' : 'в любом городе'}
+            </div>
         );
     });
 
     props.sizes.forEach(size => {
         itemsSizes.push(
-            <button
+            <div
                 className="category__item"
                 key={size}
                 onClick={() => handleFilterSizeChange(size)}
             >
-                {size}
-            </button>
+                {size === 'flat' ? 'квартиру' : size === 'room' ? 'комнату' : size === 'bed' ? 'спальное место' : 'жильё'}
+            </div>
         );
     });
 
+    function handleChange(value) {
+        console.log(`selected ${value}`);
+    }
+
     return (
-        <div className="categories">
-            <h2>Filter By Categories</h2>
-            Категория
-            {itemsCategories}
-            <br/>
-            Город:
-            {itemsCities}
-            <br/>
-            Размер:
-            {itemsSizes}
-            <br/>
-            <br/>
+        <div className={classes.SmartSearch}>
+            {/* eslint-disable-next-line jsx-a11y/accessible-emoji */}
+            <strong><span className={classes.Icon}>✨</span> Я ХОЧУ</strong>
+            <Select
+                className={classes.Select}
+                defaultValue="снять и сдать" style={{width: '160px'}} onChange={handleChange}>
+                {itemsCategories.map(category => (
+                <Option value={category}>{category}</Option>
+                ))}
+            </Select>
+            <Select
+                className={classes.Select}
+                defaultValue="жильё" style={{width: '133px'}} onChange={handleChange}>
+                {itemsSizes.map(size => (
+                    <Option value={size}>{size}</Option>
+                ))}
+            </Select>
+            <Select
+                className={classes.Select}
+                defaultValue="в любом городе" style={{width: '200px'}} onChange={handleChange}>
+                {itemsCities.map(city => (
+                    <Option value={city}>{city}</Option>
+                ))}
+            </Select>
         </div>
     );
 };
