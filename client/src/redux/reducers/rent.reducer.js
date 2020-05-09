@@ -7,6 +7,7 @@ const rentSlice = createSlice({
     initialState: {
         ads: [],
         loaded: false,
+        files: [],
         filter: {
             filterCategory: "all",
             filterCity: "all",
@@ -34,6 +35,15 @@ const rentSlice = createSlice({
         },
         handleInStockChange(state, action) {
             state.filter.inStockOnly = action.payload
+        },
+        setLoadedFiles(state, action) {
+            state.files = [
+                ...state.files,
+                ...action.payload
+            ]
+        },
+        resetFiles(state, payload) {
+            state.files = []
         }
     }
 })
@@ -44,7 +54,9 @@ export const {
     handleFilterCityChange,
     handleFilterSizeChange,
     handleFilterTextChange,
-    handleInStockChange
+    handleInStockChange,
+    setLoadedFiles,
+    resetFiles
 } = rentSlice.actions
 
 export default rentSlice.reducer

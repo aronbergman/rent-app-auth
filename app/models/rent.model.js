@@ -50,6 +50,12 @@ module.exports = (sequelize, Sequelize) => {
         },
         userId: {
             type: Sequelize.INTEGER
+        },
+        images: {
+            type: Sequelize.STRING
+        },
+        secret: {
+            type: Sequelize.STRING
         }
     });
 

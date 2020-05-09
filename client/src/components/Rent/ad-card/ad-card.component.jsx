@@ -16,7 +16,7 @@ const AdCardComponent = ({ad}) => {
         <Link target="_blank" to={`/rent/${ad.id}`}>
             <Card title={ad.title} className={classes.Card}>
                 {!!ad.userId && <div className={classes.RegisterBage}><CheckCircleOutlined/> Подтверждено</div>}
-                <Card.Grid hoverable={false} style={w25}>ID: {ad.id}</Card.Grid>
+                <Card.Grid hoverable={false} style={w25}>Есть фото: {ad.images ? 'ДА' : 'нет'}</Card.Grid>
                 <Card.Grid hoverable={false} style={w25}>Город: {cityParser(ad.city)}</Card.Grid>
                 <Card.Grid hoverable={false} style={w25}>Метро: {ad.metroStations}</Card.Grid>
                 <Card.Grid hoverable={false} style={w25}>До метро: {ad.distanceMetro}</Card.Grid>
@@ -26,9 +26,8 @@ const AdCardComponent = ({ad}) => {
                 <Card.Grid hoverable={false} style={w25}>Депозит: {ad.deposit}</Card.Grid>
                 <Card.Grid hoverable={false} style={w25}>Описание: {ad.description}</Card.Grid>
                 <Card.Grid hoverable={false} style={w25}>Этаж: {ad.floor}</Card.Grid>
-                <Card.Grid hoverable={false} style={w25}>Email: {ad.email}</Card.Grid>
-                <Card.Grid hoverable={false} style={w25}>Telegram: {ad.username}</Card.Grid>
                 <Card.Grid hoverable={false} style={w25}>Создано: {dateParser(ad.updatedAt)}</Card.Grid>
+                <Card.Grid hoverable={false} style={w25}>ID: {ad.id}</Card.Grid>
             </Card>
         </Link>
     )

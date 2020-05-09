@@ -3,6 +3,9 @@ const config = require("../config/auth.config");
 const Rent = db.rent;
 const User = db.user;
 
+var jwt = require("jsonwebtoken");
+var bcrypt = require("bcryptjs");
+
 const Op = db.Sequelize.Op;
 
 exports.createAd = (req, res) => {
@@ -23,8 +26,12 @@ exports.createAd = (req, res) => {
         deposit,
         renovation,
         city,
+        images,
+        secret,
         userId
     } = req.body
+
+    const token = bcrypt.hashSync(secret, 8)
 
     Rent.create({
         title,
@@ -34,6 +41,7 @@ exports.createAd = (req, res) => {
         typeOfObject,
         sizeOfObject,
         metroLine: JSON.stringify(metroStations),
+        images: JSON.stringify(images),
         infrastructure: JSON.stringify(infrastructure),
         distanceMetro,
         description,
@@ -43,6 +51,7 @@ exports.createAd = (req, res) => {
         renovation,
         userId,
         city,
+        secret : req.body.secret ? token : null,
         active: 1
     })
         .then(() => {
@@ -78,6 +87,29 @@ exports.fetchSingleAd = (req, res) => {
         .catch(err => {
             res.status(500).send({message: err.message});
         });
+}
+
+exports.fetchDeleteAd = (req, res) => {
+
+    const {secret, id} = req.body
+
+    var passwordIsValid = bcrypt.compareSync(
+        req.body.password,
+        secret
+    );
+
+    console.log('passwordIsValid', passwordIsValid)
+
+    if (passwordIsValid) {
+        Rent.destroy({
+            where: {
+                id
+            }
+        })
+        res.status(200).send({message: 'Удалено'});
+    } else  {
+        res.status(500).send({message: err.message});
+    }
 }
 
 exports.fetchUser = (req, res) => {

@@ -10,7 +10,9 @@ const ProductTable = props => {
     const filterCity = props.filterCity;
     const filterSize = props.filterSize;
 
-    props.rentAds.forEach(product => {
+    const ads = [...props.rentAds].sort((a, b) => a.id < b.id ? 1 : -1);
+
+    ads.forEach(product => {
         const name = product.title.toLowerCase();
         if (name.indexOf(filterText.toLowerCase())) {
             return;

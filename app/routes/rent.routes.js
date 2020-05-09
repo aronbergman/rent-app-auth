@@ -28,4 +28,9 @@ module.exports = function(app) {
         "/api/rent/fetch-single-ad",
         controller.fetchSingleAd
     );
+
+    app.post(
+        "/api/rent/delete",
+        controller.fetchDeleteAd
+    );
 };

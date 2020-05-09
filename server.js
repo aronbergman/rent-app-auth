@@ -1,9 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-import morgan from 'morgan';
 const cors = require("cors");
-const path = require('path');
-const helpers = require('./app/helpers/helpers');
 
 const app = express();
 const multer = require('multer')
@@ -26,30 +23,27 @@ const Role = db.role;
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'public')
+        cb(null, 'public/images')
     },
     filename: function (req, file, cb) {
         cb(null, Date.now() + '-' +file.originalname )
     }
 })
 
-var upload = multer({ storage: storage }).single('file')
+var upload = multer({ storage: storage }).array('file')
 
-app.post('/upload',function(req, res) {
-
+app.post('/api/upload',function(req, res) {
     upload(req, res, function (err) {
         if (err instanceof multer.MulterError) {
             return res.status(500).json(err)
         } else if (err) {
             return res.status(500).json(err)
         }
-        return res.status(200).send(req.file)
-
+        return res.status(200).json(req.files)
     })
-
 });
 
-app.use(express.static(__dirname, 'public'));
+app.use(express.static('public'));
 
 db.sequelize.sync();
 // force: true will drop the table if it already exists
