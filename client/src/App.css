@@ -35,3 +35,15 @@ nav.bg-dark:before {
   -webkit-border-radius: 50%;
   border-radius: 50%;
 }
+
+#root {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#rent-filter .ant-select-selection-item {
+  font-size: 20px;
+  font-weight: bold;
+ }

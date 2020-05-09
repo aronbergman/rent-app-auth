@@ -1,10 +1,17 @@
 .Header {
   display: flex;
+  position: relative;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
+  margin-bottom: -20px;
+  z-index: 2;
 }
 
 .Header > div {
   display: flex;
   flex-direction: row;
+}
+
+.DeleteButton {
+  display: block;
 }

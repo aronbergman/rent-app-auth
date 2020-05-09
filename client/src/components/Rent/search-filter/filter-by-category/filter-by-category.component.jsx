@@ -63,12 +63,12 @@ const FilterByCategory = props => {
     }
 
     return (
-        <div className={classes.SmartSearch}>
+        <div id="rent-filter" className={classes.SmartSearch}>
             {/* eslint-disable-next-line jsx-a11y/accessible-emoji */}
-            <strong><span className={classes.Icon}>✨</span> Я ХОЧУ</strong>
+            <strong><span className={classes.Icon}>✨</span> <span className={classes.IMake}>Я ХОЧУ</span></strong>
             <Select
                 className={classes.Select}
-                defaultValue="снять и сдать" style={{width: '160px'}} onChange={handleChange}>
+                defaultValue="снять и сдать" style={{width: '180px'}} onChange={handleChange}>
                 {itemsCategories.map(category => (
                 <Option value={category}>{category}</Option>
                 ))}
@@ -82,7 +82,7 @@ const FilterByCategory = props => {
             </Select>
             <Select
                 className={classes.Select}
-                defaultValue="в любом городе" style={{width: '200px'}} onChange={handleChange}>
+                defaultValue="в любом городе" style={{width: '240px'}} onChange={handleChange}>
                 {itemsCities.map(city => (
                     <Option value={city}>{city}</Option>
                 ))}

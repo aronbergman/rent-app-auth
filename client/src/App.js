@@ -17,6 +17,7 @@ import CreateAdRent from "./components/Rent/create-ad.component";
 import LoveFilter from "./components/Love/LoveFilter.component";
 import News from "./components/News/News.component";
 import SingleRentAd from "./components/Rent/single-rent-ad/single-rent-ad";
+import Footer from './components/Footer/footer.component'
 
 class App extends Component {
     constructor(props) {
@@ -54,8 +55,7 @@ class App extends Component {
                 <div>
                     <nav className="navbar navbar-expand navbar-dark bg-dark">
                         <Link to={"/"} className="navbar-brand">
-                            {/* eslint-disable-next-line jsx-a11y/accessible-emoji */}
-                            <span role="img">🏳️‍🌈</span> CONNECT
+                            <img src="http://localhost:8080/favicon.png" alt=""/>
                         </Link>
                         <div className="navbar-nav mr-auto">
 
@@ -146,6 +146,7 @@ class App extends Component {
                         </Switch>
                     </div>
                 </div>
+                <Footer/>
             </Router>
         );
     }

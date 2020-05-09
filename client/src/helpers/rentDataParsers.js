@@ -1,15 +1,15 @@
 export const renovationParser = renovation => {
     switch (renovation) {
         case '0':
-            return 'White box'
+            return '📦 Голые стены'
         case '1':
-            return 'Совок стайл'
+            return '👵 Бабушкин'
         case '2':
-            return 'Косметический'
+            return '🛏 Косметический'
         case '3':
-            return 'Евроремонт'
+            return '🛋 Евроремонт'
         case '4':
-            return 'Без ремонта'
+            return 'Срем в кухне'
         default:
             return '–'
     }

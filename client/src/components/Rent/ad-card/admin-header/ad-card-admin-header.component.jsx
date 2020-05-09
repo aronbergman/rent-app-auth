@@ -1,22 +1,34 @@
 import React from 'react';
 import classes from './styles.module.scss'
-import dateParser from "../../../../helpers/dateParser";
+import {Button} from "antd";
+import {connect} from "react-redux";
+import {handlerDeleteRentAdAuth} from "../../../../redux/thunks/rent-ad.thunks";
 
-const AdCardAdminHeader = ({ad}) => {
+const AdCardAdminHeader = (props) => {
+
+    const user = JSON.parse(localStorage.getItem('user'))
+
+    const handlerDeleteUserAd = () => {
+        const data = {
+            username: user.username,
+            id: props.ad.id,
+            token: user.token,
+            email: user.email
+        }
+        props.onDeleteUserAd(data).then(() => props.history.push('/rent'))
+    }
+
     return (
         <div className={classes.Header}>
-            <div>
-                <div>Создано: {dateParser(ad.createdAt)}</div>
-                {ad.createdAt !== ad.updatedAt && <div>Изменено: {dateParser(ad.updatedAt)}</div>}
-            </div>
-
-            {/*TODO: Добавить удаленое и узменение объявления из админки*/}
-            <div>
-                <div>Изменить</div>
-                <div>Удалить</div>
-            </div>
+            <Button className={classes.DeleteButton} shape="round" size='large' onClick={handlerDeleteUserAd}>
+                Удалить объявление
+            </Button>
         </div>
     );
 };
 
-export default AdCardAdminHeader;
+const mapDispatch = dispatch => ({
+    onDeleteUserAd: data => dispatch(handlerDeleteRentAdAuth(data))
+})
+
+export default connect(null, mapDispatch)(AdCardAdminHeader);

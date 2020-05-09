@@ -6,6 +6,7 @@ import AdCardComponent from "../ad-card/ad-card.component";
 import classes from "./styles.module.scss";
 import {Button} from "antd";
 import {Modal, Form} from "react-bootstrap";
+import {Link} from "react-router-dom";
 
 const SingleRentAd = props => {
     const [ad, setAd] = useState('')
@@ -45,6 +46,10 @@ const SingleRentAd = props => {
                     <Modal.Header closeButton>
                         <Modal.Title>Удаление объявления</Modal.Title>
                     </Modal.Header>
+                    <Modal.Body className="Body">
+                       Введите пароль, который Вы добавили к объявлению при создании.
+                        Если Вы уже зарегистрированный пользователь, то удалить объявление можно из раздела <Link to={'/profile'}>Профиль пользователя</Link>.
+                    </Modal.Body>
                     <Form.Control className={classes.InputPassword} type="password" placeholder="Пароль" onChange={handlePassword} />
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleClose}>

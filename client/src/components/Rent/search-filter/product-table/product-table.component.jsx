@@ -1,6 +1,8 @@
 import React from "react";
 import AdCardComponent from "../../ad-card/ad-card.component";
 import classes from './styles.module.scss'
+import dateParser from "../../../../helpers/dateParser";
+import InfiniteScroll from 'react-infinite-scroller';
 
 const ProductTable = props => {
     const rows = [];
@@ -32,12 +34,28 @@ const ProductTable = props => {
         rows.push(<AdCardComponent ad={product} key={product.id}/>);
     });
 
+    const loadFunc = () => {
+        console.log('loadFunc')
+    }
+
     return (
         <div>
-            <div className={classes.SearchLength}> Всего найдено: {rows.length}</div>
-            {rows}
+            <div className={classes.SearchLength}> Страница обновлена: {dateParser(Date.now())}</div>
+            {/* eslint-disable-next-line react/jsx-no-undef */}
+                <InfiniteScroll
+                    pageStart={0}
+                    loadMore={loadFunc}
+                    hasMore={true}
+                    loader={<div className="loader" key={0}>Loading ...</div>}
+                >
+                    {rows}
+                </InfiniteScroll>
         </div>
     );
 };
 
-export default ProductTable;
+const mapDispatch = dispatch => ({
+    fetchOffset: e  => dispatch(handlerFetchOffsetRentAd(e))
+})
+
+export default connect(null, mapDispatch)(ProductTable);

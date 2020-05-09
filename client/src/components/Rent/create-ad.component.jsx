@@ -1,8 +1,14 @@
 import React from 'react';
 import {connect} from 'react-redux'
 import {Form, Input, Select, InputNumber, Switch, Radio, Button, Checkbox, Row, Col} from 'antd';
-import {createAd, handlerLoadFiles} from '../../redux/thunks/rent-ad.thunks';
+import {
+    createAd,
+    handlerCityForLoadingMetro,
+    handlerLoadFiles,
+    handlerTypeOfApplicant
+} from '../../redux/thunks/rent-ad.thunks';
 import createTitleAd from '../../helpers/createTitleAd';
+import classes from './styles.module.scss'
 
 const {Option} = Select;
 
@@ -22,6 +28,9 @@ class CreateAdForm extends React.Component {
         }
     }
 
+    cityHandler = e => this.props.cityHandler(e)
+    typeOfApplicantHandler = e => this.props.typeOfApplicantHandler(e.target.value)
+
     componentDidMount() {
         const user = JSON.parse(localStorage.getItem('user'))
         this.setState({user})
@@ -30,12 +39,13 @@ class CreateAdForm extends React.Component {
     render() {
         const onFinish = values => {
             const title = createTitleAd(values)
+            console.log(values)
             this.props.createAd({
                 ...values,
                 userId: this.state.user ? this.state.user.id : 0,
                 title,
                 images: this.props.files
-            })
+            }).then(() => this.props.history.push('/rent'))
         };
 
         const onChangeHandler = event => {
@@ -45,8 +55,6 @@ class CreateAdForm extends React.Component {
             }
             this.props.loadFiles(data)
         }
-
-        console.log('this.state.user', this.state.user)
 
         return (
             <div>
@@ -61,15 +69,21 @@ class CreateAdForm extends React.Component {
                         rate: 3.5,
                     }}
                 >
-                    <Form.Item name="username" label="Telegram" rules={[{required: true}]}>
+                    <Form.Item name="username" label="Ник или номер Telegram">
                         <Input/>
                     </Form.Item>
-                    <Form.Item name="email" label="Email" rules={[{type: 'email'}]}>
+                    <Form.Item name="name" label="Твоё имя" rules={[{required: true}]}>
                         <Input/>
                     </Form.Item>
-                    <Form.Item name="typeOfApplicant" label="Ты хочешь"
-                               rules={[{required: true, message: 'Пожалуйста, выберите цель!'}]}>
-                        <Radio.Group>
+                    <Form.Item name="email" label="Email" rules={[{type: 'email', required: true}]}>
+                        <Input/>
+                    </Form.Item>
+                    <Form.Item
+                        name="typeOfApplicant" label="Ты хочешь"
+                        rules={[{required: true, message: 'Пожалуйста, выберите цель!'}]}>
+                        <Radio.Group
+                            onChange={this.typeOfApplicantHandler}
+                        >
                             <Radio.Button value="0">Снять</Radio.Button>
                             <Radio.Button value="1">Сдать</Radio.Button>
                         </Radio.Group>
@@ -82,15 +96,6 @@ class CreateAdForm extends React.Component {
                             <Radio.Button value="bed">Спальное место</Radio.Button>
                         </Radio.Group>
                     </Form.Item>
-                    <Form.Item name="sizeOfObject" label="Комнат в квартире">
-                        <Radio.Group>
-                            <Radio.Button value="1">1</Radio.Button>
-                            <Radio.Button value="2">2</Radio.Button>
-                            <Radio.Button value="3">3</Radio.Button>
-                            <Radio.Button value="4">4</Radio.Button>
-                            <Radio.Button value="5">5</Radio.Button>
-                        </Radio.Group>
-                    </Form.Item>
 
                     <Form.Item
                         name="renovation"
@@ -99,12 +104,12 @@ class CreateAdForm extends React.Component {
                         rules={[{required: true, message: 'Пожалуйста, выберите вид отделки объекта!'}]}
                     >
 
-                        <Select placeholder="Совок или евро?">
-                            <Option value="0">White box</Option>
-                            <Option value="1">Совок стайл</Option>
-                            <Option value="2">Косметический</Option>
-                            <Option value="3">Евроремонт</Option>
-                            <Option value="4">Любой, не важно</Option>
+                        <Select placeholder="Например, голые стены или евроремонт">
+                            <Option value="0">📦 Голые стены</Option>
+                            <Option value="1">👵 Бабушкин</Option>
+                            <Option value="2">🛏 Косметический</Option>
+                            <Option value="3">🛋 Евроремонт</Option>
+                            {/*<Option value="4"></Option>*/}
                         </Select>
                     </Form.Item>
 
@@ -114,7 +119,7 @@ class CreateAdForm extends React.Component {
                         hasFeedback
                         rules={[{required: true, message: 'Пожалуйста, выберите город!'}]}
                     >
-                        <Select placeholder="Выбери город">
+                        <Select placeholder="Выбери город" onChange={this.cityHandler}>
                             <Option value="77">Москва</Option>
                             <Option value="78">Санкт-Петербург</Option>
                             <Option value="66">Екатеринбург</Option>
@@ -126,41 +131,63 @@ class CreateAdForm extends React.Component {
                         label="Расположение"
                     >
                         <Select mode="multiple" placeholder="Пожалуйста, выберите одну или несколько станций метро">
-                            <Option value="red">Багратионовская</Option>
-                            <Option value="darkblue">Беляево</Option>
-                            <Option value="gray">Пражская</Option>
-                            <Option value="gray">Отрадное</Option>
-                            <Option value="gray">Бульвар Рокоссовского</Option>
+
+                            {this.props.stations.map(station => <Option value={`${station.name}|${station.color}`}>
+                                <div className={classes.MetroItem}>
+                                    <div className={classes.MetroColor}
+                                         style={{backgroundColor: `#${station.color}`}}>&nbsp;</div>
+                                    {station.name}
+                                </div>
+                            </Option>)}
+
                         </Select>
                     </Form.Item>
 
-                    <Form.Item name="distanceMetro" label="Расстояние до метро">
-                        <Radio.Group>
-                            <Radio value="1">100 метров</Radio>
-                            <Radio value="2">300 метров</Radio>
-                            <Radio value="3">500 метров</Radio>
-                            <Radio value="4">1 км</Radio>
-                            <Radio value="5">2 км</Radio>
-                            <Radio value="6">более 2 км</Radio>
-                        </Radio.Group>
+                    <Form.Item
+                        name="distanceMetro"
+                        label="Расстояние до метро"
+                        hasFeedback
+                    >
+                        <Select placeholder="500 метров (в соседнем квартале)">
+                            <Option value="1">100 метров (у дома)</Option>
+                            <Option value="2">300 метров (в моем квартале)</Option>
+                            <Option value="3">500 метров (в соседнем квартале)</Option>
+                            <Option value="4">1 км (10 минут пешком)</Option>
+                            <Option value="5">2 км (пара остановок)</Option>
+                            <Option value="6">более 2 км (дохрена далеко)</Option>
+                        </Select>
                     </Form.Item>
 
-                    <Form.Item name="description" label="Дополнительные сведения">
+                    <Form.Item
+                        rules={[{required: true, message: 'Пожалуйста, укажите сведения'}]}
+                        name="description" label="Дополнительные сведения">
                         <Input.TextArea/>
                     </Form.Item>
 
-                    <Form.Item label="Стоимость">
-                        <Form.Item name="price" noStyle>
-                            <InputNumber min={5000} max={60000}/>
-                        </Form.Item>
-                        <span className="ant-form-text"> рублей в месяц</span>
+                    <Form.Item name="price" label="Стоимость"
+                               rules={[{required: true, message: 'Пожалуйста, укажите стоимость'}]}>
+                        <Input type="number" placeholder="Стоимость аренды в месяц"/>
                     </Form.Item>
 
-                    <Form.Item label="Этаж">
-                        <Form.Item name="floor" noStyle>
-                            <InputNumber min={1} max={50}/>
-                        </Form.Item>
-                    </Form.Item>
+                    {this.props.typeOfApplicant !== '0'
+                        ? <Form.Item name="sizeOfObject" label="Комнат в квартире">
+                            <Radio.Group>
+                                <Radio.Button value="1">1</Radio.Button>
+                                <Radio.Button value="2">2</Radio.Button>
+                                <Radio.Button value="3">3</Radio.Button>
+                                <Radio.Button value="4">4</Radio.Button>
+                                <Radio.Button value="5">5</Radio.Button>
+                            </Radio.Group>
+                        </Form.Item> : null
+                    }
+
+                    {this.props.typeOfApplicant !== '0'
+                        ? <Form.Item label="Этаж">
+                            <Form.Item name="floor" noStyle>
+                                <InputNumber min={1} max={50}/>
+                            </Form.Item>
+                        </Form.Item> : null
+                    }
 
                     <Form.Item name="infrastructure" label="Рядом есть">
                         <Checkbox.Group>
@@ -239,11 +266,15 @@ class CreateAdForm extends React.Component {
 
 const mapDispatch = dispatch => ({
     createAd: data => dispatch(createAd(data)),
-    loadFiles: data => dispatch(handlerLoadFiles(data))
+    loadFiles: data => dispatch(handlerLoadFiles(data)),
+    cityHandler: city => dispatch(handlerCityForLoadingMetro(city)),
+    typeOfApplicantHandler: city => dispatch(handlerTypeOfApplicant(city))
 })
 
 const mapState = state => ({
-    files: state.rent.files
+    files: state.rent.create.files,
+    stations: state.rent.create.metro,
+    typeOfApplicant: state.rent.create.typeOfApplicant
 })
 
 export default connect(mapState, mapDispatch)(CreateAdForm);

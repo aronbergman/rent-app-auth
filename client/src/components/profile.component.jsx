@@ -4,6 +4,8 @@ import {actionGetUserAds} from "../redux/thunks/rent-ad.thunks";
 import Loader from "./Loader/Loader";
 import AdCardComponent from "./Rent/ad-card/ad-card.component";
 import AdCardAdminHeader from "./Rent/ad-card/admin-header/ad-card-admin-header.component";
+import classes from './styles.module.scss'
+import {Link} from "react-router-dom";
 
 const Profile = props => {
 
@@ -37,13 +39,13 @@ const Profile = props => {
                 <h2>Мои объявления</h2>
                 {ads ? ads.map(ad => (
                     <div key={ad.id}>
-                        <AdCardAdminHeader
-                            ad={ad}/>
-                        <AdCardComponent
-                            ad={ad}
-                        />
+                        <AdCardAdminHeader history={props.history} ad={ad}/>
+                        <div className={classes.NotClick}>
+                            <AdCardComponent ad={ad}/>
+                        </div>
                     </div>
                 )) : <Loader/>}
+                {!ads.length && <div>Объявлений не найдено, <Link to="/rent/create-ad">создайте новое</Link></div>}
             </div>
         </div>
     );
