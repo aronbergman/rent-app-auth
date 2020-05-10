@@ -31,7 +31,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "npm install --no-optional --no-shrinkwrap --no-package-lock && react-scripts build && reboot",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "ssh": "ssh root@194.67.90.19"
