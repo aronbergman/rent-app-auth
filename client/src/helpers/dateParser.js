@@ -2,6 +2,5 @@ import moment from 'moment';
 
 moment.locale('ru');
 
-const dateParser = (date) => moment(date).format('LLL');
-
-export default dateParser;
+export const dateParser = (date) => moment(date).format('LLL');
+export const dateParserStartOf = (date) => moment(date).startOf('hour').fromNow();

@@ -55,7 +55,8 @@ class App extends Component {
                 <div>
                     <nav className="navbar navbar-expand navbar-dark bg-dark">
                         <Link to={"/"} className="navbar-brand">
-                            <img src="http://localhost:8080/favicon.png" alt=""/>
+                            {/*<img src="http://localhost:8080/favicon.png" alt=""/>*/}
+                            COMMUNITY
                         </Link>
                         <div className="navbar-nav mr-auto">
 
@@ -66,7 +67,13 @@ class App extends Component {
                                 <NavLink to="/love" className="nav-link" activeClassName="active">ЗНАКОМСТВА</NavLink>
                             </li>
                             <li className="nav-item">
-                                <NavLink to="/news" className="nav-link" activeClassName="active">СТАТЬИ</NavLink>
+                                <NavLink to="/news" className="nav-link" activeClassName="active">НОВОСТИ</NavLink>
+                            </li>
+                            <li className="nav-item">
+                                <NavLink to="/questions" className="nav-link" activeClassName="active">ВОПРОСЫ И ОТВЕТЫ</NavLink>
+                            </li>
+                            <li className="nav-item">
+                                <NavLink to="/shop" className="nav-link" activeClassName="active">МАГАЗИН</NavLink>
                             </li>
 
                             {/*{showModeratorBoard && (*/}
@@ -124,7 +131,7 @@ class App extends Component {
                         )}
                     </nav>
 
-                    <div className="container mt-3">
+                    <div className="container">
                         <Switch>
                             <Route exact path={"/"} component={Home}/>
 

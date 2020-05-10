@@ -22,6 +22,10 @@ const rentSlice = createSlice({
     },
     reducers: {
         setRentAds(state, action) {
+            state.ads = action.payload;
+            state.loaded = true;
+        },
+        setRentAdsOffset(state, action) {
             state.ads = [
                 ...state.ads,
                 ...action.payload
@@ -63,6 +67,7 @@ const rentSlice = createSlice({
 
 export const {
     setRentAds,
+    setRentAdsOffset,
     handleFilterCategoryChange,
     handleFilterCityChange,
     handleFilterSizeChange,

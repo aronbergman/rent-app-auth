@@ -26,13 +26,13 @@ var storage = multer.diskStorage({
         cb(null, 'public/images')
     },
     filename: function (req, file, cb) {
-        cb(null, Date.now() + '-' +file.originalname )
+        cb(null, Date.now() + '-' + file.originalname)
     }
 })
 
-var upload = multer({ storage: storage }).array('file')
+var upload = multer({storage: storage}).array('file')
 
-app.post('/api/upload',function(req, res) {
+app.post('/api/upload', function (req, res) {
     upload(req, res, function (err) {
         if (err instanceof multer.MulterError) {
             return res.status(500).json(err)
@@ -54,13 +54,15 @@ db.sequelize.sync();
 
 // simple route
 app.get("/", (req, res) => {
-    res.json({message: "Welcome to bezkoder application."});
+    res.json({message: "Welcome to aronbergman application."});
 });
 
 // routes
 require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
 require('./app/routes/rent.routes')(app);
+
+require('./app/middleware/intervalRentAdCreater.js')(db);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

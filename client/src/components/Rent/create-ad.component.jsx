@@ -9,6 +9,7 @@ import {
 } from '../../redux/thunks/rent-ad.thunks';
 import createTitleAd from '../../helpers/createTitleAd';
 import classes from './styles.module.scss'
+import Header from "../Header/Header.component";
 
 const {Option} = Select;
 
@@ -58,8 +59,11 @@ class CreateAdForm extends React.Component {
 
         return (
             <div>
-                <h2>Создать объявление для раздела Аренда</h2>
+                <Header>
+                    <h2>Создать объявление для раздела Аренда</h2>
+                </Header>
                 <Form
+                    className={classes.Content}
                     name="validate_other"
                     {...formItemLayout}
                     onFinish={onFinish}

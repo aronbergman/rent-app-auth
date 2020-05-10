@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const Rent = sequelize.define("rent-ad", {
+    const IntervalRent = sequelize.define("interval-rent-ad", {
         title: { // Сгенерированная строка из состояния объявления
             type: Sequelize.STRING
         },
@@ -31,7 +31,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER
         },
         description: {
-            type: Sequelize.STRING
+            type: Sequelize.STRING(3000)
         },
         price: {
             type: Sequelize.INTEGER
@@ -62,5 +62,5 @@ module.exports = (sequelize, Sequelize) => {
         }
     });
 
-    return Rent;
+    return IntervalRent;
 };

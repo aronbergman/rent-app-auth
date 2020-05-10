@@ -6,6 +6,9 @@ module.exports = (sequelize, Sequelize) => {
         username: { // Ник в телеграмм
             type: Sequelize.STRING
         },
+        name: { // Имя для вывода
+            type: Sequelize.STRING
+        },
         email: {
             type: Sequelize.STRING
         },
@@ -28,7 +31,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER
         },
         description: {
-            type: Sequelize.STRING
+            type: Sequelize.STRING(3000)
         },
         price: {
             type: Sequelize.INTEGER

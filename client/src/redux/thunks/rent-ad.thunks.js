@@ -1,5 +1,12 @@
 import axios from "axios";
-import {resetFiles, setLoadedFiles, setMetroStation, setRentAds, setTypeOfApplicant} from "../reducers/rent.reducer";
+import {
+    resetFiles,
+    setLoadedFiles,
+    setMetroStation,
+    setRentAds,
+    setRentAdsOffset,
+    setTypeOfApplicant
+} from "../reducers/rent.reducer";
 import {
     API_CREATE_RENT_ADS,
     API_FETCH_ALL_RENT_ADS,
@@ -26,7 +33,7 @@ export const fetchAll = () => async dispatch => {
 
 export const handlerFetchOffsetRentAd = (data) => async dispatch => {
     const response = await axios.post(API_FETCH_OFFSET_RENT_ADS, data)
-    dispatch(setRentAds(response.data));
+    dispatch(setRentAdsOffset(response.data));
     return response.data;
 }
 

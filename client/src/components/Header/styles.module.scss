@@ -1,0 +1,11 @@
+.Header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  min-height: 150px;
+  background: #eee;
+}

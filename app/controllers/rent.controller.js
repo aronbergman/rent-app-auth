@@ -12,6 +12,7 @@ exports.createAd = (req, res) => {
 
     const {
         title,
+        name,
         username,
         email,
         typeOfApplicant,
@@ -31,16 +32,17 @@ exports.createAd = (req, res) => {
         userId
     } = req.body
 
-    const token = bcrypt.hashSync(secret, 8)
+    const token = secret ? bcrypt.hashSync(secret, 8) : null
 
     Rent.create({
         title,
+        name,
         username,
         email,
         typeOfApplicant,
         typeOfObject,
         sizeOfObject,
-        metroLine: JSON.stringify(metroStations),
+        metroStations: JSON.stringify(metroStations),
         images: JSON.stringify(images),
         infrastructure: JSON.stringify(infrastructure),
         distanceMetro,
@@ -51,7 +53,7 @@ exports.createAd = (req, res) => {
         renovation,
         userId,
         city,
-        secret : req.body.secret ? token : null,
+        secret: req.body.secret ? token : null,
         active: 1
     })
         .then(() => {
@@ -64,7 +66,23 @@ exports.createAd = (req, res) => {
 
 exports.fetchAll = (req, res) => {
     Rent.findAll({
-        limit: 1000
+        limit: 10,
+        order: [['createdAt', 'DESC']]
+    })
+        .then(response => {
+            res.status(200).send(response);
+        })
+        .catch(err => {
+            res.status(500).send({message: err.message});
+        });
+}
+
+exports.fetchOffset = (req, res) => {
+    Rent.findAll({
+        offset: req.body.offset * req.body.limit,
+        limit: req.body.limit,
+        subQuery: false,
+        order: [['createdAt', 'DESC']]
     })
         .then(response => {
             res.status(200).send(response);
@@ -91,25 +109,32 @@ exports.fetchSingleAd = (req, res) => {
 
 exports.fetchDeleteAd = (req, res) => {
 
-    const {secret, id} = req.body
-
-    var passwordIsValid = bcrypt.compareSync(
+    const passwordIsValid = bcrypt.compareSync(
         req.body.password,
-        secret
+        req.body.secret
     );
-
-    console.log('passwordIsValid', passwordIsValid)
 
     if (passwordIsValid) {
         Rent.destroy({
             where: {
-                id
+                id: req.body.id
             }
+        }).then(() => {
+            res.status(200).send({message: 'Удалено'});
         })
-        res.status(200).send({message: 'Удалено'});
-    } else  {
+    } else {
         res.status(500).send({message: err.message});
     }
+}
+
+exports.fetchDeleteAdAuth = (req, res) => {
+    Rent.destroy({
+        where: {
+            id: req.body.id
+        }
+    }).then(() => {
+        res.status(200).send({message: 'Удалено'});
+    })
 }
 
 exports.fetchUser = (req, res) => {

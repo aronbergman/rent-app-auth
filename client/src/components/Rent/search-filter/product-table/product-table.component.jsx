@@ -1,7 +1,7 @@
 import React from "react";
 import AdCardComponent from "../../ad-card/ad-card.component";
 import classes from './styles.module.scss'
-import dateParser from "../../../../helpers/dateParser";
+import {dateParser} from "../../../../helpers/dateParser";
 import InfiniteScroll from 'react-infinite-scroller';
 import {connect} from "react-redux";
 import {handlerFetchOffsetRentAd} from "../../../../redux/thunks/rent-ad.thunks";
@@ -44,7 +44,7 @@ const ProductTable = props => {
 
     return (
         <div className={classes.Container}>
-            <div className={classes.SearchLength}> Страница обновлена: {dateParser(Date.now())}</div>
+            <div className={classes.SearchLength}> Страница обновлена: {dateParser(Date.now())} <a href="/rent">Обновить</a></div>
             <InfiniteScroll
                 pageStart={0}
                 loadMore={loadFunc}
