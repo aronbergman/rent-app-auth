@@ -1,12 +1,15 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const path = require('path');
+require('dotenv').config();
+const {SERVER_PORT} = process.env;
 
 const app = express();
 const multer = require('multer')
 
 var corsOptions = {
-    origin: "http://localhost:8081"
+    origin: `http://localhost:${SERVER_PORT}`
 };
 
 app.use(cors(corsOptions));
@@ -43,10 +46,17 @@ require('./app/routes/news.routes')(app);
 require('./app/middleware/intervalRentAdCreater.js')(db);
 require('./app/routes/file.routes.js')(app, multer, express);
 
+if (process.env.NODE_ENV === 'production') {
+    app.use('/', express.static(path.join(__dirname, 'client', 'build')))
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+    })
+}
+
 // set port, listen for requests
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}.`);
+// const PORT = process.env.PORT || 8080;
+app.listen(SERVER_PORT, () => {
+    console.log(`Server is running on port ${SERVER_PORT}.`);
 });
 
 function initial() {

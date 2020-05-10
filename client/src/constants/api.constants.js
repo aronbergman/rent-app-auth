@@ -16,3 +16,6 @@ export const API_FETCH_SINGLE_CATEGORY = `${API_URL}/dating/single-category`
 
 export const API_FETCH_ALL_NEWS = `${API_URL}/news/fetch-all`
 export const API_FETCH_NEWS_OFFSET = `${API_URL}/news/fetch-offset`
+export const API_FETCH_SINGLE_POST = `${API_URL}/news/fetch-single`
+
+export const API_CREATE_POST = `${API_URL}/news/create-post`

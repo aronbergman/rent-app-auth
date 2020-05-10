@@ -19,4 +19,14 @@ module.exports = function (app) {
         controller.fetchOffset
     );
 
+    app.post(
+        `/api/news/create-post`,
+        controller.createPost
+    );
+
+    app.post(
+        `/api/news/fetch-single`,
+        controller.singlePost
+    );
+
 }

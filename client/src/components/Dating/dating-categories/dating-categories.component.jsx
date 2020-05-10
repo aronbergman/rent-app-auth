@@ -15,7 +15,7 @@ const DatingCategories = props => {
     return (
         <div>
             <Header>
-                <h2>Выбери категорию по интересам</h2>
+                <h2>Выбери категорию</h2>
             </Header>
 
             <div className={classes.CategoriesList}>

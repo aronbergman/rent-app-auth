@@ -22,9 +22,9 @@ const AdminLayout = props => {
                 }}
             >
                 <div className="logo"/>
-                <Menu theme="dark" mode="inline" onSelect={menuSelectHandler} defaultSelectedKeys={['4']}>
+                <Menu theme="dark" mode="inline" onSelect={menuSelectHandler} >
                     <Menu.Item key="news-creator">
-                        nav 1
+                        Создать новость
                     </Menu.Item>
                     <Menu.Item key="2">
                         nav 2

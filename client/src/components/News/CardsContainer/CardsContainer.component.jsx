@@ -10,7 +10,7 @@ const CardsContainer = props => {
     const rows = [];
 
     props.news.forEach(post => {
-        rows.push(<NewsCard key={post.id} title={post.id}/>)
+        rows.push(<NewsCard key={post.id}  post={post}/>)
     })
 
     const loadFunc = pages => {

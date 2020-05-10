@@ -35,3 +35,29 @@ exports.fetchOffset = (req, res) => {
             res.status(500).send({message: err.message});
         });
 }
+
+exports.createPost = (req, res) => {
+
+    const {title, images, content, category} = req.body
+
+    News.create({title, images: JSON.stringify(images), content, category})
+        .then(() => {
+            res.send({message: "Новость создана!"});
+        })
+        .catch(err => {
+            res.status(500).send({message: err.message});
+        });
+}
+
+exports.singlePost = (req, res) => {
+
+    News.findOne({
+        where: {
+            id: req.body.id
+        }
+    }).then(response => {
+        res.status(200).send(response);
+    }).catch(err => {
+        res.status(500).send({message: err.message});
+    });
+}

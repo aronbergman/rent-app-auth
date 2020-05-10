@@ -6,8 +6,11 @@ module.exports = (sequelize, Sequelize) => {
         category: {
             type: Sequelize.INTEGER
         },
-        images: {
+        image: {
             type: Sequelize.STRING
+        },
+        content: {
+            type: Sequelize.STRING(10000)
         }
     })
     return News;

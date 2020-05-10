@@ -20,6 +20,7 @@ import News from "./components/News/News.component";
 import SingleRentAd from "./components/Rent/single-rent-ad/single-rent-ad";
 import Footer from './components/Footer/footer.component'
 import NewsCreator from "./components/Admin/News/NewsCreator/NewsCreator.component";
+import SingleNews from "./components/News/SingleNews/SingleNews.component";
 
 class App extends Component {
     constructor(props) {
@@ -97,7 +98,7 @@ class App extends Component {
                             {currentUser && (
                                 <li className="nav-item">
                                     <Link to={"/user"} className="nav-link">
-                                        User Board
+                                        МОЙ ПРОФИЛЬ
                                     </Link>
                                 </li>
                             )}
@@ -107,7 +108,7 @@ class App extends Component {
                             <div className="navbar-nav ml-auto">
                                 <li className="nav-item">
                                     <Link to={"/profile"} className="nav-link">
-                                        {currentUser.username}
+                                        Настройки {currentUser.username}
                                     </Link>
                                 </li>
                                 <li className="nav-item">
@@ -145,6 +146,7 @@ class App extends Component {
                         <Route exact path={"/dating/:id"} component={DatingList}/>
 
                         <Route exact path={"/news"} component={News}/>
+                        <Route exact path={"/news/:id"} component={SingleNews}/>
 
                         <Route exact path="/login" component={Login}/>
                         <Route exact path="/register" component={Register}/>

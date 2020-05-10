@@ -1,5 +1,4 @@
 const db = require("../models");
-const config = require("../config/auth.config");
 const Rent = db.rent;
 const User = db.user;
 
