@@ -19,6 +19,7 @@ import DatingList from "./components/Dating/single-category/DatingList.component
 import News from "./components/News/News.component";
 import SingleRentAd from "./components/Rent/single-rent-ad/single-rent-ad";
 import Footer from './components/Footer/footer.component'
+import NewsCreator from "./components/Admin/News/NewsCreator/NewsCreator.component";
 
 class App extends Component {
     constructor(props) {
@@ -150,6 +151,8 @@ class App extends Component {
                         <Route exact path="/profile" component={Profile}/>
                         <Route path="/user" component={BoardUser}/>
                         <Route path="/mod" component={BoardModerator}/>
+
+                        <Route path="/admin/news-creator" component={NewsCreator}/>
                         <Route path="/admin" component={AdminPanel}/>
                     </Switch>
                 </div>

@@ -5,13 +5,14 @@ const TODOS_REDUCER_NAME = 'user'
 const userSlice = createSlice({
     name: TODOS_REDUCER_NAME,
     initialState: {
-        loaded: false
+        isAuthenticated: null,
+        role: null
     },
     reducers: {
         fetchRole(state, action) {
-            state.loaded = true
+            state.isAuthenticated = action.payload.isAuthenticated
+            state.role = action.payload.role
         },
-
     }
 })
 

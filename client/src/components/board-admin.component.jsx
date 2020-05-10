@@ -1,36 +1,15 @@
-import React, {useEffect} from "react";
-import {connect} from 'react-redux'
-import Loader from "./Loader/Loader";
-import UserService from "../services/user.service";
-import {fetchRole} from "../redux/reducers/user.reducer";
+import React from "react";
 import AdminLayout from "./Layouts/admin.layout";
+import withAuth from "../HOC/withAuth";
+import {ADMIN} from "../constants/roles.constants";
 
 const AdminPanel = props => {
 
-    const currentUser = JSON.parse(localStorage.getItem('user'))
-
-    useEffect(() => {
-        UserService.getAdminBoard().then(response => {
-                props.fetchRoleHandler()
-            }
-        ).catch(() => props.history.push('/profile'));
-    }, [])
-
     return (
-        props.loaded
-            ? <AdminLayout>
-                <strong>{currentUser.username}</strong> ADMIN BOARD, YEEES!
-            </AdminLayout>
-            : <Loader/>
+        <AdminLayout history={props.history}>
+            ADMIN BOARD, YEEES!
+        </AdminLayout>
     );
 }
 
-const mapState = state => ({
-    loaded: state.user.loaded
-})
-
-const mapDispatch = dispatch => ({
-    fetchRoleHandler: () => dispatch(fetchRole(true))
-})
-
-export default connect(mapState, mapDispatch)(AdminPanel);
+export default withAuth(AdminPanel, ADMIN);

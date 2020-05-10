@@ -6,8 +6,8 @@ import AdCardComponent from "./Rent/ad-card/ad-card.component";
 import AdCardAdminHeader from "./Rent/ad-card/admin-header/ad-card-admin-header.component";
 import classes from './styles.module.scss'
 import {Link} from "react-router-dom";
-import UserService from "../services/user.service";
-import {fetchRole} from "../redux/reducers/user.reducer";
+import {USER} from "../constants/roles.constants";
+import withAuth from "../HOC/withAuth";
 
 const Profile = props => {
 
@@ -16,13 +16,9 @@ const Profile = props => {
     const [ads, setAds] = useState('')
 
     useEffect(() => {
-        UserService.getUserBoard().then(response => {
-                props.getUserAds(currentUser).then(res => {
-                    setAds(res)
-                    props.fetchRoleHandler()
-                })
-            }
-        ).catch(() => props.history.push('/login'));
+        props.getUserAds(currentUser).then(res => {
+            setAds(res)
+        })
     }, [])
 
     return (
@@ -55,15 +51,14 @@ const Profile = props => {
 }
 
 const mapState = state => ({
-    loaded: state.user.loaded
+    loaded: state.user.isAuthenticated
 })
 
 const mapDispatch = dispatch => ({
-    fetchRoleHandler: () => dispatch(fetchRole(true)),
     getUserAds: currentUser => dispatch(actionGetUserAds({
         id: currentUser.id,
         email: currentUser.email
     }))
 })
 
-export default connect(mapState, mapDispatch)(Profile);
+export default withAuth(connect(mapState, mapDispatch)(Profile), USER);
