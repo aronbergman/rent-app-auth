@@ -3,6 +3,9 @@ import AdCardComponent from "../../ad-card/ad-card.component";
 import classes from './styles.module.scss'
 import dateParser from "../../../../helpers/dateParser";
 import InfiniteScroll from 'react-infinite-scroller';
+import {connect} from "react-redux";
+import {handlerFetchOffsetRentAd} from "../../../../redux/thunks/rent-ad.thunks";
+import Loader from "../../../Loader/Loader";
 
 const ProductTable = props => {
     const rows = [];
@@ -12,9 +15,7 @@ const ProductTable = props => {
     const filterCity = props.filterCity;
     const filterSize = props.filterSize;
 
-    const ads = [...props.rentAds].sort((a, b) => a.id < b.id ? 1 : -1);
-
-    ads.forEach(product => {
+    props.rentAds.forEach(product => {
         const name = product.title.toLowerCase();
         if (name.indexOf(filterText.toLowerCase())) {
             return;
@@ -34,28 +35,29 @@ const ProductTable = props => {
         rows.push(<AdCardComponent ad={product} key={product.id}/>);
     });
 
-    const loadFunc = () => {
-        console.log('loadFunc')
+    const loadFunc = pages => {
+        props.fetchOffset({
+            limit: 10,
+            offset: pages
+        })
     }
 
     return (
-        <div>
+        <div className={classes.Container}>
             <div className={classes.SearchLength}> Страница обновлена: {dateParser(Date.now())}</div>
-            {/* eslint-disable-next-line react/jsx-no-undef */}
-                <InfiniteScroll
-                    pageStart={0}
-                    loadMore={loadFunc}
-                    hasMore={true}
-                    loader={<div className="loader" key={0}>Loading ...</div>}
-                >
-                    {rows}
-                </InfiniteScroll>
+            <InfiniteScroll
+                pageStart={0}
+                loadMore={loadFunc}
+                hasMore={true}
+                loader={<Loader/>}>
+                {rows}
+            </InfiniteScroll>
         </div>
     );
 };
 
 const mapDispatch = dispatch => ({
-    fetchOffset: e  => dispatch(handlerFetchOffsetRentAd(e))
+    fetchOffset: e => dispatch(handlerFetchOffsetRentAd(e))
 })
 
 export default connect(null, mapDispatch)(ProductTable);

@@ -22,7 +22,10 @@ const rentSlice = createSlice({
     },
     reducers: {
         setRentAds(state, action) {
-            state.ads = action.payload;
+            state.ads = [
+                ...state.ads,
+                ...action.payload
+            ];
             state.loaded = true;
         },
         handleFilterCategoryChange(state, action) {
