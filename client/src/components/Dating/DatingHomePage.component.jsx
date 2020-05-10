@@ -1,11 +1,12 @@
 import React from 'react';
 import DatingCategories from "./dating-categories/dating-categories.component";
+import DefaultLayout from "../Layouts/default.layout";
 
 const DatingHomePage = () => {
     return (
-        <div style={{textAlign: 'center'}}>
+        <DefaultLayout>
             <DatingCategories/>
-        </div>
+        </DefaultLayout>
     );
 };
 

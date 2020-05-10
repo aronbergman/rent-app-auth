@@ -3,6 +3,7 @@ import Header from "../../Header/Header.component";
 import {connect} from "react-redux";
 import {handlerSingleCategoryLoad} from "../../../redux/thunks/dating.thunks";
 import Loader from "../../Loader/Loader";
+import DefaultLayout from "../../Layouts/default.layout";
 
 const DatingList = props => {
 
@@ -11,12 +12,12 @@ const DatingList = props => {
     }, [])
 
     return (
-        (props.title && props.ads) ? <div>
+        (props.title && props.ads) ? <DefaultLayout>
             <Header>
                 <h2>{props.title}</h2>
             </Header>
             {props.ads.map((ad, index) => <div key={index}>{ad.title}</div>)}
-        </div> : <Loader/>
+        </DefaultLayout> : <Loader/>
     );
 };
 

@@ -3,9 +3,6 @@ import {fetchAll} from "../../redux/thunks/rent-ad.thunks";
 import {connect} from "react-redux";
 import Loader from "../Loader/Loader";
 import FilterableProductTable from './search-filter/filterable-product-table.component';
-import {Button} from "antd";
-import PlusOutlined from "@ant-design/icons/lib/icons/PlusOutlined";
-import {Link} from "react-router-dom";
 
 const Filter = props => {
 

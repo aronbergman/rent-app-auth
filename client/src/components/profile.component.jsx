@@ -6,6 +6,8 @@ import AdCardComponent from "./Rent/ad-card/ad-card.component";
 import AdCardAdminHeader from "./Rent/ad-card/admin-header/ad-card-admin-header.component";
 import classes from './styles.module.scss'
 import {Link} from "react-router-dom";
+import UserService from "../services/user.service";
+import {fetchRole} from "../redux/reducers/user.reducer";
 
 const Profile = props => {
 
@@ -14,16 +16,17 @@ const Profile = props => {
     const [ads, setAds] = useState('')
 
     useEffect(() => {
-        props.getUserAds(currentUser)
-            .then(res => {
-                console.log(res)
-                setAds(res)
-            })
+        UserService.getUserBoard().then(response => {
+                props.getUserAds(currentUser).then(res => {
+                    setAds(res)
+                    props.fetchRoleHandler()
+                })
+            }
+        ).catch(() => props.history.push('/login'));
     }, [])
 
-    console.log(ads)
     return (
-        <div className="container">
+        props.loaded ? <div className="container">
             <header className="jumbotron">
                 <h3>
                     <strong>{currentUser.username}</strong> Profile
@@ -47,15 +50,20 @@ const Profile = props => {
                 )) : <Loader/>}
                 {!ads.length && <div>Объявлений не найдено, <Link to="/rent/create-ad">создайте новое</Link></div>}
             </div>
-        </div>
+        </div> : <Loader/>
     );
 }
 
+const mapState = state => ({
+    loaded: state.user.loaded
+})
+
 const mapDispatch = dispatch => ({
+    fetchRoleHandler: () => dispatch(fetchRole(true)),
     getUserAds: currentUser => dispatch(actionGetUserAds({
         id: currentUser.id,
         email: currentUser.email
     }))
 })
 
-export default connect(null, mapDispatch)(Profile);
+export default connect(mapState, mapDispatch)(Profile);

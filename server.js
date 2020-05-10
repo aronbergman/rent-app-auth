@@ -21,30 +21,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 const db = require("./app/models");
 const Role = db.role;
 
-var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'public/images')
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + '-' + file.originalname)
-    }
-})
-
-var upload = multer({storage: storage}).array('file')
-
-app.post('/api/upload', function (req, res) {
-    upload(req, res, function (err) {
-        if (err instanceof multer.MulterError) {
-            return res.status(500).json(err)
-        } else if (err) {
-            return res.status(500).json(err)
-        }
-        return res.status(200).json(req.files)
-    })
-});
-
-app.use(express.static('public'));
-
 db.sequelize.sync();
 // force: true will drop the table if it already exists
 // db.sequelize.sync({force: true}).then(() => {
@@ -65,6 +41,7 @@ require('./app/routes/dating.routes')(app);
 require('./app/routes/news.routes')(app);
 
 require('./app/middleware/intervalRentAdCreater.js')(db);
+require('./app/routes/file.routes.js')(app, multer, express);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

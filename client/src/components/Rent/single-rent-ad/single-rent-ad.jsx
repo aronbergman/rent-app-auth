@@ -7,6 +7,7 @@ import classes from "./styles.module.scss";
 import {Button} from "antd";
 import {Modal, Form} from "react-bootstrap";
 import {Link} from "react-router-dom";
+import DefaultLayout from "../../Layouts/default.layout";
 
 const SingleRentAd = props => {
     const [ad, setAd] = useState('')
@@ -36,7 +37,7 @@ const SingleRentAd = props => {
     }
 
     return (
-        ad ? <div>
+        ad ? <DefaultLayout>
             <div className={classes.CreateAd}>
                 <Button shape="round" size='large' onClick={handleShow}>
                     Удалить объявление
@@ -74,7 +75,7 @@ const SingleRentAd = props => {
             {images && images.map(img => {
                 return <img style={{width: '100%'}} src={`http://localhost:8080/images/${img}`} alt=""/>
             })}
-        </div> : <Loader/>
+        </DefaultLayout> : <Loader/>
     );
 };
 

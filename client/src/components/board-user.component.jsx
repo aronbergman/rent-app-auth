@@ -1,43 +1,37 @@
-import React, { Component } from "react";
-
+import React, {useEffect} from "react";
+import {connect} from 'react-redux'
+import Loader from "./Loader/Loader";
 import UserService from "../services/user.service";
+import {fetchRole} from "../redux/reducers/user.reducer";
 
-export default class BoardUser extends Component {
-  constructor(props) {
-    super(props);
+const AdminPanel = props => {
 
-    this.state = {
-      content: ""
-    };
-  }
+  const currentUser = JSON.parse(localStorage.getItem('user'))
 
-  componentDidMount() {
-    UserService.getUserBoard().then(
-      response => {
-        this.setState({
-          content: response.data
-        });
-      },
-      error => {
-        this.setState({
-          content:
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString()
-        });
-      }
-    );
-  }
+  useEffect(() => {
+    UserService.getUserBoard().then(response => {
+          props.fetchRoleHandler()
+        }
+    ).catch(() => props.history.push('/profile'));
+  }, [])
 
-  render() {
-    return (
-      <div className="container">
+  return (
+      props.loaded ? <div className="container">
         <header className="jumbotron">
-          <h3>{this.state.content}</h3>
+          <h3>
+            <strong>{currentUser.username}</strong> USER BOARD, YEEES!
+          </h3>
         </header>
-      </div>
-    );
-  }
+      </div> : <Loader/>
+  );
 }
+
+const mapState = state => ({
+  loaded: state.user.loaded
+})
+
+const mapDispatch = dispatch => ({
+  fetchRoleHandler: () => dispatch(fetchRole(true))
+})
+
+export default connect(mapState, mapDispatch)(AdminPanel);

@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import {handlerNews} from "../../redux/thunks/news.thunks";
 import CardsContainer from "./CardsContainer/CardsContainer.component";
 import Loader from "../Loader/Loader";
+import DefaultLayout from "../Layouts/default.layout";
 
 const News = props => {
 
@@ -18,12 +19,14 @@ const News = props => {
                 <h2>Новости</h2>
             </Header>
 
-            {props.news ? <div className={classes.News}>
-                <CardsContainer
-                    hasMore={props.hasMore}
-                    limit={props.limit}
-                    news={props.news}/>
-            </div> : <Loader/>}
+            {props.news ? <DefaultLayout>
+                <div className={classes.News}>
+                    <CardsContainer
+                        hasMore={props.hasMore}
+                        limit={props.limit}
+                        news={props.news}/>
+                </div>
+            </DefaultLayout> : <Loader/>}
         </div>
     );
 };

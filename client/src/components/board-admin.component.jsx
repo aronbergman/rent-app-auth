@@ -1,43 +1,36 @@
-import React, { Component } from "react";
-
+import React, {useEffect} from "react";
+import {connect} from 'react-redux'
+import Loader from "./Loader/Loader";
 import UserService from "../services/user.service";
+import {fetchRole} from "../redux/reducers/user.reducer";
+import AdminLayout from "./Layouts/admin.layout";
 
-export default class BoardAdmin extends Component {
-  constructor(props) {
-    super(props);
+const AdminPanel = props => {
 
-    this.state = {
-      content: ""
-    };
-  }
+    const currentUser = JSON.parse(localStorage.getItem('user'))
 
-  componentDidMount() {
-    UserService.getAdminBoard().then(
-      response => {
-        this.setState({
-          content: response.data
-        });
-      },
-      error => {
-        this.setState({
-          content:
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString()
-        });
-      }
-    );
-  }
+    useEffect(() => {
+        UserService.getAdminBoard().then(response => {
+                props.fetchRoleHandler()
+            }
+        ).catch(() => props.history.push('/profile'));
+    }, [])
 
-  render() {
     return (
-      <div className="container">
-        <header className="jumbotron">
-          <h3>{this.state.content}</h3>
-        </header>
-      </div>
+        props.loaded
+            ? <AdminLayout>
+                <strong>{currentUser.username}</strong> ADMIN BOARD, YEEES!
+            </AdminLayout>
+            : <Loader/>
     );
-  }
 }
+
+const mapState = state => ({
+    loaded: state.user.loaded
+})
+
+const mapDispatch = dispatch => ({
+    fetchRoleHandler: () => dispatch(fetchRole(true))
+})
+
+export default connect(mapState, mapDispatch)(AdminPanel);

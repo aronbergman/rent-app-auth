@@ -1,9 +1,27 @@
 import React from 'react';
-import {Spinner} from 'react-bootstrap'
 import classes from './Loader.module.scss'
 
+const cls = [classes.loader, classes.loader4]
+
 export default () => (
-    <Spinner animation="border" role="status" className={classes.Loader}>
-        <span className="sr-only">Loading...</span>
-    </Spinner>
-);
+    <div className={cls.join(' ')}>
+        <div>
+            <div>
+                <div>
+                    <div>
+                        <div>
+                            <div>
+                                <div>
+                                    <div>
+                                        <div>
+                                            <div>&nbsp;</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>);

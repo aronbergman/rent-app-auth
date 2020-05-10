@@ -11,7 +11,7 @@ import Home from "./components/home.component";
 import Profile from "./components/profile.component";
 import BoardUser from "./components/board-user.component";
 import BoardModerator from "./components/board-moderator.component";
-import BoardAdmin from "./components/board-admin.component";
+import AdminPanel from "./components/board-admin.component";
 import RentFilter from "./components/Rent/filter.component";
 import CreateAdRent from "./components/Rent/create-ad.component";
 import DatingHomePage from "./components/Dating/DatingHomePage.component";
@@ -77,29 +77,29 @@ class App extends Component {
                             {/*    <NavLink to="/shop" className="nav-link" activeClassName="active">МАГАЗИН</NavLink>*/}
                             {/*</li>*/}
 
-                            {/*{showModeratorBoard && (*/}
-                            {/*    <li className="nav-item">*/}
-                            {/*        <Link to={"/mod"} className="nav-link">*/}
-                            {/*            Moderator Board*/}
-                            {/*        </Link>*/}
-                            {/*    </li>*/}
-                            {/*)}*/}
+                            {showModeratorBoard && (
+                                <li className="nav-item">
+                                    <Link to={"/mod"} className="nav-link">
+                                        Moderator Board
+                                    </Link>
+                                </li>
+                            )}
 
-                            {/*{showAdminBoard && (*/}
-                            {/*    <li className="nav-item">*/}
-                            {/*        <Link to={"/admin"} className="nav-link">*/}
-                            {/*            Admin Board*/}
-                            {/*        </Link>*/}
-                            {/*    </li>*/}
-                            {/*)}*/}
+                            {showAdminBoard && (
+                                <li className="nav-item">
+                                    <Link to={"/admin"} className="nav-link">
+                                        Admin Board
+                                    </Link>
+                                </li>
+                            )}
 
-                            {/*{currentUser && (*/}
-                            {/*    <li className="nav-item">*/}
-                            {/*        <Link to={"/user"} className="nav-link">*/}
-                            {/*            User*/}
-                            {/*        </Link>*/}
-                            {/*    </li>*/}
-                            {/*)}*/}
+                            {currentUser && (
+                                <li className="nav-item">
+                                    <Link to={"/user"} className="nav-link">
+                                        User Board
+                                    </Link>
+                                </li>
+                            )}
                         </div>
 
                         {currentUser ? (
@@ -132,27 +132,26 @@ class App extends Component {
                         )}
                     </nav>
 
-                    <div className="container">
-                        <Switch>
-                            <Route exact path={"/"} component={Home}/>
 
-                            <Route exact path={"/rent"} component={RentFilter}/>
-                            <Route exact path={"/rent/create-ad"} component={CreateAdRent}/>
-                            <Route exact path={"/rent/:id"} component={SingleRentAd}/>
+                    <Switch>
+                        <Route exact path={"/"} component={Home}/>
 
-                            <Route exact path={"/dating"} component={DatingHomePage}/>
-                            <Route exact path={"/dating/:id"} component={DatingList}/>
+                        <Route exact path={"/rent"} component={RentFilter}/>
+                        <Route exact path={"/rent/create-ad"} component={CreateAdRent}/>
+                        <Route exact path={"/rent/:id"} component={SingleRentAd}/>
 
-                            <Route exact path={"/news"} component={News}/>
+                        <Route exact path={"/dating"} component={DatingHomePage}/>
+                        <Route exact path={"/dating/:id"} component={DatingList}/>
 
-                            <Route exact path="/login" component={Login}/>
-                            <Route exact path="/register" component={Register}/>
-                            <Route exact path="/profile" component={Profile}/>
-                            <Route path="/user" component={BoardUser}/>
-                            <Route path="/mod" component={BoardModerator}/>
-                            <Route path="/admin" component={BoardAdmin}/>
-                        </Switch>
-                    </div>
+                        <Route exact path={"/news"} component={News}/>
+
+                        <Route exact path="/login" component={Login}/>
+                        <Route exact path="/register" component={Register}/>
+                        <Route exact path="/profile" component={Profile}/>
+                        <Route path="/user" component={BoardUser}/>
+                        <Route path="/mod" component={BoardModerator}/>
+                        <Route path="/admin" component={AdminPanel}/>
+                    </Switch>
                 </div>
                 <Footer/>
             </Router>
