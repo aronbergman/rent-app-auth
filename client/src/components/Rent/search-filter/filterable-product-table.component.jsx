@@ -42,6 +42,8 @@ const FilterableProductTable = props => {
                     filterSize={props.filterSize}
                     filterText={props.filterText}
                     inStockOnly={props.inStockOnly}
+                    limit={props.limit}
+                    hasMore={props.hasMore}
                 />
             </div>
         </div>

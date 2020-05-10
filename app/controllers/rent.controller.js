@@ -65,16 +65,23 @@ exports.createAd = (req, res) => {
 };
 
 exports.fetchAll = (req, res) => {
-    Rent.findAll({
-        limit: 10,
-        order: [['createdAt', 'DESC']]
-    })
-        .then(response => {
-            res.status(200).send(response);
+    Rent.count().then(response => {
+        const count = response
+        Rent.findAll({
+            limit: 10,
+            subQuery: false,
+            order: [['createdAt', 'DESC']]
         })
-        .catch(err => {
-            res.status(500).send({message: err.message});
-        });
+            .then(response => {
+                res.status(200).send({
+                    ads: response,
+                    count
+                });
+            })
+            .catch(err => {
+                res.status(500).send({message: err.message});
+            });
+    })
 }
 
 exports.fetchOffset = (req, res) => {

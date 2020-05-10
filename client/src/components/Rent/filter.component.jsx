@@ -29,6 +29,8 @@ const Filter = props => {
                 productCategories={PRODUCT_CATEGORIES}
                 sizeCategories={SIZE_CATEGORIES}
                 rentAds={props.rentAds}
+                limit={props.limit}
+                hasMore={props.hasMore}
             />
             : <Loader/>
     );
@@ -36,6 +38,8 @@ const Filter = props => {
 
 const mapState = state => ({
     rentAds: state.rent.ads,
+    limit: state.rent.limit,
+    hasMore: state.rent.hasMore,
     loaded: state.rent.loaded
 })
 

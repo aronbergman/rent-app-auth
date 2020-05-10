@@ -13,3 +13,6 @@ export const API_FETCH_DELETE_AD_AUTH = `${API_URL}/rent/delete-auth`
 
 export const API_FETCH_DATING_CATEGORIES = `${API_URL}/dating/categories`
 export const API_FETCH_SINGLE_CATEGORY = `${API_URL}/dating/single-category`
+
+export const API_FETCH_ALL_NEWS = `${API_URL}/news/fetch-all`
+export const API_FETCH_NEWS_OFFSET = `${API_URL}/news/fetch-offset`

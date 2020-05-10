@@ -62,6 +62,7 @@ require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
 require('./app/routes/rent.routes')(app);
 require('./app/routes/dating.routes')(app);
+require('./app/routes/news.routes')(app);
 
 require('./app/middleware/intervalRentAdCreater.js')(db);
 

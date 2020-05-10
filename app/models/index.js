@@ -26,6 +26,7 @@ db.Sequelize = Sequelize;
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 db.sequelize = sequelize;
+db.sequelize = sequelize;
 
 db.user = require("../models/user.model.js")(sequelize, Sequelize);
 db.role = require("../models/role.model.js")(sequelize, Sequelize);
@@ -33,6 +34,7 @@ db.rent = require("../models/rent.model.js")(sequelize, Sequelize);
 db.intervalRent = require("../models/interval-rent.model.js")(sequelize, Sequelize);
 db.datingCategories = require("../models/dating-categories.model.js")(sequelize, Sequelize);
 db.datingAds = require("../models/dating-ads.model.js")(sequelize, Sequelize);
+db.news = require("../models/news.model.js")(sequelize, Sequelize);
 
 db.role.belongsToMany(db.user, {
   through: "user_roles",

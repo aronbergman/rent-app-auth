@@ -70,12 +70,12 @@ class App extends Component {
                             <li className="nav-item">
                                 <NavLink to="/news" className="nav-link" activeClassName="active">НОВОСТИ</NavLink>
                             </li>
-                            <li className="nav-item">
-                                <NavLink to="/questions" className="nav-link" activeClassName="active">ВОПРОСЫ И ОТВЕТЫ</NavLink>
-                            </li>
-                            <li className="nav-item">
-                                <NavLink to="/shop" className="nav-link" activeClassName="active">МАГАЗИН</NavLink>
-                            </li>
+                            {/*<li className="nav-item">*/}
+                            {/*    <NavLink to="/questions" className="nav-link" activeClassName="active">ВОПРОСЫ И ОТВЕТЫ</NavLink>*/}
+                            {/*</li>*/}
+                            {/*<li className="nav-item">*/}
+                            {/*    <NavLink to="/shop" className="nav-link" activeClassName="active">МАГАЗИН</NavLink>*/}
+                            {/*</li>*/}
 
                             {/*{showModeratorBoard && (*/}
                             {/*    <li className="nav-item">*/}

@@ -37,7 +37,7 @@ const ProductTable = props => {
 
     const loadFunc = pages => {
         props.fetchOffset({
-            limit: 10,
+            limit: props.limit,
             offset: pages
         })
     }
@@ -48,7 +48,7 @@ const ProductTable = props => {
             <InfiniteScroll
                 pageStart={0}
                 loadMore={loadFunc}
-                hasMore={true}
+                hasMore={props.hasMore}
                 loader={<Loader key={0} />}>
                 {rows}
             </InfiniteScroll>

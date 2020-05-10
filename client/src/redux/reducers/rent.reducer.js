@@ -6,6 +6,10 @@ const rentSlice = createSlice({
     name: TODOS_REDUCER_NAME,
     initialState: {
         ads: [],
+        count: 0,
+        limit: 10,
+        pages: 1,
+        hasMore: true,
         loaded: false,
         filter: {
             filterCategory: "all",
@@ -22,15 +26,19 @@ const rentSlice = createSlice({
     },
     reducers: {
         setRentAds(state, action) {
-            state.ads = action.payload;
+            state.ads = action.payload.ads;
+            state.count = action.payload.count
             state.loaded = true;
         },
         setRentAdsOffset(state, action) {
+            state.hasMore = (state.limit * state.pages) !== Math.ceil(state.count/10)*10
+            state.pages = ++state.pages
             state.ads = [
                 ...state.ads,
                 ...action.payload
             ];
             state.loaded = true;
+
         },
         handleFilterCategoryChange(state, action) {
             state.filter.filterCategory = action.payload
