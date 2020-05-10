@@ -73,7 +73,7 @@ const SingleRentAd = props => {
 
 
             {images && images.map(img => {
-                return <img style={{width: '100%'}} src={`http://localhost:8080/images/${img}`} alt=""/>
+                return <img style={{width: '100%'}} src={`http://localhost:4001/images/${img}`} alt=""/>
             })}
         </DefaultLayout> : <Loader/>
     );

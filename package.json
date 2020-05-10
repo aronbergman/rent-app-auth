@@ -4,6 +4,7 @@
   "description": "Node.js Demo for JWT Authentication",
   "main": "server.js",
   "scripts": {
+    "start": "cross-env NODE_ENV=production node server.js",
     "server": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
