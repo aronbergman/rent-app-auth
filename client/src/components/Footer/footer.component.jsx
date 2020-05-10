@@ -38,7 +38,7 @@ const Footer = () => {
                         <h5>Категории</h5>
                         <ul className="nav-list">
                             <li><Link to={'/rent'}>Аренда</Link></li>
-                            <li><Link to={'/love'}>Знакомства</Link></li>
+                            <li><Link to={'/dating'}>Знакомства</Link></li>
                             <li><Link to={'/news'}>Новости</Link></li>
                             <li><Link to={'/questions'}>Вопросы и ответы</Link></li>
                             <li><Link to={'/shop'}>Магазин</Link></li>

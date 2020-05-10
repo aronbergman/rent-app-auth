@@ -39,9 +39,9 @@ const AdCardComponent = ({ad}) => {
                 <Card.Grid hoverable={false} style={w25}>{ad.images.length > 2 ? ' ✅ Есть фото' : 'Без фото'}</Card.Grid>
                 <Card.Grid hoverable={false} className={classes.Metro}>
                     <div className={classes.MetroContainer}>
-                        {stations.length ? stations.map(station => {
+                        {stations.length ? stations.map((station, index) => {
                             return (
-                                <div className={classes.MetroItem}>
+                                <div key={index} className={classes.MetroItem}>
                                     <div className={classes.MetroColor}
                                          style={{backgroundColor: `#${station.color}`,}}>&nbsp;</div>
                                     {station.name}

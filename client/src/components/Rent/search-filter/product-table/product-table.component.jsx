@@ -49,7 +49,7 @@ const ProductTable = props => {
                 pageStart={0}
                 loadMore={loadFunc}
                 hasMore={true}
-                loader={<Loader/>}>
+                loader={<Loader key={0} />}>
                 {rows}
             </InfiniteScroll>
         </div>

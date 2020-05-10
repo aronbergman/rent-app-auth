@@ -69,22 +69,22 @@ const FilterByCategory = props => {
             <Select
                 className={classes.Select}
                 defaultValue="снять и сдать" style={{width: '180px'}} onChange={handleChange}>
-                {itemsCategories.map(category => (
-                <Option value={category}>{category}</Option>
+                {itemsCategories.map((category, index) => (
+                <Option key={index} value={category}>{category}</Option>
                 ))}
             </Select>
             <Select
                 className={classes.Select}
                 defaultValue="жильё" style={{width: '133px'}} onChange={handleChange}>
-                {itemsSizes.map(size => (
-                    <Option value={size}>{size}</Option>
+                {itemsSizes.map((size, index) => (
+                    <Option key={index} value={size}>{size}</Option>
                 ))}
             </Select>
             <Select
                 className={classes.Select}
                 defaultValue="в любом городе" style={{width: '240px'}} onChange={handleChange}>
-                {itemsCities.map(city => (
-                    <Option value={city}>{city}</Option>
+                {itemsCities.map((city, index) => (
+                    <Option key={index} value={city}>{city}</Option>
                 ))}
             </Select>
         </div>

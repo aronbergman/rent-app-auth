@@ -14,7 +14,8 @@ import BoardModerator from "./components/board-moderator.component";
 import BoardAdmin from "./components/board-admin.component";
 import RentFilter from "./components/Rent/filter.component";
 import CreateAdRent from "./components/Rent/create-ad.component";
-import LoveFilter from "./components/Love/LoveFilter.component";
+import DatingHomePage from "./components/Dating/DatingHomePage.component";
+import DatingList from "./components/Dating/single-category/DatingList.component";
 import News from "./components/News/News.component";
 import SingleRentAd from "./components/Rent/single-rent-ad/single-rent-ad";
 import Footer from './components/Footer/footer.component'
@@ -64,7 +65,7 @@ class App extends Component {
                                 <NavLink to="/rent" className="nav-link" activeClassName="active">АРЕНДА</NavLink>
                             </li>
                             <li className="nav-item">
-                                <NavLink to="/love" className="nav-link" activeClassName="active">ЗНАКОМСТВА</NavLink>
+                                <NavLink to="/dating" className="nav-link" activeClassName="active">ЗНАКОМСТВА</NavLink>
                             </li>
                             <li className="nav-item">
                                 <NavLink to="/news" className="nav-link" activeClassName="active">НОВОСТИ</NavLink>
@@ -139,8 +140,8 @@ class App extends Component {
                             <Route exact path={"/rent/create-ad"} component={CreateAdRent}/>
                             <Route exact path={"/rent/:id"} component={SingleRentAd}/>
 
-                            <Route exact path={"/love"} component={LoveFilter}/>
-                            {/*<Route exact path={"/rent/create-ad"} component={CreateAdLove}/>*/}
+                            <Route exact path={"/dating"} component={DatingHomePage}/>
+                            <Route exact path={"/dating/:id"} component={DatingList}/>
 
                             <Route exact path={"/news"} component={News}/>
 
