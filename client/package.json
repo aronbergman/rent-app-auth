@@ -27,7 +27,9 @@
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
     "sass-loader": "^8.0.2",
-    "validator": "^12.2.0"
+    "validator": "^12.2.0",
+    "css-loader": "^3.5.3",
+    "style-loader": "^1.2.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -52,7 +54,5 @@
     ]
   },
   "devDependencies": {
-    "css-loader": "^3.5.3",
-    "style-loader": "^1.2.1"
   }
 }
