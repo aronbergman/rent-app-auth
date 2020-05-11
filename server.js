@@ -1,7 +1,6 @@
-import {Consola} from "consola";
-
 const express = require("express");
 const bodyParser = require("body-parser");
+const consola = require('consola')
 const cors = require("cors");
 const path = require('path');
 require('dotenv').config();
@@ -58,7 +57,7 @@ if (process.env.NODE_ENV === 'production') {
 // set port, listen for requests
 // const PORT = process.env.PORT || 8080;
 app.listen(SERVER_PORT, () => {
-    Consola.info({
+    consola.info({
         message: `Server is running on port ${SERVER_PORT}.`,
         badge: true
     });
