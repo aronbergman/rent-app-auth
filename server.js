@@ -1,3 +1,5 @@
+import {Consola} from "consola";
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -56,7 +58,10 @@ if (process.env.NODE_ENV === 'production') {
 // set port, listen for requests
 // const PORT = process.env.PORT || 8080;
 app.listen(SERVER_PORT, () => {
-    console.log(`Server is running on port ${SERVER_PORT}.`);
+    Consola.info({
+        message: `Server is running on port ${SERVER_PORT}.`,
+        badge: true
+    });
 });
 
 function initial() {

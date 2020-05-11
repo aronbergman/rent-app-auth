@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="@localhost" uuid="72d96321-0465-46f0-9163-55e130083b14">
+    <data-source source="LOCAL" name="rent-app-auth PROD" uuid="24b9e94f-f2b9-4814-82ae-f56c7383f9ba">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306/rent-app-auth</jdbc-url>
+      <driver-properties>
+        <property name="serverTimezone" value="Europe/Moscow" />
+      </driver-properties>
     </data-source>
-    <data-source source="LOCAL" name="bergman.bar PROD" uuid="24b9e94f-f2b9-4814-82ae-f56c7383f9ba">
+    <data-source source="LOCAL" name="rent-app-auth DEV" uuid="cedda9cd-2fba-4755-821c-a23d2dd7f20f">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306/rent_app</jdbc-url>
       <driver-properties>
         <property name="serverTimezone" value="Europe/Moscow" />
       </driver-properties>
