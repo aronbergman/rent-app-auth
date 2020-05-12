@@ -54,16 +54,16 @@ consola.info({
 
 if (process.env.NODE_ENV === 'production') {
     consola.log({
-        message: path.join('client', 'build'),
+        message: path.join(__dirname, 'client', 'build'),
         badge: true
     })
     consola.log({
-        message: path.resolve('client', 'build', 'index.html'),
+        message: path.resolve(__dirname, 'client', 'build', 'index.html'),
         badge: true
     })
-    app.use('/', express.static(path.join('client', 'build')))
+    app.use('/', express.static(path.join(__dirname, 'client', 'build')))
     app.get('*', (req, res) => {
-        res.sendFile(path.resolve('client', 'build', 'index.html'))
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
     })
 }
 
