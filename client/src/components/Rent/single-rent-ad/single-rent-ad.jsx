@@ -8,6 +8,9 @@ import {Button} from "antd";
 import {Modal, Form} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import DefaultLayout from "../../Layouts/default.layout";
+import baseUrl from "../../../baseurl";
+
+const host = baseUrl()
 
 const SingleRentAd = props => {
     const [ad, setAd] = useState('')
@@ -73,7 +76,7 @@ const SingleRentAd = props => {
 
 
             {images && images.map(img => {
-                return <img style={{width: '100%'}} src={`http://localhost:4001/images/${img}`} alt=""/>
+                return <img style={{width: '100%'}} src={`${host}/images/${img}`} alt=""/>
             })}
         </DefaultLayout> : <Loader/>
     );

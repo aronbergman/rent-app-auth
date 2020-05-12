@@ -193,6 +193,12 @@ class CreateAdForm extends React.Component {
                         </Form.Item> : null
                     }
 
+                    {this.props.typeOfApplicant !== '0'
+                        ? <Form.Item name="deposit" label="Есть депозит" valuePropName="checked">
+                            <Switch/>
+                        </Form.Item> : null
+                    }
+
                     <Form.Item name="infrastructure" label="Рядом есть">
                         <Checkbox.Group>
                             <Row>
@@ -228,10 +234,6 @@ class CreateAdForm extends React.Component {
                                 </Col>
                             </Row>
                         </Checkbox.Group>
-                    </Form.Item>
-
-                    <Form.Item name="deposit" label="Есть депозит" valuePropName="checked">
-                        <Switch/>
                     </Form.Item>
 
                     <Form.Item label="Фотографии">

@@ -1,11 +1,11 @@
 {
   "name": "node-js-jwt-auth",
   "version": "1.0.0",
-  "description": "Node.js Demo for JWT Authentication",
+  "description": "Rent app react/express",
   "main": "server.js",
   "scripts": {
     "start": "cross-env NODE_ENV=production node server.js",
-    "ssh": "ssh root@194.67.90.19",
+    "ssh": "ssh root@5.63.157.247",
     "server": "node server.js",
     "client": "npm run start --prefix client",
     "client:install": "npm install -prefix client",
