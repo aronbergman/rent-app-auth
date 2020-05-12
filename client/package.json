@@ -32,11 +32,10 @@
     "style-loader": "^1.2.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "export PORT=5000 && react-scripts start",
+    "build": "export PORT=5000 && react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "ssh": "ssh root@194.67.90.19"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"

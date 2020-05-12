@@ -4,9 +4,13 @@
   "description": "Node.js Demo for JWT Authentication",
   "main": "server.js",
   "scripts": {
-    "prod": "cross-env NODE_ENV=production node server.js",
-    "dev": "cross-env NODE_ENV=development node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "cross-env NODE_ENV=production node server.js",
+    "ssh": "ssh root@194.67.90.19",
+    "server": "node server.js",
+    "client": "npm run start --prefix client",
+    "client:install": "npm install -prefix client",
+    "client:build": "npm run build -prefix client",
+    "develop": "cross-env NODE_ENV=development && concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [
     "node.js",
@@ -20,6 +24,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "concurrently": "^5.2.0",
     "consola": "^2.12.1",
     "cors": "^2.8.5",
     "cross-env": "^7.0.2",
