@@ -4,13 +4,13 @@ const consola = require('consola')
 const cors = require("cors");
 const path = require('path');
 require('dotenv').config();
-const {SERVER_PORT} = process.env;
+const {NODE_ENV, SERVER_PORT, CORS_DEV_PORT} = process.env;
 
 const app = express();
 const multer = require('multer')
 
 var corsOptions = {
-    origin: `http://localhost:${SERVER_PORT}`
+    origin: `http://localhost:${NODE_ENV === 'production' ? SERVER_PORT : CORS_DEV_PORT}`
 };
 
 app.use(cors(corsOptions));
@@ -53,14 +53,6 @@ consola.info({
 });
 
 if (process.env.NODE_ENV === 'production') {
-    consola.log({
-        message: path.join(__dirname, 'client', 'build'),
-        badge: true
-    })
-    consola.log({
-        message: path.resolve(__dirname, 'client', 'build', 'index.html'),
-        badge: true
-    })
     app.use('/', express.static(path.join(__dirname, 'client', 'build')))
     app.get('*', (req, res) => {
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))

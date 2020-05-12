@@ -1,6 +1,8 @@
 import axios from "axios";
+import baseUrl from "./../baseurl";
 
-const API_URL = "https://bergman.bar/api/auth/";
+const host = baseUrl()
+const API_URL = `${host}/api/auth/`;
 
 class AuthService {
   login(username, password) {

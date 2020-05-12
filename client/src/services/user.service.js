@@ -1,7 +1,10 @@
 import axios from 'axios';
 import authHeader from './auth-header';
+import baseUrl from '../baseurl';
 
-const API_URL = 'https://bergman.bar/api/test/';
+const host = baseUrl()
+
+const API_URL = `${host}/api/test/`;
 
 class UserService {
     getPublicContent() {
