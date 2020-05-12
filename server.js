@@ -47,6 +47,8 @@ require('./app/routes/news.routes')(app);
 require('./app/middleware/intervalRentAdCreater.js')(db);
 require('./app/routes/file.routes.js')(app, multer, express);
 
+console.log('process.env.NODE_ENV', process.env.NODE_ENV)
+
 if (process.env.NODE_ENV === 'production') {
     app.use('/', express.static(path.join(__dirname, 'client', 'build')))
     app.get('*', (req, res) => {
