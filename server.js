@@ -68,6 +68,7 @@ app.listen(SERVER_PORT, () => {
     });
 });
 
+initial();
 function initial() {
     Role.create({
         id: 1,
