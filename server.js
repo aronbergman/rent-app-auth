@@ -33,9 +33,9 @@ db.sequelize.sync();
 // });
 
 // simple route
-app.get("/", (req, res) => {
-    res.json({message: "Welcome to aronbergman application."});
-});
+// app.get("/", (req, res) => {
+//     res.json({message: "Welcome to aronbergman application."});
+// });
 
 // routes
 require('./app/routes/auth.routes')(app);
@@ -62,7 +62,7 @@ if (process.env.NODE_ENV === 'production') {
         badge: true
     })
     app.use('/', express.static(path.join(__dirname, 'client', 'build')))
-    app.get('*', (req, res) => {
+    app.get('/', (req, res) => {
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
     })
 }
