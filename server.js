@@ -53,6 +53,14 @@ consola.info({
 });
 
 if (process.env.NODE_ENV === 'production') {
+    consola.log({
+        message: path.join('client', 'build'),
+        badge: true
+    })
+    consola.log({
+        message: path.resolve('client', 'build', 'index.html'),
+        badge: true
+    })
     app.use('/', express.static(path.join('client', 'build')))
     app.get('*', (req, res) => {
         res.sendFile(path.resolve('client', 'build', 'index.html'))
