@@ -7,7 +7,6 @@ import classes from './styles.module.scss'
 import {dateParser} from "../../../helpers/dateParser";
 import {categoryParser} from "../../../helpers/newsDataParder";
 import baseUrl from "../../../baseurl";
-import ReactDisqusComments from 'react-disqus-comments';
 
 const host = baseUrl()
 
