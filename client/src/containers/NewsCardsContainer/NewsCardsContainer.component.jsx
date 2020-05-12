@@ -1,8 +1,8 @@
 import React from 'react';
-import Loader from "../../Loader/Loader";
+import Loader from "../../components/Loader/Loader";
 import InfiniteScroll from "react-infinite-scroller";
-import NewsCard from "../NewsCard/NewsCard.conponent";
-import {handlerNewsOffset} from "../../../redux/thunks/news.thunks";
+import NewsCard from "../../components/News/NewsCard/NewsCard.conponent";
+import {handlerNewsOffset} from "../../redux/thunks/news.thunks";
 import {connect} from "react-redux";
 
 const CardsContainer = props => {

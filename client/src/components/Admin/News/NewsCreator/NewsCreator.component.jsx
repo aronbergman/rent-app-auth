@@ -18,13 +18,12 @@ const tailLayout = {
 };
 
 const NewsCreator = props => {
-    const [images, setImage] = useState('')
+    const [image, setImage] = useState('')
 
     const onFinish = values => {
-        console.log('Success:', values, images);
         props.createNewPost({
             ...values,
-            images
+            image
         }).then(() => props.history.push('/news'))
     };
 
@@ -68,6 +67,12 @@ const NewsCreator = props => {
                         <Option value="1">ПУТЕШЕСТВИЯ</Option>
                         <Option value="2">ПСИХОЛОГИЯ</Option>
                     </Select>
+                </Form.Item>
+
+                <Form.Item
+                    label="Краткое описание"
+                    name="description">
+                    <Input.TextArea/>
                 </Form.Item>
 
                 <Form.Item

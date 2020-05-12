@@ -3,7 +3,7 @@ import Header from "./../Header/Header.component";
 import classes from './styles.module.scss'
 import {connect} from "react-redux";
 import {handlerNews} from "../../redux/thunks/news.thunks";
-import CardsContainer from "./CardsContainer/CardsContainer.component";
+import CardsContainer from "../../containers/NewsCardsContainer/NewsCardsContainer.component";
 import Loader from "../Loader/Loader";
 import DefaultLayout from "../Layouts/default.layout";
 

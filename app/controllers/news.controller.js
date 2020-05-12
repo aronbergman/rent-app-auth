@@ -38,9 +38,10 @@ exports.fetchOffset = (req, res) => {
 
 exports.createPost = (req, res) => {
 
-    const {title, images, content, category} = req.body
+    const {title, image, content, category} = req.body
+    console.log(image)
 
-    News.create({title, images: JSON.stringify(images), content, category})
+    News.create({title, image: JSON.stringify(image), content, category})
         .then(() => {
             res.send({message: "Новость создана!"});
         })
