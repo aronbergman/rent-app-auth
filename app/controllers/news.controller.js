@@ -38,10 +38,9 @@ exports.fetchOffset = (req, res) => {
 
 exports.createPost = (req, res) => {
 
-    const {title, image, content, category} = req.body
-    console.log(image)
+    const {title, image, content, category, description} = req.body
 
-    News.create({title, image: JSON.stringify(image), content, category})
+    News.create({title, image: JSON.stringify(image), content, category, description})
         .then(() => {
             res.send({message: "Новость создана!"});
         })
@@ -57,6 +56,13 @@ exports.singlePost = (req, res) => {
             id: req.body.id
         }
     }).then(response => {
+        console.log(response)
+
+        News.update(
+            { count: ++response.count },
+            { where: {  id: req.body.id } }
+        )
+
         res.status(200).send(response);
     }).catch(err => {
         res.status(500).send({message: err.message});

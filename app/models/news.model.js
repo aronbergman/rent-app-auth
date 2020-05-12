@@ -11,6 +11,12 @@ module.exports = (sequelize, Sequelize) => {
         },
         content: {
             type: Sequelize.STRING(10000)
+        },
+        description: {
+            type: Sequelize.STRING(10000)
+        },
+        count: {
+            type: Sequelize.INTEGER
         }
     })
     return News;
