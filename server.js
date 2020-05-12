@@ -10,7 +10,7 @@ const app = express();
 const multer = require('multer')
 
 var corsOptions = {
-    origin: `http://localhost:8081`
+    origin: `http://localhost:${SERVER_PORT}`
 };
 
 app.use(cors(corsOptions));
