@@ -13,7 +13,9 @@ import store from './redux/store';
 
 ReactDOM.render(
     <React.Fragment>
-        <YMInitializer accounts={[62759980]} options={{clickmap: true, webvisor: true}} version="2" />
+        {process.env.NODE_ENV === 'production'
+            ? <YMInitializer accounts={[62759980]} options={{clickmap: true, webvisor: true}} version="2"/>
+            : null}
         <BrowserRouter>
             <Provider store={store}>
                 <App/>
