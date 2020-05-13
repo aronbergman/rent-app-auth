@@ -5,10 +5,10 @@ const host = baseUrl()
 const API_URL = `${host}/api/auth/`;
 
 class AuthService {
-  login(username, password) {
+  login(email, password) {
     return axios
       .post(API_URL + "signin", {
-        username,
+        email,
         password
       })
       .then(response => {

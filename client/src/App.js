@@ -21,6 +21,7 @@ import SingleRentAd from "./components/Rent/single-rent-ad/single-rent-ad";
 import Footer from './components/Footer/footer.component'
 import NewsCreator from "./components/Admin/News/NewsCreator/NewsCreator.component";
 import SingleNews from "./components/News/SingleNews/SingleNews.component";
+import {Nav, Navbar, NavDropdown} from "react-bootstrap";
 
 class App extends Component {
     constructor(props) {
@@ -56,83 +57,147 @@ class App extends Component {
         return (
             <Router>
                 <div>
-                    <nav className="navbar navbar-expand navbar-dark bg-dark">
-                        <Link to={"/"} className="navbar-brand">
-                            {/*<img src="http://localhost:8080/favicon.png" alt=""/>*/}
-                            COMMUNITY
-                        </Link>
-                        <div className="navbar-nav mr-auto">
-
-                            <li className="nav-item">
+                    <Navbar bg="light" expand="lg">
+                        <Navbar.Brand href="/">#bergmanbar</Navbar.Brand>
+                        <Navbar.Toggle aria-controls="basic-navbar-nav"/>
+                        <Navbar.Collapse id="basic-navbar-nav">
+                            <Nav className="mr-auto">
                                 <NavLink to="/rent" className="nav-link" activeClassName="active">АРЕНДА</NavLink>
-                            </li>
-                            <li className="nav-item">
                                 <NavLink to="/dating" className="nav-link" activeClassName="active">ЗНАКОМСТВА</NavLink>
-                            </li>
-                            <li className="nav-item">
                                 <NavLink to="/news" className="nav-link" activeClassName="active">НОВОСТИ</NavLink>
-                            </li>
-                            {/*<li className="nav-item">*/}
-                            {/*    <NavLink to="/questions" className="nav-link" activeClassName="active">ВОПРОСЫ И ОТВЕТЫ</NavLink>*/}
-                            {/*</li>*/}
-                            {/*<li className="nav-item">*/}
-                            {/*    <NavLink to="/shop" className="nav-link" activeClassName="active">МАГАЗИН</NavLink>*/}
-                            {/*</li>*/}
 
-                            {showModeratorBoard && (
-                                <li className="nav-item">
-                                    <Link to={"/mod"} className="nav-link">
-                                        Moderator Board
-                                    </Link>
-                                </li>
+                                {(showAdminBoard || showModeratorBoard || currentUser) &&
+                                <NavDropdown title="МОЙ ПРОФИЛЬ" id="basic-nav-dropdown">
+                                    {showAdminBoard && (
+                                        <Link to={"/admin"} activeClassName="active" className="dropdown-item">
+                                            Admin Board
+                                        </Link>
+                                    )}
+                                    {showModeratorBoard && (
+                                        <Link to={"/mod"} activeClassName="active" className="dropdown-item">
+                                            Moderator Board
+                                        </Link>
+                                    )}
+                                    {currentUser && (
+                                        <Link to={"/user"} activeClassName="active" className="dropdown-item">
+                                            Мои объявления
+                                        </Link>
+                                    )}
+                                    <NavDropdown.Divider/>
+                                    {currentUser && (
+                                        <Link to={"/profile"} activeClassName="active" className="dropdown-item">
+                                            Настройки
+                                        </Link>)}
+                                </NavDropdown>}
+                            </Nav>
+
+
+                            {currentUser ? (
+                                <div className="navbar-nav ml-auto">
+                                    <li className="nav-item">
+                                        <Link to={"/profile"} className="nav-link">{currentUser.username}</Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <a href="/login" className="nav-link"
+                                           onClick={this.logOut}>Выйти</a>
+                                    </li>
+                                </div>
+                            ) : (
+                                <div className="navbar-nav ml-auto">
+                                    <li className="nav-item">
+                                        <Link to={"/login"} className="nav-link">
+                                            Вход
+                                        </Link>
+                                    </li>
+
+                                    <li className="nav-item">
+                                        <Link to={"/register"} className="nav-link">
+                                            Регистрация
+                                        </Link>
+                                    </li>
+                                </div>
                             )}
+                        </Navbar.Collapse>
+                    </Navbar>
 
-                            {showAdminBoard && (
-                                <li className="nav-item">
-                                    <Link to={"/admin"} className="nav-link">
-                                        Admin Board
-                                    </Link>
-                                </li>
-                            )}
 
-                            {currentUser && (
-                                <li className="nav-item">
-                                    <Link to={"/user"} className="nav-link">
-                                        МОЙ ПРОФИЛЬ
-                                    </Link>
-                                </li>
-                            )}
-                        </div>
+                    {/*<nav className="navbar navbar-expand navbar-dark bg-dark">*/}
+                    {/*    <Link to={"/"} className="navbar-brand">*/}
+                    {/*        /!*<img src="http://localhost:8080/favicon.png" alt=""/>*!/*/}
+                    {/*        COMMUNITY*/}
+                    {/*    </Link>*/}
+                    {/*    <div className="navbar-nav mr-auto">*/}
 
-                        {currentUser ? (
-                            <div className="navbar-nav ml-auto">
-                                <li className="nav-item">
-                                    <Link to={"/profile"} className="nav-link">
-                                        Настройки {currentUser.username}
-                                    </Link>
-                                </li>
-                                <li className="nav-item">
-                                    <a href="/login" className="nav-link" onClick={this.logOut}>
-                                        Выйти
-                                    </a>
-                                </li>
-                            </div>
-                        ) : (
-                            <div className="navbar-nav ml-auto">
-                                <li className="nav-item">
-                                    <Link to={"/login"} className="nav-link">
-                                        Вход
-                                    </Link>
-                                </li>
+                    {/*        <li className="nav-item">*/}
+                    {/*            <NavLink to="/rent" className="nav-link" activeClassName="active">АРЕНДА</NavLink>*/}
+                    {/*        </li>*/}
+                    {/*        <li className="nav-item">*/}
+                    {/*            <NavLink to="/dating" className="nav-link" activeClassName="active">ЗНАКОМСТВА</NavLink>*/}
+                    {/*        </li>*/}
+                    {/*        <li className="nav-item">*/}
+                    {/*            <NavLink to="/news" className="nav-link" activeClassName="active">НОВОСТИ</NavLink>*/}
+                    {/*        </li>*/}
+                    {/*        /!*<li className="nav-item">*!/*/}
+                    {/*        /!*    <NavLink to="/questions" className="nav-link" activeClassName="active">ВОПРОСЫ И ОТВЕТЫ</NavLink>*!/*/}
+                    {/*        /!*</li>*!/*/}
+                    {/*        /!*<li className="nav-item">*!/*/}
+                    {/*        /!*    <NavLink to="/shop" className="nav-link" activeClassName="active">МАГАЗИН</NavLink>*!/*/}
+                    {/*        /!*</li>*!/*/}
 
-                                <li className="nav-item">
-                                    <Link to={"/register"} className="nav-link">
-                                        Регистрация
-                                    </Link>
-                                </li>
-                            </div>
-                        )}
-                    </nav>
+                    {/*        {showModeratorBoard && (*/}
+                    {/*            <li className="nav-item">*/}
+                    {/*                <Link to={"/mod"} className="nav-link">*/}
+                    {/*                    Moderator Board*/}
+                    {/*                </Link>*/}
+                    {/*            </li>*/}
+                    {/*        )}*/}
+
+                    {/*        {showAdminBoard && (*/}
+                    {/*            <li className="nav-item">*/}
+                    {/*                <Link to={"/admin"} className="nav-link">*/}
+                    {/*                    Admin Board*/}
+                    {/*                </Link>*/}
+                    {/*            </li>*/}
+                    {/*        )}*/}
+
+                    {/*        {currentUser && (*/}
+                    {/*            <li className="nav-item">*/}
+                    {/*                <Link to={"/user"} className="nav-link">*/}
+                    {/*                    МОЙ ПРОФИЛЬ*/}
+                    {/*                </Link>*/}
+                    {/*            </li>*/}
+                    {/*        )}*/}
+                    {/*    </div>*/}
+
+                    {/*    {currentUser ? (*/}
+                    {/*        <div className="navbar-nav ml-auto">*/}
+                    {/*            <li className="nav-item">*/}
+                    {/*                <Link to={"/profile"} className="nav-link">*/}
+                    {/*                    Настройки {currentUser.username}*/}
+                    {/*                </Link>*/}
+                    {/*            </li>*/}
+                    {/*            <li className="nav-item">*/}
+                    {/*                <a href="/login" className="nav-link" onClick={this.logOut}>*/}
+                    {/*                    Выйти*/}
+                    {/*                </a>*/}
+                    {/*            </li>*/}
+                    {/*        </div>*/}
+                    {/*    ) : (*/}
+                    {/*        <div className="navbar-nav ml-auto">*/}
+                    {/*            <li className="nav-item">*/}
+                    {/*                <Link to={"/login"} className="nav-link">*/}
+                    {/*                    Вход*/}
+                    {/*                </Link>*/}
+                    {/*            </li>*/}
+
+                    {/*            <li className="nav-item">*/}
+                    {/*                <Link to={"/register"} className="nav-link">*/}
+                    {/*                    Регистрация*/}
+                    {/*                </Link>*/}
+                    {/*            </li>*/}
+                    {/*        </div>*/}
+                    {/*    )}*/}
+                    {/*</nav>*/}
 
 
                     <Switch>

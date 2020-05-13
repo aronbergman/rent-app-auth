@@ -44,12 +44,12 @@ exports.signup = (req, res) => {
 exports.signin = (req, res) => {
   User.findOne({
     where: {
-      username: req.body.username
+      email: req.body.email
     }
   })
     .then(user => {
       if (!user) {
-        return res.status(404).send({ message: "User Not found." });
+        return res.status(404).send({ message: "Пользователя с таким email не найдено" });
       }
 
       var passwordIsValid = bcrypt.compareSync(
@@ -60,7 +60,7 @@ exports.signin = (req, res) => {
       if (!passwordIsValid) {
         return res.status(401).send({
           accessToken: null,
-          message: "Invalid Password!"
+          message: "Проверьте правильность логина и пароля"
         });
       }
 

@@ -42,6 +42,9 @@ const SingleRentAd = props => {
     return (
         ad ? <DefaultLayout>
             <div className={classes.CreateAd}>
+                <Button shape="round" size='large' onClick={() => props.history.push('/rent')}>
+                    Вернуться в ленту
+                </Button>
                 <Button shape="round" size='large' onClick={handleShow}>
                     Удалить объявление
                 </Button>
@@ -51,10 +54,12 @@ const SingleRentAd = props => {
                         <Modal.Title>Удаление объявления</Modal.Title>
                     </Modal.Header>
                     <Modal.Body className="Body">
-                       Введите пароль, который Вы добавили к объявлению при создании.
-                        Если Вы уже зарегистрированный пользователь, то удалить объявление можно из раздела <Link to={'/profile'}>Профиль пользователя</Link>.
+                        Введите пароль, который Вы добавили к объявлению при создании.
+                        Если Вы уже зарегистрированный пользователь, то удалить объявление можно из раздела <Link
+                        to={'/profile'}>Профиль пользователя</Link>.
                     </Modal.Body>
-                    <Form.Control className={classes.InputPassword} type="password" placeholder="Пароль" onChange={handlePassword} />
+                    <Form.Control className={classes.InputPassword} type="password" placeholder="Пароль"
+                                  onChange={handlePassword}/>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleClose}>
                             Отменить

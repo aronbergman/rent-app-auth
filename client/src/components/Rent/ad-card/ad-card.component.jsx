@@ -31,7 +31,7 @@ const AdCardComponent = ({ad}) => {
     )
 
     return (
-        <Link target="_blank" to={`/rent/${ad.id}`}>
+        <Link to={`/rent/${ad.id}`}>
             <Card title={title()} className={classes.Card}>
                 {!!ad.userId && <div className={classes.RegisterBage}><CheckCircleOutlined/> Автор подтвержден</div>}
                 {/*<Card.Grid hoverable={false} style={w25}>Город: {cityParser(ad.city)}</Card.Grid>*/}
