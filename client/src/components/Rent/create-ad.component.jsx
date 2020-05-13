@@ -3,8 +3,6 @@ import {connect} from 'react-redux'
 import {Form, Input, Select, InputNumber, Switch, Radio, Button, Checkbox, Row, Col} from 'antd';
 import {
     createAd,
-    handlerCityForLoadingMetro,
-    handlerLoadFiles,
     handlerTypeOfApplicant
 } from '../../redux/thunks/rent-ad.thunks';
 import createTitleAd from '../../helpers/createTitleAd';
@@ -27,6 +25,7 @@ import {
     INFRASTRUCTURE_F, RENOVATION_0, RENOVATION_1, RENOVATION_2, RENOVATION_3, RENOVATION_4
 } from "../../helpers/rentDataParsers";
 import DefaultLayout from "../Layouts/default.layout";
+import {handlerCityForLoadingMetro, handlerLoadFiles} from "../../redux/thunks/app.thunks";
 
 const {Option} = Select;
 
@@ -300,8 +299,8 @@ const mapDispatch = dispatch => ({
 })
 
 const mapState = state => ({
-    files: state.rent.create.files,
-    stations: state.rent.create.metro,
+    files: state.app.create.files,
+    stations: state.app.create.metro,
     typeOfApplicant: state.rent.create.typeOfApplicant
 })
 

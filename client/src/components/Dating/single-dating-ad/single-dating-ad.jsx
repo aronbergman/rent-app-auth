@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux";
-import {handlerDeleteRentAd, handlerSingleAd, handlerSingleRentAd} from "../../../redux/thunks/rent-ad.thunks";
 import Loader from "../../Loader/Loader";
 import classes from "./styles.module.scss";
 import {Button} from "antd";
@@ -8,10 +7,11 @@ import {Modal, Form, Carousel} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import DefaultLayout from "../../Layouts/default.layout";
 import baseUrl from "../../../baseurl";
+import {handlerDeleteDatingAd, handlerSingleDatingAd} from "../../../redux/thunks/dating.thunks";
 
 const host = baseUrl()
 
-const SingleRentAd = props => {
+const SingleDatingAd = props => {
     const [show, setShow] = useState(false);
     const [password, setPassword] = useState(false);
     const [errorForm, setErrorForm] = useState(null);
@@ -34,7 +34,7 @@ const SingleRentAd = props => {
             password,
             secret: props.ad.secret
         }).then(() => {
-            props.history.push('/rent')
+            props.history.push('/dating')
         }).catch(() => {
             setErrorForm('Объявление не удалено. Попробуйте позже.')
         })
@@ -43,7 +43,7 @@ const SingleRentAd = props => {
     return (
         props.ad && props.loaded ? <DefaultLayout>
             <div className={classes.CreateAd}>
-                <Button shape="round" size='large' onClick={() => props.history.push('/rent')}>
+                <Button shape="round" size='large' onClick={() => props.history.push('/dating')}>
                     Вернуться в ленту
                 </Button>
                 <Button shape="round" size='large' onClick={handleShow}>
@@ -79,13 +79,13 @@ const SingleRentAd = props => {
 
             <div className={classes.Header}>
                 <h2>{props.ad.title}</h2>
-                <p>Автор <strong>{props.ad.name}</strong>, обновлено <strong>{props.ad.updatedAt}</strong>, просмотров <strong>{1+props.ad.counterView}</strong></p>
+                <p>Автор <strong>{props.ad.name}</strong>, обновлено <strong>{props.ad.updatedAt}</strong>, просмотров <strong>{1+props.ad.counter}</strong></p>
             </div>
 
             <div className={classes.Body}>
 
                 <div className={classes.MetroContainer}>
-                    {props.ad.metroStations.length ? props.ad.metroStations.map((station, index) => {
+                    {props.ad.metroStations ? props.ad.metroStations.map((station, index) => {
                         return (
                             <div key={index} className={classes.MetroItem}>
                                 <div className={classes.MetroColor}
@@ -97,18 +97,7 @@ const SingleRentAd = props => {
                 </div>
 
                 <div className={classes.Section}>
-                    {!!props.ad.infrastructure && <p className={classes.Infrastructure}>Рядом: {props.ad.infrastructure.map(item => <span>&nbsp;{item};&nbsp;</span>)}</p>}
-                    <p className={classes.DistanceMetro}>До метро: {props.ad.distanceMetro}</p>
-                </div>
-
-                <div className={classes.Section}>
                     <p className={classes.Description}>{props.ad.description}</p>
-                </div>
-                <div className={classes.Section}>
-                    <p className={classes.Renovation}>Ремонт {props.ad.renovation}</p>
-                    <h3 className={classes.Price}>{props.ad.price} ₽</h3>
-                    {!!props.ad.images.length &&
-                    <p className={classes.ImagesCount}>Загружено {props.ad.images.length} фото</p>}
                 </div>
 
                 <div className={classes.Section}>
@@ -118,7 +107,6 @@ const SingleRentAd = props => {
                     {!!props.ad.username &&
                     <p className={classes.Username}>Telegram: <strong>{props.ad.username}</strong></p>}
                 </div>
-
 
                 {!!props.ad.images.length && <div className={classes.Section}>
                     <Carousel>
@@ -137,13 +125,14 @@ const SingleRentAd = props => {
 };
 
 const mapState = state => ({
-    ad: state.rent.singleAd,
-    loaded: state.rent.loaded
+    ad: state.dating.singleAd,
+    loaded: state.app.loaded
 })
 
 const mapDispatch = dispatch => ({
-    fetchSingleRentAd: id => dispatch(handlerSingleRentAd(id)),
-    onDeleteHendler: ad => dispatch(handlerDeleteRentAd(ad))
+    fetchSingleRentAd: id => dispatch(handlerSingleDatingAd(id)),
+    onDeleteHendler: ad => dispatch(handlerDeleteDatingAd(ad)),
+    // onSingleAd: ad => dispatch(handlerSingleAd(ad))
 })
 
-export default connect(mapState, mapDispatch)(SingleRentAd);
+export default connect(mapState, mapDispatch)(SingleDatingAd);

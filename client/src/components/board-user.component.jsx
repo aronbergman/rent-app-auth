@@ -1,17 +1,22 @@
 import React from "react";
 import withAuth from "../HOC/withAuth";
 import {USER} from "../constants/roles.constants";
+import DefaultLayout from "./Layouts/default.layout";
+import {Link} from "react-router-dom";
 
 const AdminPanel = props => {
 
   const currentUser = JSON.parse(localStorage.getItem('user'))
 
   return (
-        <header className="jumbotron">
-          <h3>
-            <strong>{currentUser.username}</strong> USER BOARD, YEEES!
-          </h3>
-        </header>
+        <DefaultLayout>
+            <Link to={'/user/rent'}>
+                Мои объявления аренды
+            </Link>
+            <Link to={'/user/dating'}>
+                Мои объявления на доске
+            </Link>
+        </DefaultLayout>
   );
 }
 

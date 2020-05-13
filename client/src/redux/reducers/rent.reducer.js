@@ -20,8 +20,6 @@ const rentSlice = createSlice({
             inStockOnly: false
         },
         create: {
-            files: [],
-            metro: [],
             typeOfApplicant: null
         },
         singleAd: null
@@ -41,7 +39,6 @@ const rentSlice = createSlice({
                 ...action.payload.ads
             ];
             state.loaded = true;
-
         },
         handleFilterCategoryChange(state, action) {
             state.filter.filterCategory = action.payload
@@ -91,12 +88,8 @@ export const {
     handleFilterSizeChange,
     handleFilterTextChange,
     handleInStockChange,
-    setLoadedFiles,
-    setMetroStation,
     setTypeOfApplicant,
-    resetFiles,
-    setSingleAd,
-    setLoading
+    setSingleAd
 } = rentSlice.actions
 
 export default rentSlice.reducer
