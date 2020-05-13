@@ -3,15 +3,21 @@ import './styles.scss'
 import {Link} from "react-router-dom";
 
 const Footer = () => {
+
+    const bagFormHandler = () => {
+    //    Отпрыть форму
+    }
+
     return (
-        <footer className="footer section footer-classic context-dark bg-image" >
+        <footer className="footer section footer-classic context-dark bg-image">
             <div className="container">
                 <div className="row row-30">
                     <div className="col-md-4 col-xl-5">
                         <div className="pr-xl-4"><a className="brand" href="index.html"><img
                             className="brand-logo-light" src="images/agency/logo-inverse-140x37.png" alt="" width="140"
                             height="37" srcSet="images/agency/logo-retina-inverse-280x74.png 2x"/></a>
-                            <p>#bergmanbar – социальная платформа для вашего общения и поиска новых связей! Объявления аренды, знакомства и интересные новости для тебя.</p>
+                            <p>#bergmanbar – социальная платформа для вашего общения и поиска новых связей! Объявления
+                                аренды, знакомства и интересные новости для тебя.</p>
                             <p className="rights"><span>©  </span><span
                                 className="copyright-year">2020</span><span> </span><span>#bergmanbar LLC</span><span>. </span><span>Все права защищены.</span>
                             </p>
@@ -21,7 +27,7 @@ const Footer = () => {
                         <h5>Контакты</h5>
                         <dl className="contact-list">
                             <dt>Адрес редакции:</dt>
-                            <dd>101000, Москва, Мясницкая ул., 11 </dd>
+                            <dd>101000, Москва, Мясницкая ул., 11</dd>
                         </dl>
                         <dl className="contact-list">
                             <dt>Email:</dt>
@@ -40,21 +46,38 @@ const Footer = () => {
                             <li><Link to={'/rent'}>Аренда</Link></li>
                             <li><Link to={'/dating'}>Знакомства</Link></li>
                             <li><Link to={'/news'}>Новости</Link></li>
+                            {/*<li><Link to={'/about'}>О сайте</Link></li>*/}
                             {/*<li><Link to={'/questions'}>Вопросы и ответы</Link></li>*/}
                             {/*<li><Link to={'/shop'}>Магазин</Link></li>*/}
                         </ul>
                     </div>
                 </div>
             </div>
-            <div className="row no-gutters social-container" style={{pointerEvents: 'none'}}>
-                <div className="col"><a className="social-inner" href="#"><span
-                    className="icon mdi mdi-facebook"></span><span>Facebook</span></a></div>
-                <div className="col"><a className="social-inner" href="#"><span
-                    className="icon mdi mdi-instagram"></span><span>instagram</span></a></div>
-                <div className="col"><a className="social-inner" href="#"><span className="icon mdi mdi-twitter"></span><span>twitter</span></a>
+            <div className="row no-gutters social-container">
+                <div className="col">
+                    <div className="social-inner" onClick={bagFormHandler}>
+                        <span className="icon mdi mdi-facebook"></span>
+                        <span>Обратная связь</span>
+                    </div>
                 </div>
-                <div className="col"><a className="social-inner" href="#"><span
-                    className="icon mdi mdi-youtube-play"></span><span>google</span></a></div>
+                <div className="col">
+                    <a className="social-inner" href="#">
+                        <span className="icon mdi mdi-instagram"></span>
+                        <span>instagram</span>
+                    </a>
+                </div>
+                <div className="col">
+                    <a className="social-inner" href="#">
+                        <span className="icon mdi mdi-twitter"></span>
+                        <span>telegram</span>
+                    </a>
+                </div>
+                <div className="col">
+                    <a className="social-inner" href="#">
+                        <span className="icon mdi mdi-youtube-play"></span>
+                        <span>vk</span>
+                    </a>
+                </div>
             </div>
         </footer>
     );

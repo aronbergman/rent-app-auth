@@ -13,11 +13,10 @@ const Profile = props => {
 
     const currentUser = JSON.parse(localStorage.getItem('user'))
 
-    const [ads, setAds] = useState('')
-
     useEffect(() => {
         props.getUserAds(currentUser).then(res => {
-            setAds(res)
+            console.log(res)
+            // setAds(res)
         })
     }, [])
 
@@ -36,7 +35,7 @@ const Profile = props => {
 
             <div>
                 <h2>Мои объявления</h2>
-                {ads ? ads.map(ad => (
+                {props.ads ? props.ads.map(ad => (
                     <div key={ad.id}>
                         <AdCardAdminHeader history={props.history} ad={ad}/>
                         <div className={classes.NotClick}>
@@ -44,14 +43,15 @@ const Profile = props => {
                         </div>
                     </div>
                 )) : <Loader/>}
-                {!ads.length && <div>Объявлений не найдено, <Link to="/rent/create-ad">создайте новое</Link></div>}
+                {!props.ads.length && <div>Объявлений не найдено, <Link to="/rent/create-ad">создайте новое</Link></div>}
             </div>
         </div> : <Loader/>
     );
 }
 
 const mapState = state => ({
-    loaded: state.user.isAuthenticated
+    loaded: state.user.isAuthenticated,
+    ads: state.rent.ads
 })
 
 const mapDispatch = dispatch => ({

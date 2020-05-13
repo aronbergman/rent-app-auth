@@ -4,8 +4,9 @@ import classes from './styles.module.scss'
 import {dateParser} from "../../../../helpers/dateParser";
 import InfiniteScroll from 'react-infinite-scroller';
 import {connect} from "react-redux";
-import {handlerFetchOffsetRentAd} from "../../../../redux/thunks/rent-ad.thunks";
+import {fetchAll, handlerFetchOffsetRentAd} from "../../../../redux/thunks/rent-ad.thunks";
 import Loader from "../../../Loader/Loader";
+import {message} from "antd";
 
 const ProductTable = props => {
     const rows = [];
@@ -42,9 +43,18 @@ const ProductTable = props => {
         })
     }
 
+    let dateLoadingData = Date.now()
+
+    const reloadingHandler = () => {
+        props.fetchAll().then(() => {
+            message.info('Список обновлен');
+            dateLoadingData = Date.now()
+        })
+    }
+
     return (
         <div className={classes.Container}>
-            <div className={classes.SearchLength}> Страница обновлена: {dateParser(Date.now())} <a href="/rent">Обновить</a></div>
+            <div className={classes.SearchLength}> Страница обновлена: {dateParser(dateLoadingData)} <a onClick={reloadingHandler} href="#">Обновить</a></div>
             <InfiniteScroll
                 pageStart={0}
                 loadMore={loadFunc}
@@ -57,7 +67,8 @@ const ProductTable = props => {
 };
 
 const mapDispatch = dispatch => ({
-    fetchOffset: e => dispatch(handlerFetchOffsetRentAd(e))
+    fetchOffset: e => dispatch(handlerFetchOffsetRentAd(e)),
+    fetchAll: () => dispatch(fetchAll())
 })
 
 export default connect(null, mapDispatch)(ProductTable);

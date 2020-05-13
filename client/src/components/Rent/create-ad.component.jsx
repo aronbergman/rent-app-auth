@@ -10,6 +10,23 @@ import {
 import createTitleAd from '../../helpers/createTitleAd';
 import classes from './styles.module.scss'
 import Header from "../Header/Header.component";
+import {
+    CITY_66,
+    CITY_77, CITY_78,
+    DISTANCE_TO_METRO_1,
+    DISTANCE_TO_METRO_2,
+    DISTANCE_TO_METRO_3,
+    DISTANCE_TO_METRO_4,
+    DISTANCE_TO_METRO_5,
+    DISTANCE_TO_METRO_6,
+    INFRASTRUCTURE_A,
+    INFRASTRUCTURE_B,
+    INFRASTRUCTURE_C,
+    INFRASTRUCTURE_D,
+    INFRASTRUCTURE_E,
+    INFRASTRUCTURE_F, RENOVATION_0, RENOVATION_1, RENOVATION_2, RENOVATION_3, RENOVATION_4
+} from "../../helpers/rentDataParsers";
+import DefaultLayout from "../Layouts/default.layout";
 
 const {Option} = Select;
 
@@ -58,7 +75,7 @@ class CreateAdForm extends React.Component {
         }
 
         return (
-            <div>
+            <DefaultLayout>
                 <Header>
                     <h2>Создать объявление для раздела Аренда</h2>
                 </Header>
@@ -109,29 +126,30 @@ class CreateAdForm extends React.Component {
                     >
 
                         <Select placeholder="Например, голые стены или евроремонт">
-                            <Option value="0">📦 Голые стены</Option>
-                            <Option value="1">👵 Бабушкин</Option>
-                            <Option value="2">🛏 Косметический</Option>
-                            <Option value="3">🛋 Евроремонт</Option>
-                            {/*<Option value="4"></Option>*/}
+                            <Option value="0">{RENOVATION_0}</Option>
+                            <Option value="1">{RENOVATION_1}</Option>
+                            <Option value="2">{RENOVATION_2}</Option>
+                            <Option value="3">{RENOVATION_3}</Option>
+                            <Option value="4">{RENOVATION_4}</Option>
                         </Select>
                     </Form.Item>
 
                     <Form.Item
                         name="city"
-                        label="Город"
+                        label="В каком городе"
                         hasFeedback
                         rules={[{required: true, message: 'Пожалуйста, выберите город!'}]}
                     >
                         <Select placeholder="Выбери город" onChange={this.cityHandler}>
-                            <Option value="77">Москва</Option>
-                            <Option value="78">Санкт-Петербург</Option>
-                            <Option value="66">Екатеринбург</Option>
+                            <Option value="77">{CITY_77}</Option>
+                            <Option value="78">{CITY_78}</Option>
+                            <Option value="66">{CITY_66}</Option>
                         </Select>
                     </Form.Item>
 
-                    <Form.Item
+                   <Form.Item
                         name="metroStations"
+                        rules={[{required: true, message: 'Пожалуйста, укажите сведения'}]}
                         label="Расположение"
                     >
                         <Select mode="multiple" placeholder="Пожалуйста, выберите одну или несколько станций метро">
@@ -149,16 +167,17 @@ class CreateAdForm extends React.Component {
 
                     <Form.Item
                         name="distanceMetro"
+                        rules={[{required: true, message: 'Пожалуйста, укажите сведения'}]}
                         label="Расстояние до метро"
                         hasFeedback
                     >
                         <Select placeholder="500 метров (в соседнем квартале)">
-                            <Option value="1">100 метров (у дома)</Option>
-                            <Option value="2">300 метров (в моем квартале)</Option>
-                            <Option value="3">500 метров (в соседнем квартале)</Option>
-                            <Option value="4">1 км (10 минут пешком)</Option>
-                            <Option value="5">2 км (пара остановок)</Option>
-                            <Option value="6">более 2 км (дохрена далеко)</Option>
+                            <Option value="1">{DISTANCE_TO_METRO_1}</Option>
+                            <Option value="2">{DISTANCE_TO_METRO_2}</Option>
+                            <Option value="3">{DISTANCE_TO_METRO_3}</Option>
+                            <Option value="4">{DISTANCE_TO_METRO_4}</Option>
+                            <Option value="5">{DISTANCE_TO_METRO_5}</Option>
+                            <Option value="6">{DISTANCE_TO_METRO_6}</Option>
                         </Select>
                     </Form.Item>
 
@@ -174,13 +193,16 @@ class CreateAdForm extends React.Component {
                     </Form.Item>
 
                     {this.props.typeOfApplicant !== '0'
-                        ? <Form.Item name="sizeOfObject" label="Комнат в квартире">
+                        ? <Form.Item name="sizeOfObject"
+                                     rules={[{required: true, message: 'Пожалуйста, укажите сведения о колличестве комнат'}]}
+                                     label="Комнат в квартире">
                             <Radio.Group>
                                 <Radio.Button value="1">1</Radio.Button>
                                 <Radio.Button value="2">2</Radio.Button>
                                 <Radio.Button value="3">3</Radio.Button>
                                 <Radio.Button value="4">4</Radio.Button>
                                 <Radio.Button value="5">5</Radio.Button>
+                                <Radio.Button value="6">6</Radio.Button>
                             </Radio.Group>
                         </Form.Item> : null
                     }
@@ -204,32 +226,32 @@ class CreateAdForm extends React.Component {
                             <Row>
                                 <Col span={8}>
                                     <Checkbox value="A" style={{lineHeight: '32px'}}>
-                                        Спортзал, качалка
+                                        {INFRASTRUCTURE_A}
                                     </Checkbox>
                                 </Col>
                                 <Col span={8}>
                                     <Checkbox value="B" style={{lineHeight: '32px'}}>
-                                        Продукты и тд
+                                        {INFRASTRUCTURE_B}
                                     </Checkbox>
                                 </Col>
                                 <Col span={8}>
                                     <Checkbox value="C" style={{lineHeight: '32px'}}>
-                                        Торговый центр
+                                        {INFRASTRUCTURE_C}
                                     </Checkbox>
                                 </Col>
                                 <Col span={8}>
                                     <Checkbox value="D" style={{lineHeight: '32px'}}>
-                                        Парк
+                                        {INFRASTRUCTURE_D}
                                     </Checkbox>
                                 </Col>
                                 <Col span={8}>
                                     <Checkbox value="E" style={{lineHeight: '32px'}}>
-                                        Футбольное поле
+                                        {INFRASTRUCTURE_E}
                                     </Checkbox>
                                 </Col>
                                 <Col span={8}>
                                     <Checkbox value="F" style={{lineHeight: '32px'}}>
-                                        Тихое место
+                                        {INFRASTRUCTURE_F}
                                     </Checkbox>
                                 </Col>
                             </Row>
@@ -265,7 +287,7 @@ class CreateAdForm extends React.Component {
                     </Form.Item>
 
                 </Form>
-            </div>
+            </DefaultLayout>
         );
     }
 };

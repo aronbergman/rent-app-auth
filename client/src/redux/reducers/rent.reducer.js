@@ -1,4 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit'
+import {START} from "../../constants/others.constants";
 
 const TODOS_REDUCER_NAME = 'rent'
 
@@ -22,20 +23,22 @@ const rentSlice = createSlice({
             files: [],
             metro: [],
             typeOfApplicant: null
-        }
+        },
+        singleAd: null
     },
     reducers: {
         setRentAds(state, action) {
             state.ads = action.payload.ads;
             state.count = action.payload.count
+            state.singleAd = null
             state.loaded = true;
         },
         setRentAdsOffset(state, action) {
-            state.hasMore = (state.limit * state.pages) !== Math.ceil(state.count/10)*10
+            state.hasMore = (state.limit * state.pages) !== Math.ceil(state.count / 10) * 10
             state.pages = ++state.pages
             state.ads = [
                 ...state.ads,
-                ...action.payload
+                ...action.payload.ads
             ];
             state.loaded = true;
 
@@ -69,6 +72,13 @@ const rentSlice = createSlice({
         },
         setTypeOfApplicant(state, action) {
             state.create.typeOfApplicant = action.payload
+        },
+        setLoading(state, action) {
+            state.loaded = action.payload !== START
+        },
+        setSingleAd(state, action) {
+            state.singleAd = action.payload
+            state.loaded = true
         }
     }
 })
@@ -84,7 +94,9 @@ export const {
     setLoadedFiles,
     setMetroStation,
     setTypeOfApplicant,
-    resetFiles
+    resetFiles,
+    setSingleAd,
+    setLoading
 } = rentSlice.actions
 
 export default rentSlice.reducer

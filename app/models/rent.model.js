@@ -59,6 +59,9 @@ module.exports = (sequelize, Sequelize) => {
         },
         secret: {
             type: Sequelize.STRING
+        },
+        counterView: {
+            type: Sequelize.INTEGER
         }
     });
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import {Select} from 'antd';
 import classes from './styles.module.scss'
+import {CITY_66, CITY_77, CITY_78} from "../../../../helpers/rentDataParsers";
 
 const {Option} = Select;
 
@@ -41,7 +42,7 @@ const FilterByCategory = props => {
                 key={city}
                 onClick={() => handleFilterCityChange(city)}
             >
-                {city === 77 ? 'в Москве' : city === 78 ? 'в Санкт-Петербурге' : city === 66 ? 'в Екатеринбурге' : 'в любом городе'}
+                {city === 77 ? CITY_77 : city === 78 ? CITY_78 : city === 66 ? CITY_66 : 'в любом городе'}
             </div>
         );
     });

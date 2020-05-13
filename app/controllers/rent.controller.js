@@ -91,7 +91,7 @@ exports.fetchOffset = (req, res) => {
         order: [['createdAt', 'DESC']]
     })
         .then(response => {
-            res.status(200).send(response);
+            res.status(200).send({ads: response});
         })
         .catch(err => {
             res.status(500).send({message: err.message});
@@ -106,6 +106,12 @@ exports.fetchSingleAd = (req, res) => {
         }
     })
         .then(response => {
+
+            Rent.update(
+                {counterView: ++response.counterView},
+                {where: {id: req.body.id}}
+            )
+
             res.status(200).send(response);
         })
         .catch(err => {
@@ -162,7 +168,7 @@ exports.fetchUser = (req, res) => {
             }
         })
             .then(response => {
-                res.status(200).send(response);
+                res.status(200).send({ads: response});
             })
             .catch(err => {
                 res.status(500).send({message: err.message});

@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux";
-import {handlerDeleteRentAd, handlerSingleRentAd} from "../../../redux/thunks/rent-ad.thunks";
+import {handlerDeleteRentAd, handlerSingleAd, handlerSingleRentAd} from "../../../redux/thunks/rent-ad.thunks";
 import Loader from "../../Loader/Loader";
-import AdCardComponent from "../ad-card/ad-card.component";
 import classes from "./styles.module.scss";
 import {Button} from "antd";
-import {Modal, Form} from "react-bootstrap";
+import {Modal, Form, Carousel} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import DefaultLayout from "../../Layouts/default.layout";
 import baseUrl from "../../../baseurl";
@@ -13,34 +12,38 @@ import baseUrl from "../../../baseurl";
 const host = baseUrl()
 
 const SingleRentAd = props => {
-    const [ad, setAd] = useState('')
-    const [images, setImages] = useState('')
+    const [show, setShow] = useState(false);
+    const [password, setPassword] = useState(false);
+    const [errorForm, setErrorForm] = useState(null);
 
     useEffect(() => {
         const id = props.match.params.id
         props.fetchSingleRentAd(id).then(res => {
-            setAd(res)
-            setImages(JSON.parse(res.images))
+            props.onSingleAd(res)
         })
     }, [])
 
-    const [show, setShow] = useState(false);
-    const [password, setPassword] = useState(false);
-
-    const handleClose = () => setShow(false);
+    const handleClose = () => {
+        setShow(false);
+        setErrorForm(null)
+    }
     const handleShow = () => setShow(true);
     const handlePassword = e => setPassword(e.target.value)
 
     const modalHandler = () => {
         props.onDeleteHendler({
-            id: ad.id,
+            id: props.ad.id,
             password,
-            secret: ad.secret
-        }).then(() => props.history.push('/rent'))
+            secret: props.ad.secret
+        }).then(() => {
+            props.history.push('/rent')
+        }).catch(() => {
+            setErrorForm('Объявление не удалено. Попробуйте позже.')
+        })
     }
 
     return (
-        ad ? <DefaultLayout>
+        props.ad && props.loaded ? <DefaultLayout>
             <div className={classes.CreateAd}>
                 <Button shape="round" size='large' onClick={() => props.history.push('/rent')}>
                     Вернуться в ленту
@@ -53,13 +56,17 @@ const SingleRentAd = props => {
                     <Modal.Header closeButton>
                         <Modal.Title>Удаление объявления</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body className="Body">
+                    <Modal.Body className={classes.Body}>
                         Введите пароль, который Вы добавили к объявлению при создании.
                         Если Вы уже зарегистрированный пользователь, то удалить объявление можно из раздела <Link
                         to={'/profile'}>Профиль пользователя</Link>.
                     </Modal.Body>
                     <Form.Control className={classes.InputPassword} type="password" placeholder="Пароль"
                                   onChange={handlePassword}/>
+                    {!!errorForm && <Modal.Body className={classes.Body}>
+                        <strong>{errorForm}</strong>
+                    </Modal.Body>}
+
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleClose}>
                             Отменить
@@ -72,24 +79,74 @@ const SingleRentAd = props => {
 
             </div>
 
-            <div style={{pointerEvents: 'none'}}>
-                <AdCardComponent ad={ad}/>
+            <div className={classes.Header}>
+                <h2>{props.ad.title}</h2>
+                <p>Автор <strong>{props.ad.name}</strong>, обновлено <strong>{props.ad.updatedAt}</strong>, просмотров <strong>{1+props.ad.counterView}</strong></p>
             </div>
 
-            {ad.email && <h4>Email: {ad.email}</h4>}
-            {ad.username && <h4>Telegram: {ad.username}</h4>}
+            <div className={classes.Body}>
+
+                <div className={classes.MetroContainer}>
+                    {props.ad.metroStations.length ? props.ad.metroStations.map((station, index) => {
+                        return (
+                            <div key={index} className={classes.MetroItem}>
+                                <div className={classes.MetroColor}
+                                     style={{backgroundColor: `#${station.color}`,}}>&nbsp;</div>
+                                {station.name}
+                            </div>
+                        )
+                    }) : null}
+                </div>
+
+                <div className={classes.Section}>
+                    {!!props.ad.infrastructure && <p className={classes.Infrastructure}>Рядом: {props.ad.infrastructure.map(item => <span>&nbsp;{item};&nbsp;</span>)}</p>}
+                    <p className={classes.DistanceMetro}>До метро: {props.ad.distanceMetro}</p>
+                </div>
+
+                <div className={classes.Section}>
+                    <p className={classes.Description}>{props.ad.description}</p>
+                </div>
+                <div className={classes.Section}>
+                    <p className={classes.Renovation}>Ремонт {props.ad.renovation}</p>
+                    <h3 className={classes.Price}>{props.ad.price} ₽</h3>
+                    {!!props.ad.images.length &&
+                    <p className={classes.ImagesCount}>Загружено {props.ad.images.length} фото</p>}
+                </div>
+
+                <div className={classes.Section}>
+                    {!!props.ad.email &&
+                    <p className={classes.Email}>Email: <Link to={`mailto:${props.ad.email}`}>{props.ad.email}</Link>
+                    </p>}
+                    {!!props.ad.username &&
+                    <p className={classes.Username}>Telegram: <strong>{props.ad.username}</strong></p>}
+                </div>
 
 
-            {images && images.map(img => {
-                return <img style={{width: '100%'}} src={`${host}/images/${img}`} alt=""/>
-            })}
+                {!!props.ad.images.length && <div className={classes.Section}>
+                    <Carousel>
+                        {props.ad.images.map(img => {
+                            return <Carousel.Item>
+                                <img className="d-block w-100" style={{width: '100%'}} src={`${host}/images/${img}`}
+                                     alt=""/>
+                            </Carousel.Item>
+                        })}
+                    </Carousel>
+                </div>}
+            </div>
+
         </DefaultLayout> : <Loader/>
     );
 };
 
-const mapDispatch = dispatch => ({
-    fetchSingleRentAd: id => dispatch(handlerSingleRentAd(id)),
-    onDeleteHendler: ad => dispatch(handlerDeleteRentAd(ad))
+const mapState = state => ({
+    ad: state.rent.singleAd,
+    loaded: state.rent.loaded
 })
 
-export default connect(null, mapDispatch)(SingleRentAd);
+const mapDispatch = dispatch => ({
+    fetchSingleRentAd: id => dispatch(handlerSingleRentAd(id)),
+    onDeleteHendler: ad => dispatch(handlerDeleteRentAd(ad)),
+    onSingleAd: ad => dispatch(handlerSingleAd(ad))
+})
+
+export default connect(mapState, mapDispatch)(SingleRentAd);
