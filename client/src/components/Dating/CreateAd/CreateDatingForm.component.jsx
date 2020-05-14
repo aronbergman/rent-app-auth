@@ -20,7 +20,7 @@ class CreateDatingForm extends React.Component {
         super(props);
         this.state = {
             category: {
-                id : null,
+                id: null,
                 name: null
             },
             selectedFile: [],
@@ -79,7 +79,7 @@ class CreateDatingForm extends React.Component {
                         rate: 3.5,
                     }}
                 >
-                    <Form.Item name="name"  rules={[{required: true}]} label="Твоё имя" >
+                    <Form.Item name="name" rules={[{required: true}]} label="Твоё имя">
                         <Input/>
                     </Form.Item>
 
@@ -138,7 +138,7 @@ class CreateDatingForm extends React.Component {
                         </Select>
                     </Form.Item>}
 
-                    <Form.Item name="title"  rules={[{required: true}]} label="Заголовок">
+                    <Form.Item name="title" rules={[{required: true}]} label="Заголовок">
                         <Input/>
                     </Form.Item>
 

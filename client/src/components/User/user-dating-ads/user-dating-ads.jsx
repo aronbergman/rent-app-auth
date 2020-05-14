@@ -28,14 +28,14 @@ const UserDatingAds = props => {
                         </div>
                     </div>
                 )) : <Loader/>}
-                {!props.ads.length && <div>Объявлений не найдено, <Link to="/dating/create-ad">создайте новое</Link></div>}
+                {!props.ads.length && <div>Объявлений не найдено, <Link to="/dating/create">создайте новое</Link></div>}
             </DefaultLayout>
         </div> : <Loader/>
     );
 };
 
 const mapState = state => ({
-    loaded: state.user.isAuthenticated,
+    loaded: state.app.loaded,
     ads: state.dating.ads
 })
 

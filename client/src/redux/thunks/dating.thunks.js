@@ -3,7 +3,8 @@ import {
     API_CREATE_DATING_ADS,
     API_FETCH_DATING_CATEGORIES,
     API_FETCH_DELETE_DATING_AD,
-    API_FETCH_DELETE_DATING_AD_AUTH, API_FETCH_OFFSET_DATING_ADS, API_FETCH_OFFSET_RENT_ADS,
+    API_FETCH_DELETE_DATING_AD_AUTH,
+    API_FETCH_OFFSET_DATING_ADS,
     API_FETCH_SINGLE_CATEGORY,
     API_FETCH_SINGLE_DATING_AD,
     API_FETCH_USER_DATING_ADS,
@@ -14,7 +15,6 @@ import {FINISH, START} from "../../constants/others.constants";
 import {parseAds} from "../../helpers/rentDataParsers";
 import {setDatingAds, setSingleAd} from "../reducers/dating.reducer";
 import authHeader from "../../services/auth-header";
-import {setRentAdsOffset} from "../reducers/rent.reducer";
 
 export const handlerDatingCategories = () => async dispatch => {
     const response = await axios.post(API_FETCH_DATING_CATEGORIES)
@@ -66,8 +66,11 @@ export const handlerDeleteDatingAd = data => async dispatch => {
 export const actionGetUserAds = data => async dispatch => {
     dispatch(setLoading(START))
     const response = await axios.post(API_FETCH_USER_DATING_ADS, data)
-    const parse = await parseAds(response.data)
-    dispatch(setDatingAds(parse));
+    if (response.data.ads.length) {
+        const parse = await parseAds(response.data)
+        dispatch(setDatingAds(parse));
+    }
+    dispatch(setLoading(FINISH))
     return response.data;
 }
 

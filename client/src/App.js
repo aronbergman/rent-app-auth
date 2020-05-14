@@ -142,13 +142,13 @@ class App extends Component {
                         <Route exact path="/login" component={Login}/>
                         <Route exact path="/register" component={Register}/>
                         <Route exact path="/profile" component={Profile}/>
-                        <Route path="/user/rent" component={UserRentAds}/>
-                        <Route path="/user/dating" component={UserDatingAds}/>
-                        <Route path="/user" component={BoardUser}/>
-                        <Route path="/mod" component={BoardModerator}/>
+                        <Route exact path="/user/rent" component={UserRentAds}/>
+                        <Route exact path="/user/dating" component={UserDatingAds}/>
+                        <Route exact path="/user" component={BoardUser}/>
+                        <Route exact path="/mod" component={BoardModerator}/>
 
-                        <Route path="/admin/news-creator" component={NewsCreator}/>
-                        <Route path="/admin" component={AdminPanel}/>
+                        <Route exact path="/admin/news-creator" component={NewsCreator}/>
+                        <Route exact path="/admin" component={AdminPanel}/>
                     </Switch>
                 </div>
                 <Footer/>

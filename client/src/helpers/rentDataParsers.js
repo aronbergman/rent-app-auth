@@ -1,6 +1,5 @@
-import {dateParser} from "./dateParser";
-import {Select} from "antd";
 import React from "react";
+import {dateParser} from "./dateParser";
 
 export const parseAds = (data) => {
     const {ads} = data

@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const Sentry = require('@sentry/node');
 const consola = require('consola')
 const cors = require("cors");
 const path = require('path');
@@ -7,6 +8,11 @@ require('dotenv').config();
 const {NODE_ENV, SERVER_PORT, CORS_DEV_PORT} = process.env;
 
 const app = express();
+
+Sentry.init({ dsn: 'https://80ec2091533941ef80154e3220bae060@o392602.ingest.sentry.io/5240421' });
+// The request handler must be the first middleware on the app
+app.use(Sentry.Handlers.requestHandler());
+
 const multer = require('multer')
 
 var corsOptions = {
@@ -52,11 +58,19 @@ consola.info({
     badge: true
 });
 
+app.get('/debug-sentry', function mainHandler(req, res) {
+    throw new Error('My Sentry error!');
+});
+
 if (process.env.NODE_ENV === 'production') {
     app.use('/', express.static(path.join(__dirname, 'client', 'build')))
     app.get('*', (req, res) => {
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
     })
+}
+// The error handler must be before any other error middleware and after all controllers
+if (process.env.NODE_ENV === 'production') {
+    app.use(Sentry.Handlers.errorHandler());
 }
 
 // set port, listen for requests

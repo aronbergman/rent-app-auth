@@ -14,8 +14,8 @@ const datingSlice = createSlice({
         hasMore: true,
         loaded: false,
         singleCategory: {
-            title: '',
-            ads: []
+            title: null,
+            ads: null
         },
         create: {
             files: [],
