@@ -75,12 +75,14 @@ if (process.env.NODE_ENV === 'production') {
 
 // set port, listen for requests
 // const PORT = process.env.PORT || 8080;
-app.listen(SERVER_PORT, () => {
-    consola.info({
-        message: `Server is running on port ${SERVER_PORT}.`,
-        badge: true
+if (!module.parent) {
+    app.listen(SERVER_PORT, () => {
+        consola.info({
+            message: `Server is running on port ${SERVER_PORT}.`,
+            badge: true
+        });
     });
-});
+}
 
 // initial();
 function initial() {
