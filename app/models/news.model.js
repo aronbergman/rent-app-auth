@@ -10,10 +10,10 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING
         },
         content: {
-            type: Sequelize.STRING(10000)
+            type: Sequelize.TEXT()
         },
         description: {
-            type: Sequelize.STRING(10000)
+            type: Sequelize.TEXT()
         },
         count: {
             type: Sequelize.INTEGER

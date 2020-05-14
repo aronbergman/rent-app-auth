@@ -31,7 +31,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER
         },
         description: {
-            type: Sequelize.STRING(3000)
+            type: Sequelize.TEXT()
         },
         price: {
             type: Sequelize.INTEGER
