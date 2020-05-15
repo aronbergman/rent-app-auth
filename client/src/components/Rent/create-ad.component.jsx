@@ -223,32 +223,32 @@ class CreateAdForm extends React.Component {
                     <Form.Item name="infrastructure" label="Рядом есть">
                         <Checkbox.Group>
                             <Row>
-                                <Col span={8}>
+                                <Col className={classes.Col50Mob} span={8}>
                                     <Checkbox value="A" style={{lineHeight: '32px'}}>
                                         {INFRASTRUCTURE_A}
                                     </Checkbox>
                                 </Col>
-                                <Col span={8}>
+                                <Col className={classes.Col50Mob} span={8}>
                                     <Checkbox value="B" style={{lineHeight: '32px'}}>
                                         {INFRASTRUCTURE_B}
                                     </Checkbox>
                                 </Col>
-                                <Col span={8}>
+                                <Col className={classes.Col50Mob} span={8}>
                                     <Checkbox value="C" style={{lineHeight: '32px'}}>
                                         {INFRASTRUCTURE_C}
                                     </Checkbox>
                                 </Col>
-                                <Col span={8}>
+                                <Col className={classes.Col50Mob} span={8}>
                                     <Checkbox value="D" style={{lineHeight: '32px'}}>
                                         {INFRASTRUCTURE_D}
                                     </Checkbox>
                                 </Col>
-                                <Col span={8}>
+                                <Col className={classes.Col50Mob} span={8}>
                                     <Checkbox value="E" style={{lineHeight: '32px'}}>
                                         {INFRASTRUCTURE_E}
                                     </Checkbox>
                                 </Col>
-                                <Col span={8}>
+                                <Col className={classes.Col50Mob} span={8}>
                                     <Checkbox value="F" style={{lineHeight: '32px'}}>
                                         {INFRASTRUCTURE_F}
                                     </Checkbox>
@@ -266,7 +266,7 @@ class CreateAdForm extends React.Component {
                                    onChange={onChangeHandler}>
                             </input>
                             <label className="custom-file-label" htmlFor="validatedCustomFile">
-                                Загрузите сразу несколько или друг за другом, (.jpg, .png)</label>
+                                Одна или несколько, (.jpg, .png)</label>
                         </div>
                     </Form.Item>
 

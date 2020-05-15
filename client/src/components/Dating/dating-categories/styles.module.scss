@@ -1,4 +1,10 @@
+@import "src/mixins";
+
 .CategoriesList {
   display: flex;
   flex-direction: row;
+
+  @include respond-to($mobile) {
+    flex-direction: column;
+  }
 }

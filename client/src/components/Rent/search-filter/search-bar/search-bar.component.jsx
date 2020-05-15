@@ -17,8 +17,10 @@ const SearchBar = props => {
 
             <Input placeholder="Найти по заголовку..." onChange={handleFilterTextChange}/>
 
-            <Switch defaultChecked={props.inStockOnly} onChange={handleInStockChange}/> Объявления только
-            зарегистрированных пользователей
+            <div className={classes.Switcher}>
+                <Switch defaultChecked={props.inStockOnly} onChange={handleInStockChange}/> Объявления только
+                зарегистрированных пользователей
+            </div>
 
         </div>
     );

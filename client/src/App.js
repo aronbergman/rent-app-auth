@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {BrowserRouter as Router, Switch, Route, Link, NavLink} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
+import "./App.scss";
 
 import AuthService from "./services/auth.service";
 
@@ -26,6 +26,7 @@ import CreateDatingForm from "./components/Dating/CreateAd/CreateDatingForm.comp
 import SingleDatingAd from "./components/Dating/single-dating-ad/single-dating-ad";
 import UserRentAds from "./components/User/user-rent-ads/user-rent-ads";
 import UserDatingAds from "./components/User/user-dating-ads/user-dating-ads";
+import MessagesPage from "./components/Messages/MessagesPage/MessagesPage";
 
 class App extends Component {
     constructor(props) {
@@ -87,6 +88,11 @@ class App extends Component {
                                             Мои объявления
                                         </Link>
                                     )}
+                                    {currentUser && (
+                                        <Link to={"/messages"} activeClassName="active" className="dropdown-item">
+                                            Сообщения
+                                        </Link>
+                                    )}
                                     <NavDropdown.Divider/>
                                     {currentUser && (
                                         <Link to={"/profile"} activeClassName="active" className="dropdown-item">
@@ -125,7 +131,7 @@ class App extends Component {
                     </Navbar>
 
                     <Switch>
-                        <Route exact path={"/"} component={Home}/>
+                        <Route exact path={"/"} component={RentFilter}/>
 
                         <Route exact path={"/rent"} component={RentFilter}/>
                         <Route exact path={"/rent/create-ad"} component={CreateAdRent}/>
@@ -142,9 +148,8 @@ class App extends Component {
                         <Route exact path="/login" component={Login}/>
                         <Route exact path="/register" component={Register}/>
                         <Route exact path="/profile" component={Profile}/>
-                        <Route exact path="/user/rent" component={UserRentAds}/>
-                        <Route exact path="/user/dating" component={UserDatingAds}/>
                         <Route exact path="/user" component={BoardUser}/>
+                        <Route exact path="/messages" component={MessagesPage}/>
                         <Route exact path="/mod" component={BoardModerator}/>
 
                         <Route exact path="/admin/news-creator" component={NewsCreator}/>

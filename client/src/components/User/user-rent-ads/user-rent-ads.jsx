@@ -19,7 +19,7 @@ const UserRentAds = props => {
     return (
         props.loaded ? <div>
             <DefaultLayout>
-                <h2>Мои объявления Аренды</h2>
+                <br/>
                 {props.ads ? props.ads.map(ad => (
                     <div key={ad.id}>
                         <AdCardAdminHeader history={props.history} ad={ad}/>

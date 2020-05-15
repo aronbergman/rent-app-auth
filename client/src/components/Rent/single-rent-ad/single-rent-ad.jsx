@@ -47,7 +47,7 @@ const SingleRentAd = props => {
                     Вернуться в ленту
                 </Button>
                 <Button shape="round" size='large' onClick={handleShow}>
-                    Удалить объявление
+                    Удалить
                 </Button>
 
                 <Modal show={show} onHide={handleClose}>

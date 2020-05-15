@@ -72,10 +72,7 @@ if (process.env.NODE_ENV === 'production') {
 if (process.env.NODE_ENV === 'production') {
     app.use(Sentry.Handlers.errorHandler({
         shouldHandleError(error) {
-            if (error.status === 404 || error.status === 500) {
-                return true
-            }
-            return false
+            return true
         }
     }));
 }

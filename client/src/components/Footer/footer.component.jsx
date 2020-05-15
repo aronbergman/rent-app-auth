@@ -16,8 +16,7 @@ const Footer = () => {
                         <div className="pr-xl-4"><a className="brand" href="index.html"><img
                             className="brand-logo-light" src="images/agency/logo-inverse-140x37.png" alt="" width="140"
                             height="37" srcSet="images/agency/logo-retina-inverse-280x74.png 2x"/></a>
-                            <p>#bergmanbar – социальная платформа для вашего общения и поиска новых связей! Объявления
-                                аренды, знакомства и интересные новости для тебя.</p>
+                            <p>#bergmanbar – Тематические объявления по аренде и знакомствам.</p>
                             <p className="rights"><span>©  </span><span
                                 className="copyright-year">2020</span><span> </span><span>#bergmanbar LLC</span><span>. </span><span>Все права защищены.</span>
                             </p>
@@ -27,7 +26,7 @@ const Footer = () => {
                         <h5>Контакты</h5>
                         <dl className="contact-list">
                             <dt>Адрес редакции:</dt>
-                            <dd>101000, Москва, Мясницкая ул., 11</dd>
+                            <dd>121087, Москва, Новозаводская, 8</dd>
                         </dl>
                         <dl className="contact-list">
                             <dt>Email:</dt>

@@ -47,7 +47,7 @@ const SingleDatingAd = props => {
                     Вернуться в ленту
                 </Button>
                 <Button shape="round" size='large' onClick={handleShow}>
-                    Удалить объявление
+                    Удалить
                 </Button>
 
                 <Modal show={show} onHide={handleClose}>
@@ -108,7 +108,7 @@ const SingleDatingAd = props => {
                     <p className={classes.Username}>Telegram: <strong>{props.ad.username}</strong></p>}
                 </div>
 
-                {!!props.ad.images.length && <div className={classes.Section}>
+                {!!props.ad.images.length && <div className={classes.SectionImage}>
                     <Carousel>
                         {props.ad.images.map(img => {
                             return <Carousel.Item>

@@ -1,12 +1,45 @@
+@import "./../../../../mixins";
+
 .SmartSearch {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 20px 0 50px;
+
+  .Title {
+    @include respond-to($mobile) {
+      margin-bottom: 15px;
+    }
+  }
+
+  @include respond-to($mobile) {
+    flex-direction: column;
+  }
 }
 
-.SmartSearch .Select {
-  margin: 0 10px;
+.SmartSearch {
+  .SelectCategory,
+  .SelectSize,
+  .SelectCity {
+    margin: 0 10px;
+
+    @include respond-to($mobile) {
+      width: 100%;
+      margin: 10px 0;
+    }
+  }
+}
+
+.SelectCategory {
+  width: 180px;
+}
+
+.SelectSize {
+  width: 133px;
+}
+
+.SelectCity {
+  width: 240px;
 }
 
 .Icon {
@@ -18,4 +51,5 @@
 
 .IMake {
   font-size: 20px;
+  font-weight: bold;
 }

@@ -1,3 +1,5 @@
+@import "src/mixins";
+
 .FileLoader {
   width: 50%;
   margin: 0 auto 30px;
@@ -19,4 +21,11 @@
 
 .Content {
   padding-top: 77px;
+}
+
+@include respond-to($mobile) {
+  .Col50Mob {
+    max-width: 50%;
+    flex: 0 0 50%;
+  }
 }

@@ -1,4 +1,6 @@
-nav.bg-dark:before {
+@import 'mixins';
+
+nav:before {
   content: "";
   position: absolute;
   width: 100%;

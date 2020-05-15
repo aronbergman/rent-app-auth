@@ -66,24 +66,27 @@ const FilterByCategory = props => {
     return (
         <div id="rent-filter" className={classes.SmartSearch}>
             {/* eslint-disable-next-line jsx-a11y/accessible-emoji */}
-            <strong><span className={classes.Icon}>✨</span> <span className={classes.IMake}>Я ХОЧУ</span></strong>
+            <div className={classes.Title}>
+                <span className={classes.Icon}>✨</span>
+                <span className={classes.IMake}>Я ХОЧУ</span>
+            </div>
             <Select
-                className={classes.Select}
-                defaultValue="снять и сдать" style={{width: '180px'}} onChange={handleChange}>
+                className={classes.SelectCategory}
+                defaultValue="снять и сдать" onChange={handleChange}>
                 {itemsCategories.map((category, index) => (
                 <Option key={index} value={category}>{category}</Option>
                 ))}
             </Select>
             <Select
-                className={classes.Select}
-                defaultValue="жильё" style={{width: '133px'}} onChange={handleChange}>
+                className={classes.SelectSize}
+                defaultValue="жильё" onChange={handleChange}>
                 {itemsSizes.map((size, index) => (
                     <Option key={index} value={size}>{size}</Option>
                 ))}
             </Select>
             <Select
-                className={classes.Select}
-                defaultValue="в любом городе" style={{width: '240px'}} onChange={handleChange}>
+                className={classes.SelectCity}
+                defaultValue="в любом городе" onChange={handleChange}>
                 {itemsCities.map((city, index) => (
                     <Option key={index} value={city}>{city}</Option>
                 ))}

@@ -1,3 +1,5 @@
+@import 'src/mixins';
+
 .CreateAd {
   display: flex;
   justify-content: space-between;
@@ -31,6 +33,14 @@
   justify-content: space-around;
   text-align: center;
   font-size: 18px;
+
+  @include respond-to($mobile) {
+    flex-direction: column;
+
+    &:last-child {
+      margin: 0 0 15px;
+    }
+  }
 
   & > * {
     width: 100%;

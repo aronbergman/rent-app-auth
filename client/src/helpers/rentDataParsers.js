@@ -123,7 +123,7 @@ export const infrastructureParcer = infrastructure => {
     return infrastructures
 }
 
-export const DISTANCE_TO_METRO_1 = '100 метров (у дома)'
+export const DISTANCE_TO_METRO_1 = '100 метров (у&nbsp;дома)'
 export const DISTANCE_TO_METRO_2 = '300 метров (в моем квартале)'
 export const DISTANCE_TO_METRO_3 = '500 метров (в соседнем квартале)'
 export const DISTANCE_TO_METRO_4 = '1 км (10 минут пешком)'

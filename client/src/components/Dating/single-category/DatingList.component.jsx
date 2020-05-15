@@ -44,7 +44,7 @@ const DatingList = props => {
     return (
         props.loaded ? <DefaultLayout>
             <div className={classes.CreateAd}>
-                <h3>Категория {props.title}</h3>
+                <h3 className={classes.CatName}>Категория {props.title}</h3>
                 <Link to={{
                     pathname: '/dating/create',
                     state: {

@@ -1,11 +1,30 @@
+@import "../../../../mixins";
+
 .SearchBar {
   display: flex;
   flex-direction: row;
   align-items: center;
+
+  input {
+    margin-right: 50px;
+  }
+
+  @include respond-to($mobile) {
+    flex-direction: column;
+
+    input {
+      margin-right: 0;
+    }
+  }
 }
 
-.SearchBar input {
-  margin-right: 50px;
+.Switcher {
+  @include respond-to($mobile) {
+    display: flex;
+    flex-direction: row;
+    margin-top: 15px;
+    align-items: center;
+  }
 }
 
 .SearchBar button {

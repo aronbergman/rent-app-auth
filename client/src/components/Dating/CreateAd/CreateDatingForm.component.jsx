@@ -157,7 +157,7 @@ class CreateDatingForm extends React.Component {
                                    onChange={onChangeHandler}>
                             </input>
                             <label className="custom-file-label" htmlFor="validatedCustomFile">
-                                Загрузите сразу несколько или друг за другом, (.jpg, .png)</label>
+                                Одна или несколько (.jpg, .png)</label>
                         </div>
                     </Form.Item>
 
