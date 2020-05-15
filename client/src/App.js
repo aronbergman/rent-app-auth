@@ -26,6 +26,7 @@ import CreateDatingForm from "./components/Dating/CreateAd/CreateDatingForm.comp
 import SingleDatingAd from "./components/Dating/single-dating-ad/single-dating-ad";
 import UserRentAds from "./components/User/user-rent-ads/user-rent-ads";
 import UserDatingAds from "./components/User/user-dating-ads/user-dating-ads";
+import MessagesPage from "./components/Messages/MessagesPage/MessagesPage";
 
 class App extends Component {
     constructor(props) {
@@ -145,6 +146,7 @@ class App extends Component {
                         <Route exact path="/user/rent" component={UserRentAds}/>
                         <Route exact path="/user/dating" component={UserDatingAds}/>
                         <Route exact path="/user" component={BoardUser}/>
+                        <Route exact path="/messages" component={MessagesPage}/>
                         <Route exact path="/mod" component={BoardModerator}/>
 
                         <Route exact path="/admin/news-creator" component={NewsCreator}/>

@@ -9,6 +9,17 @@ const {NODE_ENV, SERVER_PORT, CORS_DEV_PORT} = process.env;
 
 const app = express();
 
+const socketApp = require('http').createServer()
+const io = module.exports.io = require('socket.io')(socketApp)
+
+const SocketManager = require('./app/messages/SocketManager')
+
+io.on('connection', SocketManager)
+
+socketApp.listen(5002, ()=>{
+    console.log("Connected to port:" + 5002);
+})
+
 Sentry.init({ dsn: 'https://80ec2091533941ef80154e3220bae060@o392602.ingest.sentry.io/5240421' });
 // The request handler must be the first middleware on the app
 app.use(Sentry.Handlers.requestHandler());
