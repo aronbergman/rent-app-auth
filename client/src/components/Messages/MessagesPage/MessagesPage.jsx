@@ -13,7 +13,7 @@ const MessagesPage = () => {
             <Header>
                 <h2>Сообщения</h2>
             </Header>
-            <Layout/>
+            <Layout user={currentUser}/>
         </div>
     );
 }

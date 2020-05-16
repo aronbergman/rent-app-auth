@@ -9,7 +9,6 @@ export default class MessageInput extends Component {
 	  	message:"",
 	  	isTyping:false
 	  };
-
 	}
 	
 	handleSubmit = (e)=>{
@@ -25,6 +24,8 @@ export default class MessageInput extends Component {
 
 	componentWillUnmount() {
 	  this.stopCheckingTyping()
+
+		console.log('USER:', this.state.user)
 	}
 
 	sendTyping = ()=>{

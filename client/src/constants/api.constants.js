@@ -27,3 +27,5 @@ export const API_FETCH_ALL_NEWS = `${API_URL}/news/fetch-all`
 export const API_FETCH_NEWS_OFFSET = `${API_URL}/news/fetch-offset`
 export const API_FETCH_SINGLE_POST = `${API_URL}/news/fetch-single`
 export const API_CREATE_POST = `${API_URL}/news/create-post`
+
+export const API_FETCH_USER_CHATS = `${API_URL}/chats/user-chats`
