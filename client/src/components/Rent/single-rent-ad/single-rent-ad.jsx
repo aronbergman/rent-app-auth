@@ -1,6 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux";
-import {handlerDeleteRentAd, handlerSingleAd, handlerSingleRentAd} from "../../../redux/thunks/rent-ad.thunks";
+import {
+    handlerDeleteRentAd,
+    handlerSingleRentAd,
+} from "../../../redux/thunks/rent-ad.thunks";
 import Loader from "../../Loader/Loader";
 import classes from "./styles.module.scss";
 import {Button} from "antd";
@@ -8,8 +11,11 @@ import {Modal, Form, Carousel} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import DefaultLayout from "../../Layouts/default.layout";
 import baseUrl from "../../../baseurl";
+import {handlerStartNewRoom} from "../../../redux/thunks/chats.thunks";
 
 const host = baseUrl()
+
+const user = JSON.parse(localStorage.getItem('user'));
 
 const SingleRentAd = props => {
     const [show, setShow] = useState(false);
@@ -37,6 +43,21 @@ const SingleRentAd = props => {
             props.history.push('/rent')
         }).catch(() => {
             setErrorForm('Объявление не удалено. Попробуйте позже.')
+        })
+    }
+
+    const handlePrivatMessage = () => {
+        props.startNewRoom({
+            thisAd: {
+                authorId: props.ad.userId,
+                adId: props.ad.id
+            },
+            senderMessage: {
+                id: user.id
+            }
+        }).then(data => {
+            console.log('ROOM IN FRONT', data)
+            props.history.push(`/messages?room=${data.room}`)
         })
     }
 
@@ -79,7 +100,8 @@ const SingleRentAd = props => {
 
             <div className={classes.Header}>
                 <h2>{props.ad.title}</h2>
-                <p>Автор <strong>{props.ad.name}</strong>, обновлено <strong>{props.ad.updatedAt}</strong>, просмотров <strong>{1+props.ad.counterView}</strong></p>
+                <p>Автор <strong>{props.ad.name}</strong>, обновлено <strong>{props.ad.updatedAt}</strong>,
+                    просмотров <strong>{props.ad.counterView}</strong></p>
             </div>
 
             <div className={classes.Body}>
@@ -97,7 +119,9 @@ const SingleRentAd = props => {
                 </div>
 
                 <div className={classes.Section}>
-                    {!!props.ad.infrastructure && <p className={classes.Infrastructure}>Рядом: {props.ad.infrastructure.map(item => <span>&nbsp;{item};&nbsp;</span>)}</p>}
+                    {!!props.ad.infrastructure &&
+                    <p className={classes.Infrastructure}>Рядом: {props.ad.infrastructure.map(item =>
+                        <span>&nbsp;{item};&nbsp;</span>)}</p>}
                     <p className={classes.DistanceMetro}>До метро: {props.ad.distanceMetro}</p>
                 </div>
 
@@ -112,6 +136,11 @@ const SingleRentAd = props => {
                 </div>
 
                 <div className={classes.Section}>
+
+                    <Button shape="round" size='large' onClick={handlePrivatMessage}>
+                        Личное сообщение
+                    </Button>
+
                     {!!props.ad.email &&
                     <p className={classes.Email}>Email: <Link to={`mailto:${props.ad.email}`}>{props.ad.email}</Link>
                     </p>}
@@ -143,7 +172,8 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
     fetchSingleRentAd: id => dispatch(handlerSingleRentAd(id)),
-    onDeleteHendler: ad => dispatch(handlerDeleteRentAd(ad))
+    onDeleteHendler: ad => dispatch(handlerDeleteRentAd(ad)),
+    startNewRoom: data => dispatch(handlerStartNewRoom(data))
 })
 
 export default connect(mapState, mapDispatch)(SingleRentAd);

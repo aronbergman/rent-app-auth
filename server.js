@@ -49,6 +49,7 @@ require('./app/routes/user.routes')(app);
 require('./app/routes/rent.routes')(app);
 require('./app/routes/dating.routes')(app);
 require('./app/routes/news.routes')(app);
+require('./app/routes/chats.routes')(app);
 
 require('./app/middleware/intervalRentAdCreater.js')(db);
 require('./app/routes/file.routes.js')(app, multer, express);
@@ -72,7 +73,14 @@ if (process.env.NODE_ENV === 'production') {
 if (process.env.NODE_ENV === 'production') {
     app.use(Sentry.Handlers.errorHandler({
         shouldHandleError(error) {
-            return true
+            if (error.status) {
+                return true
+            }
+            return false
+            // if (error.status === 404 || error.status === 500) {
+            //     return true
+            // }
+            // return false
         }
     }));
 }

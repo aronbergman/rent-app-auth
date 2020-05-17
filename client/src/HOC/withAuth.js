@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import UserService from "../services/user.service";
 import {Redirect} from "react-router-dom";
 import {ADMIN, MODERATOR, USER} from "../constants/roles.constants";
@@ -8,11 +8,14 @@ import {setRole} from "../redux/thunks/user.thunks";
 export default function withAuth(WrappedComponent, role) {
     class Authenticate extends React.Component {
 
+        getUser = () => JSON.parse(localStorage.getItem('user'));
+
         componentDidMount() {
             switch (role) {
                 case ADMIN:
                     return UserService.getAdminBoard().then(() => {
                             this.props.setRole({
+                                userData: this.getUser(),
                                 isAuthenticated: true,
                                 role: ADMIN
                             })
@@ -26,6 +29,7 @@ export default function withAuth(WrappedComponent, role) {
                 case MODERATOR:
                     return UserService.getModeratorBoard().then(() => {
                             this.props.setRole({
+                                userData: this.getUser(),
                                 isAuthenticated: true,
                                 role: MODERATOR
                             })
@@ -39,6 +43,7 @@ export default function withAuth(WrappedComponent, role) {
                 case USER:
                     return UserService.getUserBoard().then(() => {
                             this.props.setRole({
+                                userData: this.getUser(),
                                 isAuthenticated: true,
                                 role: USER
                             })

@@ -26,7 +26,7 @@ import CreateDatingForm from "./components/Dating/CreateAd/CreateDatingForm.comp
 import SingleDatingAd from "./components/Dating/single-dating-ad/single-dating-ad";
 import UserRentAds from "./components/User/user-rent-ads/user-rent-ads";
 import UserDatingAds from "./components/User/user-dating-ads/user-dating-ads";
-import MessagesPage from "./components/Messages/MessagesPage/MessagesPage";
+import Chat from "./components/Messages/Chat/Chat";
 
 class App extends Component {
     constructor(props) {
@@ -73,6 +73,18 @@ class App extends Component {
 
                                 {(showAdminBoard || showModeratorBoard || currentUser) &&
                                 <NavDropdown title="МОЙ ПРОФИЛЬ" id="basic-nav-dropdown">
+                                    {currentUser && (
+                                        <Link to={"/user"} activeClassName="active" className="dropdown-item">
+                                            Мои объявления
+                                        </Link>
+                                    )}
+                                    {currentUser && (
+                                        <Link to={"/messages"} activeClassName="active" className="dropdown-item">
+                                            Мои сообщения
+                                        </Link>
+                                    )}
+
+                                    <NavDropdown.Divider/>
                                     {showAdminBoard && (
                                         <Link to={"/admin"} activeClassName="active" className="dropdown-item">
                                             Admin Board
@@ -83,17 +95,6 @@ class App extends Component {
                                             Moderator Board
                                         </Link>
                                     )}
-                                    {currentUser && (
-                                        <Link to={"/user"} activeClassName="active" className="dropdown-item">
-                                            Мои объявления
-                                        </Link>
-                                    )}
-                                    {currentUser && (
-                                        <Link to={"/messages"} activeClassName="active" className="dropdown-item">
-                                            Сообщения
-                                        </Link>
-                                    )}
-                                    <NavDropdown.Divider/>
                                     {currentUser && (
                                         <Link to={"/profile"} activeClassName="active" className="dropdown-item">
                                             Настройки
@@ -148,8 +149,10 @@ class App extends Component {
                         <Route exact path="/login" component={Login}/>
                         <Route exact path="/register" component={Register}/>
                         <Route exact path="/profile" component={Profile}/>
+                        <Route exact path="/user/rent" component={UserRentAds}/>
+                        <Route exact path="/user/dating" component={UserDatingAds}/>
                         <Route exact path="/user" component={BoardUser}/>
-                        <Route exact path="/messages" component={MessagesPage}/>
+                        <Route exact path="/messages" component={Chat}/>
                         <Route exact path="/mod" component={BoardModerator}/>
 
                         <Route exact path="/admin/news-creator" component={NewsCreator}/>
