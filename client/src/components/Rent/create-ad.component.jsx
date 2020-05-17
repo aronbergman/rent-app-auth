@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {Form, Input, Select, InputNumber, Switch, Radio, Button, Checkbox, Row, Col} from 'antd';
 import {
     createAd,
-    handlerTypeOfApplicant
+    handlerTypeOfApplicant, isLoadedTrue, thisUserData
 } from '../../redux/thunks/rent-ad.thunks';
 import createTitleAd from '../../helpers/createTitleAd';
 import classes from './styles.module.scss'
@@ -26,6 +26,7 @@ import {
 } from "../../helpers/rentDataParsers";
 import DefaultLayout from "../Layouts/default.layout";
 import {handlerCityForLoadingMetro, handlerLoadFiles} from "../../redux/thunks/app.thunks";
+import Loader from "../Loader/Loader";
 
 const {Option} = Select;
 
@@ -40,8 +41,7 @@ class CreateAdForm extends React.Component {
         this.state = {
             selectedFile: [],
             loaded: 0,
-            loadedFiles: [],
-            user: {}
+            loadedFiles: []
         }
     }
 
@@ -50,7 +50,11 @@ class CreateAdForm extends React.Component {
 
     componentDidMount() {
         const user = JSON.parse(localStorage.getItem('user'))
-        this.setState({user})
+       if (user) {
+           this.props.thisUser(user.id)
+       } else {
+           this.props.isLoaded()
+       }
     }
 
     render() {
@@ -59,7 +63,10 @@ class CreateAdForm extends React.Component {
             console.log(values)
             this.props.createAd({
                 ...values,
-                userId: this.state.user ? this.state.user.id : 0,
+                userId: this.props.userData ? this.props.userData.id : 0,
+                name: this.props.userData ? this.props.userData.name : values.name,
+                username: this.props.userData ? this.props.userData.username : values.username,
+                email: this.props.userData ? this.props.userData.email : values.email,
                 title,
                 images: this.props.files
             }).then(() => this.props.history.push('/rent'))
@@ -74,7 +81,7 @@ class CreateAdForm extends React.Component {
         }
 
         return (
-            <DefaultLayout>
+            this.props.loaded ? <DefaultLayout>
                 <Header>
                     <h2>Создать объявление для раздела Аренда</h2>
                 </Header>
@@ -89,15 +96,17 @@ class CreateAdForm extends React.Component {
                         rate: 3.5,
                     }}
                 >
-                    <Form.Item name="username" label="Ник или номер Telegram">
-                        <Input/>
-                    </Form.Item>
-                    <Form.Item name="name" label="Твоё имя" rules={[{required: true}]}>
-                        <Input/>
-                    </Form.Item>
-                    <Form.Item name="email" label="Email" rules={[{type: 'email', required: true}]}>
-                        <Input/>
-                    </Form.Item>
+                    {!this.props.userData ? <>
+                        <Form.Item name="username" label="Ник или номер Telegram">
+                            <Input/>
+                        </Form.Item>
+
+                        <Form.Item name="name" label="Твоё имя" rules={[{required: true}]}>
+                            <Input/>
+                        </Form.Item>
+                        <Form.Item name="email" label="Email" rules={[{type: 'email', required: true}]}>
+                            <Input/>
+                        </Form.Item></> : null}
                     <Form.Item
                         name="typeOfApplicant" label="Ты хочешь"
                         rules={[{required: true, message: 'Пожалуйста, выберите цель!'}]}>
@@ -146,7 +155,7 @@ class CreateAdForm extends React.Component {
                         </Select>
                     </Form.Item>
 
-                   <Form.Item
+                    <Form.Item
                         name="metroStations"
                         rules={[{required: true, message: 'Пожалуйста, укажите сведения'}]}
                         label="Расположение"
@@ -193,7 +202,10 @@ class CreateAdForm extends React.Component {
 
                     {this.props.typeOfApplicant !== '0'
                         ? <Form.Item name="sizeOfObject"
-                                     rules={[{required: true, message: 'Пожалуйста, укажите сведения о колличестве комнат'}]}
+                                     rules={[{
+                                         required: true,
+                                         message: 'Пожалуйста, укажите сведения о колличестве комнат'
+                                     }]}
                                      label="Комнат в квартире">
                             <Radio.Group>
                                 <Radio.Button value="1">1</Radio.Button>
@@ -270,7 +282,7 @@ class CreateAdForm extends React.Component {
                         </div>
                     </Form.Item>
 
-                    {!this.state.user
+                    {!this.props.userData
                         ? <Form.Item name="secret"
                                      plaseholder="Нужен для удаления этого объявления"
                                      label="Пароль на удаление" rules={[{required: !this.state.user}]}>
@@ -286,7 +298,7 @@ class CreateAdForm extends React.Component {
                     </Form.Item>
 
                 </Form>
-            </DefaultLayout>
+            </DefaultLayout> : <Loader/>
         );
     }
 };
@@ -295,13 +307,17 @@ const mapDispatch = dispatch => ({
     createAd: data => dispatch(createAd(data)),
     loadFiles: data => dispatch(handlerLoadFiles(data)),
     cityHandler: city => dispatch(handlerCityForLoadingMetro(city)),
-    typeOfApplicantHandler: city => dispatch(handlerTypeOfApplicant(city))
+    typeOfApplicantHandler: city => dispatch(handlerTypeOfApplicant(city)),
+    thisUser: id => dispatch(thisUserData({id})),
+    isLoaded: () => dispatch(isLoadedTrue())
 })
 
 const mapState = state => ({
     files: state.app.create.files,
     stations: state.app.create.metro,
-    typeOfApplicant: state.rent.create.typeOfApplicant
+    typeOfApplicant: state.rent.create.typeOfApplicant,
+    userData: state.app.user,
+    loaded: state.app.loaded
 })
 
 export default connect(mapState, mapDispatch)(CreateAdForm);

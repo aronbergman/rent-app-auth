@@ -1,13 +1,14 @@
 import {createSlice} from '@reduxjs/toolkit'
 import {START} from "../../constants/others.constants";
 
-const TODOS_REDUCER_NAME = 'chats'
+const TODOS_REDUCER_NAME = 'chat'
 
-const chatsSlice = createSlice({
+const chatSlice = createSlice({
     name: TODOS_REDUCER_NAME,
     initialState: {
         loaded: false,
-        userChats: null
+        userChats: null,
+        chatMessages: null
     },
     reducers: {
         getLoaded(state, action) {
@@ -15,13 +16,18 @@ const chatsSlice = createSlice({
         },
         getUserChats(state, action) {
             state.userChats = action.payload
+            state.chatMessages = null
+        },
+        getChatMessages(state,action) {
+            state.chatMessages = action.payload
         }
     }
 })
 
 export const {
     getLoaded,
-    getUserChats
-} = chatsSlice.actions
+    getUserChats,
+    getChatMessages
+} = chatSlice.actions
 
-export default chatsSlice.reducer
+export default chatSlice.reducer

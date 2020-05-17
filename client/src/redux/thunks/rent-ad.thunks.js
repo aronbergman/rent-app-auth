@@ -1,5 +1,5 @@
 import axios from "axios";
-import {setLoading, resetFiles} from '../reducers/app.reducer'
+import {setLoading, resetFiles, setOneUserData} from '../reducers/app.reducer'
 import {
     setRentAds,
     setRentAdsOffset, setSingleAd,
@@ -10,7 +10,7 @@ import {
     API_FETCH_ALL_RENT_ADS,
     API_FETCH_DELETE_AD,
     API_FETCH_DELETE_AD_AUTH,
-    API_FETCH_OFFSET_RENT_ADS,
+    API_FETCH_OFFSET_RENT_ADS, API_FETCH_ONE_USER_DATA,
     API_FETCH_SINGLE_RENT_AD,
     API_FETCH_USER_RENT_ADS
 } from "../../constants/api.constants";
@@ -58,10 +58,6 @@ export const handlerDeleteRentAd = data => async dispatch => {
     return response.data;
 }
 
-export const handlerSingleAd = data => async dispatch => {
-
-}
-
 export const handlerDeleteRentAdAuth = data => async dispatch => {
     const response = await axios.post(API_FETCH_DELETE_AD_AUTH, data, {headers: authHeader()})
     return response.data;
@@ -69,4 +65,15 @@ export const handlerDeleteRentAdAuth = data => async dispatch => {
 
 export const handlerTypeOfApplicant = data => async dispatch => {
     dispatch(setTypeOfApplicant(data));
+}
+
+export const thisUserData = data => async dispatch => {
+    dispatch(setLoading(START))
+    const response = await axios.post(API_FETCH_ONE_USER_DATA, data, {headers: authHeader()})
+    dispatch(setOneUserData(response.data));
+    return response.data;
+}
+
+export const isLoadedTrue = data => async dispatch => {
+    dispatch(setLoading(FINISH))
 }

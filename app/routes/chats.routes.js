@@ -15,4 +15,28 @@ module.exports = function (app) {
         [authJwt.verifyToken],
         controller.getUserChats
     );
+
+    app.post(
+        "/api/chats/get-chat-history",
+        [authJwt.verifyToken],
+        controller.getUserChatHistory
+    );
+
+    app.post(
+        "/api/chats/set-chat-history",
+        [authJwt.verifyToken],
+        controller.setUserChatHistory
+    );
+
+    // app.post(
+    //     "/api/chats/set-new-chat",
+    //     [authJwt.verifyToken],
+    //     controller.setUserChatHistory
+    // );
+
+    app.post(
+        "/api/chats/create-new-room",
+        [authJwt.verifyToken],
+        controller.createNewRoom
+    );
 }

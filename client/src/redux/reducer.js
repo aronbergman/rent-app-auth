@@ -4,7 +4,7 @@ import dating from './reducers/dating.reducer'
 import news from './reducers/news.reducer'
 import user from './reducers/user.reducer'
 import app from './reducers/app.reducer'
-import chats from './reducers/chats.reducer'
+import chat from './reducers/chat.reducer'
 
 export default combineReducers({
     app,
@@ -12,5 +12,5 @@ export default combineReducers({
     dating,
     news,
     user,
-    chats
+    chat
 });

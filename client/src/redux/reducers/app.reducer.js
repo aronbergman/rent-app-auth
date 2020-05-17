@@ -11,7 +11,8 @@ const appSlice = createSlice({
             files: [],
             metro: [],
             typeOfApplicant: null
-        }
+        },
+        user: null
     },
     reducers: {
         setLoadedFiles(state, action) {
@@ -29,6 +30,10 @@ const appSlice = createSlice({
         setLoading(state, action) {
             state.loaded = action.payload !== START
         },
+        setOneUserData(state, action) {
+            state.user = action.payload
+            state.loaded = true
+        }
     }
 })
 
@@ -36,7 +41,8 @@ export const {
     setLoadedFiles,
     resetFiles,
     setMetroStation,
-    setLoading
+    setLoading,
+    setOneUserData
 } = appSlice.actions
 
 export default appSlice.reducer

@@ -28,6 +28,7 @@ db.sequelize = sequelize;
 db.sequelize = sequelize;
 db.sequelize = sequelize;
 db.sequelize = sequelize;
+db.sequelize = sequelize;
 
 db.user = require("../models/user.model.js")(sequelize, Sequelize);
 db.role = require("../models/role.model.js")(sequelize, Sequelize);
@@ -37,7 +38,8 @@ db.datingCategories = require("../models/dating-categories.model.js")(sequelize,
 db.datingAds = require("../models/dating-ads.model.js")(sequelize, Sequelize);
 db.news = require("../models/news.model.js")(sequelize, Sequelize);
 // Сделать соотношение с базой пользователей, связать
-db.allChats = require("../models/all-chats.model.js")(sequelize, Sequelize);
+db.chats = require("./chats.model.js")(sequelize, Sequelize);
+db.messages = require("./messages.model.js")(sequelize, Sequelize);
 
 db.role.belongsToMany(db.user, {
   through: "user_roles",

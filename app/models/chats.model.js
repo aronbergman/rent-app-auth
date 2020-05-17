@@ -1,26 +1,23 @@
 module.exports = (sequelize, Sequelize) => {
-    const AllChats = sequelize.define("all-chats", {
+    const Chats = sequelize.define("chats", {
         fromUserId: {
             type: Sequelize.INTEGER
         },
         toUserId: {
             type: Sequelize.INTEGER
         },
+        fromUserName: {
+            type: Sequelize.STRING
+        },
+        toUserName: {
+            type: Sequelize.STRING
+        },
         room: {
             type: Sequelize.STRING
         },
-        name: {
-            type: Sequelize.STRING
-        },
-        messages: {
-            type: Sequelize.STRING
-        },
-        users: {
-            type: Sequelize.STRING
-        },
-        typingUsers: {
+        status: {
             type: Sequelize.STRING
         }
     })
-    return AllChats;
+    return Chats;
 }
