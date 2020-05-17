@@ -1,12 +1,16 @@
-import React from "react";
+import React, {useEffect} from "react";
 import AdCardComponent from "../../ad-card/ad-card.component";
 import classes from './styles.module.scss'
 import {dateParser} from "../../../../helpers/dateParser";
 import InfiniteScroll from 'react-infinite-scroller';
 import {connect} from "react-redux";
-import {fetchAll, handlerFetchOffsetRentAd} from "../../../../redux/thunks/rent-ad.thunks";
+import {adToStore, fetchAll, handlerFetchOffsetRentAd} from "../../../../redux/thunks/rent-ad.thunks";
 import Loader from "../../../Loader/Loader";
 import {message} from "antd";
+
+import io from "socket.io-client";
+let socket;
+
 
 const ProductTable = props => {
     const rows = [];
@@ -15,6 +19,17 @@ const ProductTable = props => {
     const filterCategory = props.filterCategory;
     const filterCity = props.filterCity;
     const filterSize = props.filterSize;
+
+    const ENDPOINT = 'http://localhost:5050/'
+    socket = io(ENDPOINT);
+
+    useEffect(() => {
+        socket.on('fetchRentAd', ad => {
+            // console.log('fetchRentAd', ad)
+            message.info(`Новое объявление: ${ad.title}`);
+            props.fetchAll()
+        });
+    }, [])
 
     props.rentAds.forEach(product => {
         const name = product.title.toLowerCase();

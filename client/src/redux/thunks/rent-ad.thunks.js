@@ -1,6 +1,7 @@
 import axios from "axios";
 import {setLoading, resetFiles, setOneUserData} from '../reducers/app.reducer'
 import {
+    addRentAdFromSocket,
     setRentAds,
     setRentAdsOffset, setSingleAd,
     setTypeOfApplicant

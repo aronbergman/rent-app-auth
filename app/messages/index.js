@@ -30,6 +30,11 @@ io.on('connect', (socket) => {
         callback();
     });
 
+    socket.on('newRentAd', (ad) => {
+        console.log('newRentAd', ad)
+        io.emit('fetchRentAd', ad);
+    });
+
     socket.on('sendMessage', (message, callback) => {
         const user = getUser(socket.id);
 

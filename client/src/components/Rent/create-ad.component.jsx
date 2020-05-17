@@ -28,6 +28,9 @@ import DefaultLayout from "../Layouts/default.layout";
 import {handlerCityForLoadingMetro, handlerLoadFiles} from "../../redux/thunks/app.thunks";
 import Loader from "../Loader/Loader";
 
+import io from "socket.io-client";
+let socket;
+
 const {Option} = Select;
 
 const formItemLayout = {
@@ -55,13 +58,18 @@ class CreateAdForm extends React.Component {
        } else {
            this.props.isLoaded()
        }
+        const ENDPOINT = 'http://localhost:5050/'
+        socket = io(ENDPOINT);
     }
 
     render() {
+
+
         const onFinish = values => {
             const title = createTitleAd(values)
             console.log(values)
-            this.props.createAd({
+
+            const data = {
                 ...values,
                 userId: this.props.userData ? this.props.userData.id : 0,
                 name: this.props.userData ? this.props.userData.name : values.name,
@@ -69,7 +77,12 @@ class CreateAdForm extends React.Component {
                 email: this.props.userData ? this.props.userData.email : values.email,
                 title,
                 images: this.props.files
-            }).then(() => this.props.history.push('/rent'))
+            }
+
+            this.props.createAd(data).then(() => {
+                socket.emit('newRentAd', data);
+                this.props.history.push('/rent')
+            })
         };
 
         const onChangeHandler = event => {
