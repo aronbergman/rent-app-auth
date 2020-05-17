@@ -2,7 +2,6 @@ import React from "react";
 import withAuth from "../HOC/withAuth";
 import {USER} from "../constants/roles.constants";
 import DefaultLayout from "./Layouts/default.layout";
-import {Link, Route, Switch} from "react-router-dom";
 import {Tab, Tabs} from "react-bootstrap";
 import UserRentAds from "./User/user-rent-ads/user-rent-ads";
 import UserDatingAds from "./User/user-dating-ads/user-dating-ads";
