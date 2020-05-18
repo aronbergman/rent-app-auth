@@ -76,6 +76,13 @@ const rentSlice = createSlice({
         setSingleAd(state, action) {
             state.singleAd = action.payload
             state.loaded = true
+        },
+        setRentAdFromSocket(state,action) {
+            state.ads = [
+                action.payload,
+                ...state.ads,
+            ]
+            state.count = state.count + 1
         }
     }
 })
@@ -89,7 +96,8 @@ export const {
     handleFilterTextChange,
     handleInStockChange,
     setTypeOfApplicant,
-    setSingleAd
+    setSingleAd,
+    setRentAdFromSocket
 } = rentSlice.actions
 
 export default rentSlice.reducer

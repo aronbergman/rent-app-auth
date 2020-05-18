@@ -4,10 +4,23 @@ import {dateParser} from "./dateParser";
 export const parseAds = (data) => {
     const {ads} = data
     let parseAds = []
-    ads.map(ad => {
+
+    if (ads) {
+        ads.map(ad => adParser(ad, true))
+        return {
+            ads: parseAds,
+            count: data.count ? data.count : null
+        }
+    } else {
+        return adParser(data, false)
+    }
+
+    function adParser(ad, many) {
         const parseAd = {
             ...ad,
-            images: JSON.parse(ad.images),
+            city: +ad.city,
+            typeOfApplicant: +ad.typeOfApplicant,
+            images: many ? JSON.parse(ad.images) : ad.images,
             updatedAt: dateParser(ad.updatedAt),
             createdAt: dateParser(ad.createdAt)
         }
@@ -38,11 +51,11 @@ export const parseAds = (data) => {
             parseAd.price = ad.price.toLocaleString('ru')
         }
 
-        parseAds.push(parseAd)
-    })
-    return {
-        ads: parseAds,
-        count: data.count ? data.count : null
+        if (many) {
+            parseAds.push(parseAd)
+        } else {
+            return parseAd
+        }
     }
 }
 
@@ -123,7 +136,7 @@ export const infrastructureParcer = infrastructure => {
     return infrastructures
 }
 
-export const DISTANCE_TO_METRO_1 = '100 метров (у&nbsp;дома)'
+export const DISTANCE_TO_METRO_1 = '100 метров (у дома)'
 export const DISTANCE_TO_METRO_2 = '300 метров (в моем квартале)'
 export const DISTANCE_TO_METRO_3 = '500 метров (в соседнем квартале)'
 export const DISTANCE_TO_METRO_4 = '1 км (10 минут пешком)'

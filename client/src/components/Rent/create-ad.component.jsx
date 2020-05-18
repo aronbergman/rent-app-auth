@@ -79,8 +79,8 @@ class CreateAdForm extends React.Component {
                 images: this.props.files
             }
 
-            this.props.createAd(data).then(() => {
-                socket.emit('newRentAd', data);
+            this.props.createAd(data).then(newAd => {
+                socket.emit('newRentAd', newAd);
                 this.props.history.push('/rent')
             })
         };
@@ -192,7 +192,7 @@ class CreateAdForm extends React.Component {
                         label="Расстояние до метро"
                         hasFeedback
                     >
-                        <Select placeholder="500 метров (в соседнем квартале)">
+                        <Select placeholder={DISTANCE_TO_METRO_3}>
                             <Option value="1">{DISTANCE_TO_METRO_1}</Option>
                             <Option value="2">{DISTANCE_TO_METRO_2}</Option>
                             <Option value="3">{DISTANCE_TO_METRO_3}</Option>

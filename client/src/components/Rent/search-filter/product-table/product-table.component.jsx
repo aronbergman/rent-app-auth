@@ -4,7 +4,11 @@ import classes from './styles.module.scss'
 import {dateParser} from "../../../../helpers/dateParser";
 import InfiniteScroll from 'react-infinite-scroller';
 import {connect} from "react-redux";
-import {adToStore, fetchAll, handlerFetchOffsetRentAd} from "../../../../redux/thunks/rent-ad.thunks";
+import {
+    fetchAll,
+    handlerFetchOffsetRentAd,
+    handlerFetchSocketRentAd
+} from "../../../../redux/thunks/rent-ad.thunks";
 import Loader from "../../../Loader/Loader";
 import {message} from "antd";
 
@@ -25,13 +29,13 @@ const ProductTable = props => {
 
     useEffect(() => {
         socket.on('fetchRentAd', ad => {
-            // console.log('fetchRentAd', ad)
+            props.fetchSocketData(ad)
             message.info(`Новое объявление: ${ad.title}`);
-            props.fetchAll()
         });
     }, [])
 
     props.rentAds.forEach(product => {
+        console.log('product', product)
         const name = product.title.toLowerCase();
         if (name.indexOf(filterText.toLowerCase())) {
             return;
@@ -83,6 +87,7 @@ const ProductTable = props => {
 
 const mapDispatch = dispatch => ({
     fetchOffset: e => dispatch(handlerFetchOffsetRentAd(e)),
+    fetchSocketData: ad => dispatch(handlerFetchSocketRentAd({ad})),
     fetchAll: () => dispatch(fetchAll())
 })
 

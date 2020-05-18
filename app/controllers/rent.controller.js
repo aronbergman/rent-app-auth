@@ -55,8 +55,8 @@ exports.createAd = (req, res) => {
         secret: req.body.secret ? token : null,
         active: 1
     })
-        .then(() => {
-            res.send({message: "Объявление создано!"});
+        .then(response => {
+            res.send(response);
         })
         .catch(err => {
             res.status(500).send({message: err.message});

@@ -1,7 +1,7 @@
 import axios from "axios";
 import {setLoading, resetFiles, setOneUserData} from '../reducers/app.reducer'
 import {
-    addRentAdFromSocket,
+    addRentAdFromSocket, setRentAdFromSocket,
     setRentAds,
     setRentAdsOffset, setSingleAd,
     setTypeOfApplicant
@@ -36,6 +36,14 @@ export const handlerFetchOffsetRentAd = (data) => async dispatch => {
     const response = await axios.post(API_FETCH_OFFSET_RENT_ADS, data)
     const parse = await parseAds(response.data)
     dispatch(setRentAdsOffset(parse));
+    return parse;
+}
+
+export const handlerFetchSocketRentAd = (data) => async dispatch => {
+    console.log('pre parse', data)
+    const parse = await parseAds(data.ad)
+    console.log(' parse', parse)
+    dispatch(setRentAdFromSocket(parse));
     return parse;
 }
 
