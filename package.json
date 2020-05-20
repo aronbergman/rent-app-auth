@@ -6,8 +6,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production node server.js",
     "ssh": "ssh root@5.63.157.247",
-    "server": "node server.js",
-    "server_m": "DEBUG=socket.io:socket node ./app/messages/index.js",
+    "server": "DEBUG=socket.io:socket node server.js",
     "client": "npm run start --prefix client",
     "client:install": "npm install -prefix client",
     "client:build": "npm run build -prefix client",

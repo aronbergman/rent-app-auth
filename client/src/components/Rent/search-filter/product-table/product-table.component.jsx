@@ -13,6 +13,7 @@ import Loader from "../../../Loader/Loader";
 import {message} from "antd";
 
 import io from "socket.io-client";
+import baseUrl from "../../../../baseurl";
 let socket;
 
 
@@ -24,7 +25,7 @@ const ProductTable = props => {
     const filterCity = props.filterCity;
     const filterSize = props.filterSize;
 
-    const ENDPOINT = 'http://localhost:5050/'
+    const ENDPOINT = baseUrl()
     socket = io(ENDPOINT);
 
     useEffect(() => {

@@ -29,6 +29,7 @@ import {handlerCityForLoadingMetro, handlerLoadFiles} from "../../redux/thunks/a
 import Loader from "../Loader/Loader";
 
 import io from "socket.io-client";
+import baseUrl from "../../baseurl";
 let socket;
 
 const {Option} = Select;
@@ -58,7 +59,7 @@ class CreateAdForm extends React.Component {
        } else {
            this.props.isLoaded()
        }
-        const ENDPOINT = 'http://localhost:5050/'
+        const ENDPOINT = baseUrl()
         socket = io(ENDPOINT);
     }
 

@@ -14,6 +14,7 @@ import {connect} from "react-redux";
 import {getUserChatsApi, setActiveChatHistory, setChatHisroty} from "../../../redux/thunks/chats.thunks";
 import DefaultLayout from "../../Layouts/default.layout";
 import ChatNotSelect from "../ChatNotSelect/ChatNotSelect";
+import baseUrl from "../../../baseurl";
 
 // Когда страница открыта в первый раз, показать все списки пользователя и загрушку на месте чата.
 // После выбора определенного чата, записать активный чат в стор и использовать нужный сокет
@@ -25,7 +26,7 @@ const Chat = (props) => {
     const [room, setRoom] = useState('');
     const [message, setMessage] = useState('');
     // const [messages, setMessages] = useState([]);
-    const ENDPOINT = 'http://localhost:5050/'
+    const ENDPOINT = baseUrl()
     const user = JSON.parse(localStorage.getItem('user'))
 
     useEffect(() => {

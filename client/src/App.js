@@ -27,19 +27,16 @@ import SingleNews from "./components/News/SingleNews/SingleNews.component";
 import {Nav, Navbar, NavDropdown} from "react-bootstrap";
 import CreateDatingForm from "./components/Dating/CreateAd/CreateDatingForm.component";
 import SingleDatingAd from "./components/Dating/single-dating-ad/single-dating-ad";
-import UserRentAds from "./components/User/user-rent-ads/user-rent-ads";
-import UserDatingAds from "./components/User/user-dating-ads/user-dating-ads";
 import Chat from "./components/Messages/Chat/Chat";
 import {connect} from "react-redux";
 import {
-    getChatHisroty,
     getUserChatsApi,
-    setChatHisroty,
     setCounterFromSocket,
     setMessageSocketAction
 } from "./redux/thunks/chats.thunks";
 import {Badge, message as m, notification} from "antd";
 import SmileOutlined from "@ant-design/icons/lib/icons/SmileOutlined";
+import baseUrl from "./baseurl";
 
 let socket;
 
@@ -56,11 +53,9 @@ class App extends Component {
         };
     }
 
-    redirect = url => this.props.history.push(url)
-
     componentDidMount() {
         const userData = JSON.parse(localStorage.getItem('user'))
-        const ENDPOINT = 'http://localhost:5050/'
+        const ENDPOINT = baseUrl()
         socket = io(ENDPOINT);
 
         const user = AuthService.getCurrentUser();

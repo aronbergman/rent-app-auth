@@ -7,7 +7,13 @@ const path = require('path');
 require('dotenv').config();
 const {NODE_ENV, SERVER_PORT, CORS_DEV_PORT} = process.env;
 
+const http = require('http');
+const socketio = require('socket.io');
+
+
 const app = express();
+const server = http.createServer(app);
+const io = socketio(server);
 
 Sentry.init({ dsn: 'https://80ec2091533941ef80154e3220bae060@o392602.ingest.sentry.io/5240421' });
 // The request handler must be the first middleware on the app
@@ -51,6 +57,8 @@ require('./app/routes/dating.routes')(app);
 require('./app/routes/news.routes')(app);
 require('./app/routes/chats.routes')(app);
 
+require('./app/messages/index')(io);
+
 require('./app/middleware/intervalRentAdCreater.js')(db);
 require('./app/routes/file.routes.js')(app, multer, express);
 
@@ -88,7 +96,7 @@ if (process.env.NODE_ENV === 'production') {
 // set port, listen for requests
 // const PORT = process.env.PORT || 8080;
 if (!module.parent) {
-    app.listen(SERVER_PORT, () => {
+    server.listen(SERVER_PORT, () => {
         consola.info({
             message: `Server is running on port ${SERVER_PORT}.`,
             badge: true
