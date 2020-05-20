@@ -1,0 +1,19 @@
+.UserChats {
+  display: flex;
+  flex-direction: column;
+  margin-right: 10px;
+  color: white;
+  width: 300px;
+  height: 100%;
+  justify-content: flex-start;
+}
+
+.UserChat {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding: 30px 20px;
+  box-sizing: border-box;
+  color: #000;
+  border: .5px solid #eee;
+}

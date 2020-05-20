@@ -8,26 +8,82 @@ const chatSlice = createSlice({
     initialState: {
         loaded: false,
         userChats: null,
-        chatMessages: null
+        allCounterNotRead: null,
+        activeChat: {
+            messages: []
+        },
+        // chatMessages: null
     },
     reducers: {
         getLoaded(state, action) {
             state.loaded = action.payload !== START
         },
         getUserChats(state, action) {
-            state.userChats = action.payload
-            state.chatMessages = null
+            state.userChats = action.payload.chats
+            state.allCounterNotRead = action.payload.counter
+            // state.chatMessages = null
         },
-        getChatMessages(state,action) {
-            state.chatMessages = action.payload
-        }
+        // getChatMessages(state,action) {
+        //     state.chatMessages = action.payload
+        // },
+        setSocketMessage(state, action) {
+            state.activeChat.messages = [
+                ...state.activeChat.messages,
+                action.payload
+            ]
+        },
+        setActiveChatMessages(state, action) {
+            const data = state.userChats.filter(i => i.room === action.payload.room)
+            let otherChats = state.userChats
+            const index = state.userChats.findIndex(i => i.room === action.payload.room);
+            if (index !== -1) {
+                otherChats.splice(index, 1);
+            }
+
+            state.activeChat = {
+                messages: action.payload.messages,
+                ...data[0]
+            }
+
+            if (data[0].lastSendUserId !== action.payload.fetchAuthor) {
+                state.allCounterNotRead = state.allCounterNotRead - data[0].notReadCounter
+            }
+
+            state.userChats = [
+                ...otherChats,
+                {
+                    ...data[0],
+                    notReadCounter: null
+                }
+            ]
+        },
+        setCounter(state, action) {
+                const data = state.userChats.filter(i => i.room === action.payload.room)
+                let otherChats = state.userChats
+                const index = state.userChats.findIndex(i => i.room === action.payload.room);
+                if (index !== -1) {
+                    otherChats.splice(index, 1);
+                }
+
+            state.allCounterNotRead = state.allCounterNotRead + 1
+
+            state.userChats = [
+                ...otherChats,
+                {
+                    ...data[0],
+                    notReadCounter: data[0].notReadCounter + 1
+                }
+            ]
+        },
     }
 })
 
 export const {
     getLoaded,
     getUserChats,
-    getChatMessages
+    setSocketMessage,
+    setActiveChatMessages,
+    setCounter
 } = chatSlice.actions
 
 export default chatSlice.reducer

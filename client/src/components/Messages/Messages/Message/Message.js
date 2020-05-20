@@ -5,10 +5,10 @@ import './Message.scss';
 import {dateParser} from "../../../../helpers/dateParser";
 moment.locale('ru');
 
-const Message = ({ message: { text, user, time }, myName }) => {
+const Message = ({ message: { message, from, updatedAt }, myName }) => {
   let isSentByCurrentUser = false;
 
-  if(user === myName) {
+  if(from === myName) {
     isSentByCurrentUser = true;
   }
 
@@ -16,18 +16,18 @@ const Message = ({ message: { text, user, time }, myName }) => {
     isSentByCurrentUser
       ? (
         <div className="messageContainer justifyEnd">
-          <p className="sentText pr-10">{dateParser(time)}</p>
+          <p className="sentText pr-10">{dateParser(updatedAt)}</p>
           <div className="messageBox backgroundBlue">
-            <p className="messageText colorWhite">{ReactEmoji.emojify(text)}</p>
+            <p className="messageText colorWhite">{ReactEmoji.emojify(message)}</p>
           </div>
         </div>
         )
         : (
           <div className="messageContainer justifyStart">
             <div className="messageBox backgroundLight">
-              <p className="messageText colorDark">{ReactEmoji.emojify(text)}</p>
+              <p className="messageText colorDark">{ReactEmoji.emojify(message)}</p>
             </div>
-            <p className="sentText pl-10 ">{dateParser(time)}</p>
+            <p className="sentText pl-10 ">{dateParser(updatedAt)}</p>
           </div>
         )
   );

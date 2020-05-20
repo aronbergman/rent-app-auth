@@ -34,24 +34,64 @@ exports.getUserChats = (req, res) => {
 }
 
 exports.getUserChatHistory = (req, res) => {
+    const {room, user} = req.body;
     Messages.findAll({
         limit: 100,
-        where: {
-            room: req.body.room
-        },
+        where: {room},
         order: [['createdAt', 'DESC']]
     }).then(response => {
-        res.status(200).send(response);
+
+        Chats.findOne({
+            where: {room}
+        }).then(responseChatOne => {
+            if (responseChatOne.lastSendUserId !== user.id) {
+
+                Chats.update({notReadCounter: 0}, {where: {room}})
+                    .then(() => {
+                        res.status(200).send(response)
+                    })
+            } else {
+                res.status(200).send(response);
+            }
+        })
+
     })
 }
 
 exports.setUserChatHistory = (req, res) => {
-    const {room, message, from, to} = req.body
+    const {room, message, from} = req.body
 
-    Messages.create({room, message, from, to, status: 1})
-        .then(response => {
-            res.status(200).send(response);
+    Messages.create({room, message, from, status: 1})
+        .then(responseMes => {
+
+            Chats.findOne({
+                where: {room}
+            }).then(response => {
+                if (response.lastSendUserId === from) {
+                    Chats.update(
+                        {notReadCounter: ++response.notReadCounter},
+                        {where: {room}}
+                    ).then(() => {
+                        res.status(200).send(responseMes);
+                    })
+                } else {
+                    Chats.update({
+                            notReadCounter: 1,
+                            lastSendUserId: from
+                        },
+                        {where: {room}}
+                    ).then(() => {
+                        res.status(200).send(responseMes);
+                    })
+                }
+            })
+
+
         })
+
+    // если автор равен тому, кто в базе сейчас последний, то инкримент,
+    //     если нет, то от нуля + 1
+
 }
 
 exports.createNewRoom = (req, res) => {

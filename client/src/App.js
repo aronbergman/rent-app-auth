@@ -1,7 +1,10 @@
 import React, {Component} from "react";
-import {BrowserRouter as Router, Switch, Route, Link, NavLink} from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route, Link, NavLink, Redirect} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.scss";
+import io from "socket.io-client";
+import queryString from 'query-string';
+import {withRouter} from "react-router-dom";
 
 import AuthService from "./services/auth.service";
 
@@ -27,6 +30,18 @@ import SingleDatingAd from "./components/Dating/single-dating-ad/single-dating-a
 import UserRentAds from "./components/User/user-rent-ads/user-rent-ads";
 import UserDatingAds from "./components/User/user-dating-ads/user-dating-ads";
 import Chat from "./components/Messages/Chat/Chat";
+import {connect} from "react-redux";
+import {
+    getChatHisroty,
+    getUserChatsApi,
+    setChatHisroty,
+    setCounterFromSocket,
+    setMessageSocketAction
+} from "./redux/thunks/chats.thunks";
+import {Badge, message as m, notification} from "antd";
+import SmileOutlined from "@ant-design/icons/lib/icons/SmileOutlined";
+
+let socket;
 
 class App extends Component {
     constructor(props) {
@@ -36,11 +51,18 @@ class App extends Component {
         this.state = {
             showModeratorBoard: false,
             showAdminBoard: false,
-            currentUser: undefined
+            currentUser: undefined,
+            readyToRedirect: null
         };
     }
 
+    redirect = url => this.props.history.push(url)
+
     componentDidMount() {
+        const userData = JSON.parse(localStorage.getItem('user'))
+        const ENDPOINT = 'http://localhost:5050/'
+        socket = io(ENDPOINT);
+
         const user = AuthService.getCurrentUser();
 
         if (user) {
@@ -49,6 +71,47 @@ class App extends Component {
                 showModeratorBoard: user.roles.includes("ROLE_MODERATOR"),
                 showAdminBoard: user.roles.includes("ROLE_ADMIN")
             });
+
+            this.props.getUserChatsApi(userData.id).then(data => {
+                data.map(chat => {
+                    socket.emit('join', {user: userData.id, room: chat.room}, (error) => {
+                        if (error) {
+                            alert(error);
+                        }
+                    });
+                });
+            }).then(() => {
+                socket.on('message', (message) => {
+                    const {room} = queryString.parse(window.location.search);
+                    if (message.room === room) {
+                        this.props.setMessageSocketAction(message)
+                    } else {
+                        this.props.setCounterFromSocket(message)
+                        notification.info({
+                            message: `${message.name}`,
+                            description: message.message,
+                            placement: 'bottomRight',
+                            onClick: () => this.setState({
+                                readyToRedirect: `/messages?room=${message.room}`
+                            }),
+                            icon: <SmileOutlined style={{color: '#108ee9'}}/>,
+                        });
+                    }
+
+                    console.log('message in client, finish!', message)
+                });
+                socket.on('notification', message => {
+                    m.success(`${message.message}`)
+                });
+            })
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevState.readyToRedirect !== null) {
+            this.setState({
+                readyToRedirect: null
+            })
         }
     }
 
@@ -68,11 +131,12 @@ class App extends Component {
                         <Navbar.Collapse id="basic-navbar-nav">
                             <Nav className="mr-auto">
                                 <NavLink to="/rent" className="nav-link" activeClassName="active">АРЕНДА</NavLink>
-                                <NavLink to="/dating" className="nav-link" activeClassName="active">ДОСКА ОБЪЯВЛЕНИЙ</NavLink>
+                                <NavLink to="/dating" className="nav-link" activeClassName="active">ДОСКА
+                                    ОБЪЯВЛЕНИЙ</NavLink>
                                 <NavLink to="/news" className="nav-link" activeClassName="active">НОВОСТИ</NavLink>
 
                                 {(showAdminBoard || showModeratorBoard || currentUser) &&
-                                <NavDropdown title="МОЙ ПРОФИЛЬ" id="basic-nav-dropdown">
+                                <NavDropdown title='МОЙ ПРОФИЛЬ' id="basic-nav-dropdown">
                                     {currentUser && (
                                         <Link to={"/user"} activeClassName="active" className="dropdown-item">
                                             Мои объявления
@@ -99,12 +163,16 @@ class App extends Component {
                                         <Link to={"/profile"} activeClassName="active" className="dropdown-item">
                                             Настройки
                                         </Link>)}
-                                </NavDropdown>}
+                                </NavDropdown>
+                                }
                             </Nav>
 
 
                             {currentUser ? (
                                 <div className="navbar-nav ml-auto">
+                                    { (this.props.allCounterNotRead !== 0) && <li className="nav-item">
+                                        <Link to={'/messages'} className="nav-link">Сообщений: <Badge count={this.props.allCounterNotRead}/></Link>
+                                    </li>}
                                     <li className="nav-item">
                                         <Link to={"/profile"} className="nav-link">{currentUser.username}</Link>
                                     </li>
@@ -130,6 +198,12 @@ class App extends Component {
                             )}
                         </Navbar.Collapse>
                     </Navbar>
+
+                    {
+                        this.state.readyToRedirect
+                            ? <Redirect to={this.state.readyToRedirect}/>
+                            : null
+                    }
 
                     <Switch>
                         <Route exact path={"/"} component={RentFilter}/>
@@ -163,4 +237,16 @@ class App extends Component {
     }
 }
 
-export default App;
+const mapState = state => ({
+    allCounterNotRead: state.chat.allCounterNotRead
+})
+
+const mapDispatch = dispatch => ({
+    getUserChatsApi: id => dispatch(getUserChatsApi({id})),
+    setMessageSocketAction: message => dispatch(setMessageSocketAction(message)),
+    setCounterFromSocket: message => dispatch(setCounterFromSocket(message))
+    // getChatHistory: room => dispatch(getChatHisroty({room})),
+    // setChatHistory: data => dispatch(setChatHisroty(data))
+})
+
+export default withRouter(connect(mapState, mapDispatch)(App));

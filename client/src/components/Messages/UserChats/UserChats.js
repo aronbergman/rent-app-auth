@@ -1,21 +1,24 @@
 import React from 'react';
 
-import './UserChats.scss';
+import classes from './styles.module.scss';
 import {Link} from "react-router-dom";
+import {Badge} from "antd";
 
-const UserChats = ({chats, interlocutor}) => {
+const UserChats = ({chats, interlocutor, counter}) => {
 
-    return (<div className="textContainer">
-        {chats ? <div>
-            <div className="activeContainer">
-                <h2>{chats.map(chat => {
-                    const chatData = interlocutor(chat)
-                    return (
-                        <Link to={`/messages?room=${chatData.room}`}>{chatData.name}</Link>
-                    )
-                })}</h2>
-            </div>
-        </div> : null}
+    return (<div className={classes.UserChats}>
+        {chats ? chats.map(chat => {
+            const chatData = interlocutor(chat, 'hisName')
+            const notRead = counter(chat)
+            return (
+                <Link to={`/messages?room=${chatData.room}`}>
+                    <div className={classes.UserChat}>
+                        {chatData.name}
+                        {!!notRead ?  <Badge count={notRead} /> : null}
+                    </div>
+                </Link>
+            )
+        }) : null}
     </div>);
 }
 

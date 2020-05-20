@@ -3,31 +3,58 @@ import {
     API_FETCH_CREATE_NEW_ROOM, API_FETCH_GET_CHAT_HISTORY,
     API_FETCH_SET_CHAT_HISTORY, API_FETCH_USER_CHATS
 } from "../../constants/api.constants";
-import {getChatMessages, getLoaded, getUserChats} from "../reducers/chat.reducer";
+import {
+    getLoaded,
+    getUserChats,
+    setActiveChatMessages, setCounter,
+    setSocketMessage
+} from "../reducers/chat.reducer";
 import {FINISH, START} from "../../constants/others.constants";
 import authHeader from "../../services/auth-header";
+const user = JSON.parse(localStorage.getItem('user'))
 
 export const getUserChatsApi = data => async dispatch => {
     dispatch(getLoaded(START))
     const response = await axios.post(API_FETCH_USER_CHATS, data, {headers: authHeader()})
-    dispatch(getUserChats(response.data));
+
+    let counter = 0
+
+    response.data.map(chat => {
+        if (chat.lastSendUserId !== user.id) {
+            counter = counter + chat.notReadCounter
+        }
+    })
+
+    dispatch(getUserChats({
+        chats: response.data,
+        counter
+    }));
     dispatch(getLoaded(FINISH))
-    return response.data;
+    return response.data
 }
 
-export const getChatHisroty = data => async dispatch => {
+export const setMessageSocketAction = data => async dispatch => {
+    dispatch(setSocketMessage(data));
+}
+
+export const setCounterFromSocket = data => async dispatch => {
+    dispatch(setCounter(data));
+}
+
+export const setActiveChatHistory = data => async dispatch => {
     dispatch(getLoaded(START))
     const response = await axios.post(API_FETCH_GET_CHAT_HISTORY, data, {headers: authHeader()})
-    dispatch(getChatMessages(response.data));
+    dispatch(setActiveChatMessages({
+        ...data,
+        messages: response.data,
+        fetchAuthor: user.id
+    }));
     dispatch(getLoaded(FINISH))
     return response.data;
 }
 
 export const setChatHisroty = data => async dispatch => {
-    dispatch(getLoaded(START))
     const response = await axios.post(API_FETCH_SET_CHAT_HISTORY, data, {headers: authHeader()})
-    dispatch(getChatMessages(response.data));
-    dispatch(getLoaded(FINISH))
     return response.data;
 }
 

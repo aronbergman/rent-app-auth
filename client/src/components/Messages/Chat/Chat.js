@@ -11,92 +11,100 @@ import './Chat.scss';
 import {USER} from "../../../constants/roles.constants";
 import withAuth from "../../../HOC/withAuth";
 import {connect} from "react-redux";
-import {getUserChatsApi, getChatHisroty, setChatHisroty} from "../../../redux/thunks/chats.thunks";
+import {getUserChatsApi, setActiveChatHistory, setChatHisroty} from "../../../redux/thunks/chats.thunks";
 import DefaultLayout from "../../Layouts/default.layout";
+import ChatNotSelect from "../ChatNotSelect/ChatNotSelect";
+
+// Когда страница открыта в первый раз, показать все списки пользователя и загрушку на месте чата.
+// После выбора определенного чата, записать активный чат в стор и использовать нужный сокет
+// При начале чата показать историю и сам чат
 
 let socket;
 
 const Chat = (props) => {
-    const [name, setName] = useState('');
     const [room, setRoom] = useState('');
-    const [activeChat, setActiveChat] = useState({});
     const [message, setMessage] = useState('');
-    const [messages, setMessages] = useState([]);
+    // const [messages, setMessages] = useState([]);
     const ENDPOINT = 'http://localhost:5050/'
+    const user = JSON.parse(localStorage.getItem('user'))
 
     useEffect(() => {
         const {room} = queryString.parse(props.location.search);
-
-        props.getUserChatsApi(props.userData.id).then(data => {
-            data.map(chat => {
-                if (chat.room === room) {
-                    const actChat = interlocutor(chat)
-                    setActiveChat(actChat)
-                }
-            });
-        })
-
-        const name = props.userData.username
+        const user = JSON.parse(localStorage.getItem('user'))
+        socket = io(ENDPOINT);
+        setRoom(room);
         if (room) {
-
-            props.getChatHistory(room).then(roomMessages => {
-                roomMessages.map(message => {
-                    setMessages(messages => [...messages, {
-                        text: message.message,
-                        user: message.from,
-                        id: message.id,
-                        time: message.updatedAt
-                    }]);
-                })
-            });
+            props.setActiveChatHistory({room, user})
+            //     .then(roomMessages => {
+            //     roomMessages.map(message => {
+            //         setMessages(messages => [...messages, {
+            //             text: message.message,
+            //             user: message.from,
+            //             id: message.id,
+            //             time: message.updatedAt
+            //         }]);
+            //     })
+            // });
         }
 
-        socket = io(ENDPOINT);
-
-        setRoom(room);
-        setName(name)
-
-        socket.emit('join', {name, room}, (error) => {
-            if (error) {
-                alert(error);
-            }
-        });
-    }, [ENDPOINT, props.location.search]);
+    }, [props.location.search]);
 
     useEffect(() => {
         socket.on('message', message => {
-            setMessages(messages => [...messages, message]);
+            console.log('message in client, finish!', message)
+            // setMessages(messages => [...messages, message]);
+            // console.log('messages', messages)
         });
 
-        socket.on("roomData", (data) => {
-            // setUsers(users);
-            console.log('roomData', data)
-        });
+        // socket.on("roomData", (data) => {
+        //     // setUsers(users);
+        //     console.log('roomData', data)
+        // });
     }, []);
 
     const sendMessage = (event) => {
         event.preventDefault();
 
-        props.setChatHistory({
-            room: room,
-            message: message,
-            from: props.userData.id
-        })
+        // props.setChatHistory({
+        //     room: room,
+        //     message: message,
+        //     from: +props.userData.id
+        // })
+
+        const {name} = interlocutor(props.activeChat, 'myName')
 
         if (message) {
-            socket.emit('sendMessage', message, () => setMessage(''));
+            const time = Date.now();
+            const data = {
+                message,
+                room: props.activeChat.room,
+                name,
+                from: +props.userData.id,
+                updatedAt: time,
+                id: time
+            }
+            socket.emit('sendMessage', data, () => {
+                setMessage('')
+                props.setChatHistory(data)
+                //    Пушим в историю это сообщение
+            });
         }
     }
 
-    messages.sort((a, b) => (a.id - b.id))
+    const activeChat = [...props.activeChat.messages].sort((a, b) => (a.id - b.id))
+    const sortUserChats = props.userChats ? [...props.userChats].sort((a, b) => (a.id - b.id)) : null
 
-    console.log('activeChat', activeChat)
-
-    const interlocutor = (chat) => {
+    const interlocutor = (chat, whyNameParse) => {
         let user = '';
-        (chat.fromUserId !== props.userData.id)
-            ? user = chat.fromUserName
-            : user = chat.toUserName;
+        if (whyNameParse !== 'myName') {
+            (chat.fromUserId !== props.userData.id)
+                ? user = chat.fromUserName
+                : user = chat.toUserName;
+        } else {
+            (chat.toUserId !== props.userData.id)
+                ? user = chat.fromUserName
+                : user = chat.toUserName;
+        }
 
         return {
             room: chat.room,
@@ -104,15 +112,30 @@ const Chat = (props) => {
         }
     }
 
+    const notReadCounter = chat => {
+        if (user.id !== chat.lastSendUserId) {
+            return chat.notReadCounter
+        }
+        return null
+    }
+
+    if (props.socketMessage) {
+        console.log('socketMessage', props.socketMessage.text)
+    }
+
     return (
         <DefaultLayout>
             <div className="outerContainer">
-                <UserChats chats={props.userChats} interlocutor={interlocutor}/>
-                <div className="container">
-                    <InfoBar name={activeChat.name}/>
-                    <Messages messages={messages} myName={props.userData.id}/>
-                    <Input message={message} setMessage={setMessage} sendMessage={sendMessage}/>
-                </div>
+                <UserChats chats={sortUserChats} interlocutor={interlocutor} counter={notReadCounter}/>
+                {
+                    props.activeChat.room
+                        ? <div className="container">
+                            <InfoBar activeChat={props.activeChat} interlocutor={interlocutor}/>
+                            <Messages messages={activeChat} myName={props.userData.id}/>
+                            <Input message={message} setMessage={setMessage} sendMessage={sendMessage}/>
+                        </div>
+                        : <ChatNotSelect/>
+                }
             </div>
         </DefaultLayout>
     );
@@ -121,12 +144,13 @@ const Chat = (props) => {
 const mapState = state => ({
     userData: state.user.userData,
     userChats: state.chat.userChats,
-    activeChatMessage: state.chat.chatMessages
+    socketMessage: state.chat.socketMessage,
+    activeChat: state.chat.activeChat
 })
 
 const mapDispatch = dispatch => ({
     getUserChatsApi: id => dispatch(getUserChatsApi({id})),
-    getChatHistory: room => dispatch(getChatHisroty({room})),
+    setActiveChatHistory: data => dispatch(setActiveChatHistory(data)),
     setChatHistory: data => dispatch(setChatHisroty(data))
 })
 

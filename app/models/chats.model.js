@@ -15,8 +15,14 @@ module.exports = (sequelize, Sequelize) => {
         room: {
             type: Sequelize.STRING
         },
-        status: {
+        status: { // для отделения черновиков от активных
             type: Sequelize.STRING
+        },
+        lastSendUserId: {
+            type: Sequelize.INTEGER
+        },
+        notReadCounter: {
+            type: Sequelize.INTEGER
         }
     })
     return Chats;
