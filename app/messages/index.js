@@ -1,11 +1,3 @@
-const http = require('http');
-const express = require('express');
-const socketio = require('socket.io');
-const cors = require('cors');
-const app = express();
-const server = http.createServer(app);
-const io = socketio(server);
-
 module.exports = function (io) {
     io.on('connect', (socket) => {
         socket.on('join', ({user, room}, callback) => {
@@ -13,7 +5,7 @@ module.exports = function (io) {
             socket.user = {room, user}
 
             socket.join(room);
-            socket.broadcast.to(room).emit('notification', {user: 'admin', message: `${user} в сети`});
+            socket.broadcast.to(room).emit('notification', {isOnline: true, room});
             callback();
         });
 
@@ -30,9 +22,14 @@ module.exports = function (io) {
 
         socket.on('disconnect', () => {
             // const user = removeUser(socket.id);
+            const user = socket.user
 
-            if (socket.user)
-                console.log('disconnect', socket.user)
+            if (user) {
+                console.log('disconnect', user)
+                if (user.room)
+                    socket.broadcast.to(user.room).emit('notification', {isOnline: false, room: user.room});
+            }
+
             // if (user) {
             // io.to(user.room).emit('message', {user: 'admin', text: `${user.name} не в сети`});
             // io.to(user.room).emit('roomData', {room: user.room, users: getUsersInRoom(user.room)});

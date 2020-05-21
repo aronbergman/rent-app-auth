@@ -75,6 +75,24 @@ const chatSlice = createSlice({
                 }
             ]
         },
+        setNotification(state, action) {
+            const data = state.userChats.filter(i => i.room === action.payload.room)
+            let otherChats = state.userChats
+            const index = state.userChats.findIndex(i => i.room === action.payload.room);
+            if (index !== -1) {
+                otherChats.splice(index, 1);
+            }
+
+            state.userChats = [
+                ...otherChats,
+                {
+                    ...data[0],
+                    notReadCounter: data[0].notReadCounter + 1,
+                    isOnline: action.payload.isOnline
+                }
+            ]
+
+        }
     }
 })
 
@@ -83,7 +101,8 @@ export const {
     getUserChats,
     setSocketMessage,
     setActiveChatMessages,
-    setCounter
+    setCounter,
+    setNotification
 } = chatSlice.actions
 
 export default chatSlice.reducer

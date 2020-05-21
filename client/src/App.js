@@ -32,7 +32,7 @@ import {connect} from "react-redux";
 import {
     getUserChatsApi,
     setCounterFromSocket,
-    setMessageSocketAction
+    setMessageSocketAction, setStatusRoom
 } from "./redux/thunks/chats.thunks";
 import {Badge, message as m, notification} from "antd";
 import SmileOutlined from "@ant-design/icons/lib/icons/SmileOutlined";
@@ -95,8 +95,8 @@ class App extends Component {
 
                     console.log('message in client, finish!', message)
                 });
-                socket.on('notification', message => {
-                    m.success(`${message.message}`)
+                socket.on('notification', data => {
+                    if (data.room) this.props.setStatusRoom(data)
                 });
             })
         }
@@ -165,8 +165,9 @@ class App extends Component {
 
                             {currentUser ? (
                                 <div className="navbar-nav ml-auto">
-                                    { (this.props.allCounterNotRead !== 0) && <li className="nav-item">
-                                        <Link to={'/messages'} className="nav-link">Сообщений: <Badge count={this.props.allCounterNotRead}/></Link>
+                                    {(this.props.allCounterNotRead !== 0) && <li className="nav-item">
+                                        <Link to={'/messages'} className="nav-link">Сообщений: <Badge
+                                            count={this.props.allCounterNotRead}/></Link>
                                     </li>}
                                     <li className="nav-item">
                                         <Link to={"/profile"} className="nav-link">{currentUser.username}</Link>
@@ -239,7 +240,8 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
     getUserChatsApi: id => dispatch(getUserChatsApi({id})),
     setMessageSocketAction: message => dispatch(setMessageSocketAction(message)),
-    setCounterFromSocket: message => dispatch(setCounterFromSocket(message))
+    setCounterFromSocket: message => dispatch(setCounterFromSocket(message)),
+    setStatusRoom: room => dispatch(setStatusRoom(room))
     // getChatHistory: room => dispatch(getChatHisroty({room})),
     // setChatHistory: data => dispatch(setChatHisroty(data))
 })

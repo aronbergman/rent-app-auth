@@ -6,7 +6,7 @@ import {
 import {
     getLoaded,
     getUserChats,
-    setActiveChatMessages, setCounter,
+    setActiveChatMessages, setCounter, setNotification,
     setSocketMessage
 } from "../reducers/chat.reducer";
 import {FINISH, START} from "../../constants/others.constants";
@@ -39,6 +39,10 @@ export const setMessageSocketAction = data => async dispatch => {
 
 export const setCounterFromSocket = data => async dispatch => {
     dispatch(setCounter(data));
+}
+
+export const setStatusRoom = data => async dispatch => {
+    dispatch(setNotification(data));
 }
 
 export const setActiveChatHistory = data => async dispatch => {
