@@ -74,7 +74,7 @@ const ProductTable = props => {
 
     return (
         <div className={classes.Container}>
-            <div className={classes.SearchLength}> Страница обновлена: {dateParser(dateLoadingData)} <a onClick={reloadingHandler} href="#">Обновить</a></div>
+            <div className={classes.SearchLength}>Новые объявления загрузятся автоматически</div>
             <InfiniteScroll
                 pageStart={0}
                 loadMore={loadFunc}

@@ -136,8 +136,8 @@ exports.createNewRoom = (req, res) => {
                 toUserId: toId,
                 status: 0,
                 room
-            }).then(() => {
-                res.status(200).send({room});
+            }).then(response => {
+                res.status(200).send(response);
             })
         })
     })

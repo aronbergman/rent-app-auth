@@ -16,16 +16,11 @@ import DefaultLayout from "../../Layouts/default.layout";
 import ChatNotSelect from "../ChatNotSelect/ChatNotSelect";
 import baseUrl from "../../../baseurl";
 
-// Когда страница открыта в первый раз, показать все списки пользователя и загрушку на месте чата.
-// После выбора определенного чата, записать активный чат в стор и использовать нужный сокет
-// При начале чата показать историю и сам чат
-
 let socket;
 
 const Chat = (props) => {
-    const [room, setRoom] = useState('');
+    // const [room, setRoom] = useState('');
     const [message, setMessage] = useState('');
-    // const [messages, setMessages] = useState([]);
     const ENDPOINT = baseUrl()
     const user = JSON.parse(localStorage.getItem('user'))
 
@@ -33,19 +28,9 @@ const Chat = (props) => {
         const {room} = queryString.parse(props.location.search);
         const user = JSON.parse(localStorage.getItem('user'))
         socket = io(ENDPOINT);
-        setRoom(room);
+        // setRoom(room);
         if (room) {
             props.setActiveChatHistory({room, user})
-            //     .then(roomMessages => {
-            //     roomMessages.map(message => {
-            //         setMessages(messages => [...messages, {
-            //             text: message.message,
-            //             user: message.from,
-            //             id: message.id,
-            //             time: message.updatedAt
-            //         }]);
-            //     })
-            // });
         }
 
     }, [props.location.search]);
@@ -56,21 +41,10 @@ const Chat = (props) => {
             // setMessages(messages => [...messages, message]);
             // console.log('messages', messages)
         });
-
-        // socket.on("roomData", (data) => {
-        //     // setUsers(users);
-        //     console.log('roomData', data)
-        // });
     }, []);
 
     const sendMessage = (event) => {
         event.preventDefault();
-
-        // props.setChatHistory({
-        //     room: room,
-        //     message: message,
-        //     from: +props.userData.id
-        // })
 
         const {name} = interlocutor(props.activeChat, 'myName')
 

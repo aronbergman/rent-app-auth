@@ -127,13 +127,13 @@ class App extends Component {
                         <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                         <Navbar.Collapse id="basic-navbar-nav">
                             <Nav className="mr-auto">
-                                <NavLink to="/rent" className="nav-link" activeClassName="active">АРЕНДА</NavLink>
-                                <NavLink to="/dating" className="nav-link" activeClassName="active">ДОСКА
-                                    ОБЪЯВЛЕНИЙ</NavLink>
-                                <NavLink to="/news" className="nav-link" activeClassName="active">НОВОСТИ</NavLink>
+                                <NavLink to="/rent" className="nav-link" activeClassName="active">Аренда</NavLink>
+                                <NavLink to="/dating" className="nav-link" activeClassName="active">Доска
+                                    ообъявлений</NavLink>
+                                <NavLink to="/news" className="nav-link" activeClassName="active">Блог</NavLink>
 
                                 {(showAdminBoard || showModeratorBoard || currentUser) &&
-                                <NavDropdown title='МОЙ ПРОФИЛЬ' id="basic-nav-dropdown">
+                                <NavDropdown title='Мой кабинет' id="basic-nav-dropdown">
                                     {currentUser && (
                                         <Link to={"/user"} activeClassName="active" className="dropdown-item">
                                             Мои объявления

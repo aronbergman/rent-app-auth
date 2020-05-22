@@ -19,7 +19,9 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING
         },
         lastSendUserId: {
-            type: Sequelize.INTEGER
+            type: Sequelize.INTEGER,
+            allowNull: false,
+            defaultValue: '0'
         },
         notReadCounter: {
             type: Sequelize.INTEGER

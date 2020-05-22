@@ -45,8 +45,10 @@ const chatSlice = createSlice({
                 ...data[0]
             }
 
-            if (data[0].lastSendUserId !== action.payload.fetchAuthor) {
-                state.allCounterNotRead = state.allCounterNotRead - data[0].notReadCounter
+            if (data[0]) {
+                if (data[0].lastSendUserId !== action.payload.fetchAuthor) {
+                    state.allCounterNotRead = state.allCounterNotRead - data[0].notReadCounter
+                }
             }
 
             state.userChats = [
@@ -58,12 +60,12 @@ const chatSlice = createSlice({
             ]
         },
         setCounter(state, action) {
-                const data = state.userChats.filter(i => i.room === action.payload.room)
-                let otherChats = state.userChats
-                const index = state.userChats.findIndex(i => i.room === action.payload.room);
-                if (index !== -1) {
-                    otherChats.splice(index, 1);
-                }
+            const data = state.userChats.filter(i => i.room === action.payload.room)
+            let otherChats = state.userChats
+            const index = state.userChats.findIndex(i => i.room === action.payload.room);
+            if (index !== -1) {
+                otherChats.splice(index, 1);
+            }
 
             state.allCounterNotRead = state.allCounterNotRead + 1
 

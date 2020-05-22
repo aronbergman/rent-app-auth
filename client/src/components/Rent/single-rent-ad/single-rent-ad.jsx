@@ -12,6 +12,7 @@ import {Link} from "react-router-dom";
 import DefaultLayout from "../../Layouts/default.layout";
 import baseUrl from "../../../baseurl";
 import {handlerStartNewRoom} from "../../../redux/thunks/chats.thunks";
+import FirstMessageForm from "./first-message-form/FirstMessageForm";
 
 const host = baseUrl()
 
@@ -21,6 +22,7 @@ const SingleRentAd = props => {
     const [show, setShow] = useState(false);
     const [password, setPassword] = useState(false);
     const [errorForm, setErrorForm] = useState(null);
+    const [createMessageForm, setCreateMessageForm] = useState(null);
 
     useEffect(() => {
         const id = props.match.params.id
@@ -57,7 +59,12 @@ const SingleRentAd = props => {
             }
         }).then(data => {
             console.log('ROOM IN FRONT', data)
-            props.history.push(`/messages?room=${data.room}`)
+            // props.history.push(`/messages?room=${data.room}`)
+            setCreateMessageForm({
+                ...data,
+                visible: true,
+                ad: props.ad
+            })
         })
     }
 
@@ -137,9 +144,9 @@ const SingleRentAd = props => {
 
                 <div className={classes.Section}>
 
-                    <Button shape="round" size='large' onClick={handlePrivatMessage}>
+                    {!!props.ad.userId && <Button shape="round" size='large' onClick={handlePrivatMessage}>
                         Личное сообщение
-                    </Button>
+                    </Button>}
 
                     {!!props.ad.email &&
                     <p className={classes.Email}>Email: <Link to={`mailto:${props.ad.email}`}>{props.ad.email}</Link>
@@ -160,6 +167,11 @@ const SingleRentAd = props => {
                     </Carousel>
                 </div>}
             </div>
+
+            {createMessageForm && <FirstMessageForm
+                data={createMessageForm}
+                setCreateMessageForm={setCreateMessageForm}
+            />}
 
         </DefaultLayout> : <Loader/>
     );

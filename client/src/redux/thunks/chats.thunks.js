@@ -4,7 +4,7 @@ import {
     API_FETCH_SET_CHAT_HISTORY, API_FETCH_USER_CHATS, API_FETCH_USER_DISCONNECT
 } from "../../constants/api.constants";
 import {
-    getLoaded, getUserChats, setActiveChatMessages,
+    getLoaded, getUserChats, setActiveChatMessages, setChatMessages,
     setCounter, setNotification, setSocketMessage
 } from "../reducers/chat.reducer";
 import {FINISH, START} from "../../constants/others.constants";
@@ -73,26 +73,26 @@ export const setChatHisroty = data => async dispatch => {
 }
 
 export const handlerStartNewRoom = data => async dispatch => {
-    let room = null
+    let startChat = null
     await axios.post(API_FETCH_USER_CHATS, {
         id: data.senderMessage.id
     }, {headers: authHeader()})
         .then(async responseUserChats => {
-            responseUserChats.data.map(chat => {
+            responseUserChats.data.chats.map(chat => {
                 if (chat.fromUserId === data.senderMessage.id && chat.toUserId === data.thisAd.authorId ||
                     chat.fromUserId === data.thisAd.authorId && chat.toUserId === data.senderMessage.id) {
-                    room = {room: chat.room}
+                    startChat = chat
                 }
             })
 
-            if (!room || !responseUserChats.data.length) {
+            if (!startChat || !responseUserChats.data.chats.length) {
                 await axios.post(API_FETCH_CREATE_NEW_ROOM, {
                     fromId: data.senderMessage.id,
                     toId: data.thisAd.authorId
                 }, {headers: authHeader()}).then(res => {
-                    room = res.data
+                    startChat = res.data
                 })
             }
         })
-    return room
+    return startChat
 }
