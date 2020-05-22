@@ -28,12 +28,6 @@ module.exports = function (app) {
         controller.setUserChatHistory
     );
 
-    // app.post(
-    //     "/api/chats/set-new-chat",
-    //     [authJwt.verifyToken],
-    //     controller.setUserChatHistory
-    // );
-
     app.post(
         "/api/chats/create-new-room",
         [authJwt.verifyToken],

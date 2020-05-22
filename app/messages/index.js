@@ -1,8 +1,16 @@
+const db = require("../models");
+const User = db.user;
+
 module.exports = function (io) {
+
     io.on('connect', (socket) => {
         socket.on('join', ({user, room}, callback) => {
-            console.log('join in server!', user, room)
+            // console.log('join in server!', user, room)
+
+
             socket.user = {room, user}
+
+            User.update({isOnline: 1}, {where: {id: user}})
 
             socket.join(room);
             socket.broadcast.to(room).emit('notification', {isOnline: true, room});
@@ -15,17 +23,20 @@ module.exports = function (io) {
         });
 
         socket.on('sendMessage', (message, callback) => {
-            console.log('message in server!', message)
+            // console.log('message in server!', message)
             io.to(message.room).emit('message', message);
             callback();
         });
 
-        socket.on('disconnect', () => {
+        socket.on('disconnect', async () => {
             // const user = removeUser(socket.id);
             const user = socket.user
 
             if (user) {
                 console.log('disconnect', user)
+
+                User.update({isOnline: 0}, {where: {id: user.user}})
+
                 if (user.room)
                     socket.broadcast.to(user.room).emit('notification', {isOnline: false, room: user.room});
             }

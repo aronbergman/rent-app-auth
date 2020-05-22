@@ -30,6 +30,7 @@ import SingleDatingAd from "./components/Dating/single-dating-ad/single-dating-a
 import Chat from "./components/Messages/Chat/Chat";
 import {connect} from "react-redux";
 import {
+    fetchUserDisconnect,
     getUserChatsApi,
     setCounterFromSocket,
     setMessageSocketAction, setStatusRoom
@@ -80,7 +81,8 @@ class App extends Component {
                     const {room} = queryString.parse(window.location.search);
                     if (message.room === room) {
                         this.props.setMessageSocketAction(message)
-                    } else {
+                    } 
+                    if (user.id !== message.from){
                         this.props.setCounterFromSocket(message)
                         notification.info({
                             message: `${message.name}`,

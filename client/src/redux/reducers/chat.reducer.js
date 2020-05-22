@@ -87,10 +87,11 @@ const chatSlice = createSlice({
                 ...otherChats,
                 {
                     ...data[0],
-                    notReadCounter: data[0].notReadCounter + 1,
                     isOnline: action.payload.isOnline
                 }
             ]
+        },
+        setFirstUsersStatus(state, action) {
 
         }
     }
@@ -102,7 +103,8 @@ export const {
     setSocketMessage,
     setActiveChatMessages,
     setCounter,
-    setNotification
+    setNotification,
+    setFirstUsersStatus
 } = chatSlice.actions
 
 export default chatSlice.reducer

@@ -1,36 +1,46 @@
 import axios from "axios";
 import {
     API_FETCH_CREATE_NEW_ROOM, API_FETCH_GET_CHAT_HISTORY,
-    API_FETCH_SET_CHAT_HISTORY, API_FETCH_USER_CHATS
+    API_FETCH_SET_CHAT_HISTORY, API_FETCH_USER_CHATS, API_FETCH_USER_DISCONNECT
 } from "../../constants/api.constants";
 import {
-    getLoaded,
-    getUserChats,
-    setActiveChatMessages, setCounter, setNotification,
-    setSocketMessage
+    getLoaded, getUserChats, setActiveChatMessages,
+    setCounter, setNotification, setSocketMessage
 } from "../reducers/chat.reducer";
 import {FINISH, START} from "../../constants/others.constants";
 import authHeader from "../../services/auth-header";
+
 const user = JSON.parse(localStorage.getItem('user'))
 
 export const getUserChatsApi = data => async dispatch => {
     dispatch(getLoaded(START))
     const response = await axios.post(API_FETCH_USER_CHATS, data, {headers: authHeader()})
-
+    const {chats, usersStatus} = response.data
     let counter = 0
 
-    response.data.map(chat => {
+    response.data.chats.map(chat => {
         if (chat.lastSendUserId !== user.id) {
             counter = counter + chat.notReadCounter
         }
     })
 
-    dispatch(getUserChats({
-        chats: response.data,
-        counter
-    }));
+    const chatsAndStatus = []
+
+    for (let i = 0; i < chats.length; i++) {
+        let interlocutor = 0;
+        if (chats[i].fromUserId === user.id) {
+            interlocutor = chats[i].toUserId
+        } else {
+            interlocutor = chats[i].fromUserId
+        }
+
+        const interlocutorStatus = usersStatus.filter(i => i.userId === interlocutor)
+        chatsAndStatus.push({...chats[i], isOnline: interlocutorStatus[0].isOnline})
+    }
+
+    dispatch(getUserChats({chats: chatsAndStatus, counter}));
     dispatch(getLoaded(FINISH))
-    return response.data
+    return chatsAndStatus
 }
 
 export const setMessageSocketAction = data => async dispatch => {
@@ -71,7 +81,6 @@ export const handlerStartNewRoom = data => async dispatch => {
             responseUserChats.data.map(chat => {
                 if (chat.fromUserId === data.senderMessage.id && chat.toUserId === data.thisAd.authorId ||
                     chat.fromUserId === data.thisAd.authorId && chat.toUserId === data.senderMessage.id) {
-                    // Чат найден, вернул номер комнаты
                     room = {room: chat.room}
                 }
             })
@@ -81,7 +90,6 @@ export const handlerStartNewRoom = data => async dispatch => {
                     fromId: data.senderMessage.id,
                     toId: data.thisAd.authorId
                 }, {headers: authHeader()}).then(res => {
-                    // Создан чат, возвращаю номер комнаты
                     room = res.data
                 })
             }

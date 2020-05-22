@@ -32,5 +32,6 @@ export const API_CREATE_POST = `${API_URL}/news/create-post`
 
 export const API_FETCH_USER_CHATS = `${API_URL}/chats/user-chats`
 export const API_FETCH_GET_CHAT_HISTORY = `${API_URL}/chats/get-chat-history`
+export const API_FETCH_USER_DISCONNECT = `${API_URL}/chats/user-disconnect`
 export const API_FETCH_SET_CHAT_HISTORY = `${API_URL}/chats/set-chat-history`
 export const API_FETCH_CREATE_NEW_ROOM = `${API_URL}/chats/create-new-room`

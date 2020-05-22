@@ -15,7 +15,7 @@ const UserChats = ({chats, interlocutor, counter}) => {
                 <Link to={`/messages?room=${chatData.room}`}>
                     <div className={classes.UserChat}>
                         {chatData.name}
-                        {chat.isOnline ? <Badge count="онлайн" style={{
+                        {!!chat.isOnline ? <Badge count="онлайн" style={{
                             backgroundColor: '#fff',
                             color: 'green',
                             boxShadow: '0 0 0 1px #d9d9d9 inset'

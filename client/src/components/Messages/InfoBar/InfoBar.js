@@ -1,17 +1,13 @@
 import React from 'react';
 
-import onlineIcon from '../../../icons/onlineIcon.png';
-import closeIcon from '../../../icons/closeIcon.png';
-
 import './InfoBar.scss';
 
-const InfoBar = ({ activeChat, interlocutor }) => {
+const InfoBar = ({activeChat, interlocutor}) => {
     console.log('activeChat', activeChat)
     const {name} = interlocutor(activeChat, 'hisName')
     return (
         <div className="infoBar">
             <div className="leftInnerContainer">
-                <img className="onlineIcon" src={onlineIcon} alt="online icon" />
                 <h3>{name}</h3>
             </div>
             <div className="rightInnerContainer">

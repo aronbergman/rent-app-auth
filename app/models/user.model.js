@@ -11,6 +11,9 @@ module.exports = (sequelize, Sequelize) => {
         },
         password: {
             type: Sequelize.STRING
+        },
+        isOnline: {
+            type: Sequelize.TINYINT(1)
         }
     });
 

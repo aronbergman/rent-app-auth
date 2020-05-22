@@ -15,9 +15,11 @@ const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
-Sentry.init({ dsn: 'https://80ec2091533941ef80154e3220bae060@o392602.ingest.sentry.io/5240421' });
+if (process.env.NODE_ENV === 'production') {
+    Sentry.init({dsn: 'https://80ec2091533941ef80154e3220bae060@o392602.ingest.sentry.io/5240421'});
 // The request handler must be the first middleware on the app
-app.use(Sentry.Handlers.requestHandler());
+    app.use(Sentry.Handlers.requestHandler());
+}
 
 const multer = require('multer')
 

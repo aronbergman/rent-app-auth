@@ -7,6 +7,7 @@ const Messages = db.messages;
 exports.getUserChats = (req, res) => {
 
     const chats = []
+    const interlocutor = []
 
     Chats.findAll({
         limit: 100,
@@ -17,15 +18,31 @@ exports.getUserChats = (req, res) => {
     })
         .then(fromUserId => {
             chats.push(...fromUserId)
+
+            for (let i = 0; i < fromUserId.length; i++) interlocutor.push(fromUserId[i].toUserId);
+
             Chats.findAll({
                 limit: 100,
-                where: {
-                    toUserId: req.body.id
-                },
+                where: {toUserId: req.body.id},
                 order: [['createdAt', 'DESC']]
             }).then(toUserId => {
                 chats.push(...toUserId)
-                res.status(200).send(chats);
+
+                for (let i = 0; i < toUserId.length; i++) interlocutor.push(toUserId[i].fromUserId);
+
+                User.findAll({
+                    where: {id: interlocutor}
+                })
+                    .then(data => {
+                        const usersStatus = []
+                        data.map(user => {
+                            usersStatus.push({
+                                userId: user.id,
+                                isOnline: user.isOnline
+                            })
+                        })
+                        res.status(200).send({chats, usersStatus});
+                    })
             })
         })
         .catch(err => {
