@@ -1,8 +1,8 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import Header from "./../Header/Header.component";
 import classes from './styles.module.scss'
-import {connect} from "react-redux";
-import {handlerNews} from "../../redux/thunks/news.thunks";
+import { connect } from "react-redux";
+import { handlerNews } from "../../redux/thunks/news.thunks";
 import CardsContainer from "../../containers/NewsCardsContainer/NewsCardsContainer.component";
 import Loader from "../Loader/Loader";
 import DefaultLayout from "../Layouts/default.layout";
@@ -15,10 +15,6 @@ const News = props => {
 
     return (
         <div>
-            <Header>
-                <h2>Новости</h2>
-            </Header>
-
             {props.news ? <DefaultLayout>
                 <div className={classes.News}>
                     <CardsContainer

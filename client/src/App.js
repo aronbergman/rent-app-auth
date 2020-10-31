@@ -1,41 +1,35 @@
-import React, {Component} from "react";
-import {BrowserRouter as Router, Switch, Route, Link, NavLink, Redirect} from "react-router-dom";
+import React, { Component } from "react";
+import { BrowserRouter as Router, Switch, Route, Link, NavLink, Redirect } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.scss";
 import io from "socket.io-client";
 import queryString from 'query-string';
-import {withRouter} from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 import AuthService from "./services/auth.service";
 
 import Login from "./components/login.component";
 import Register from "./components/register.component";
-import Home from "./components/home.component";
 import Profile from "./components/profile.component";
 import BoardUser from "./components/board-user.component";
 import BoardModerator from "./components/board-moderator.component";
 import AdminPanel from "./components/board-admin.component";
 import RentFilter from "./components/Rent/filter.component";
 import CreateAdRent from "./components/Rent/create-ad.component";
-import DatingHomePage from "./components/Dating/DatingHomePage.component";
-import DatingList from "./components/Dating/single-category/DatingList.component";
 import News from "./components/News/News.component";
 import SingleRentAd from "./components/Rent/single-rent-ad/single-rent-ad";
 import Footer from './components/Footer/footer.component'
 import NewsCreator from "./components/Admin/News/NewsCreator/NewsCreator.component";
 import SingleNews from "./components/News/SingleNews/SingleNews.component";
-import {Nav, Navbar, NavDropdown} from "react-bootstrap";
-import CreateDatingForm from "./components/Dating/CreateAd/CreateDatingForm.component";
-import SingleDatingAd from "./components/Dating/single-dating-ad/single-dating-ad";
+import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 import Chat from "./components/Messages/Chat/Chat";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import {
-    fetchUserDisconnect,
     getUserChatsApi,
     setCounterFromSocket,
     setMessageSocketAction, setStatusRoom
 } from "./redux/thunks/chats.thunks";
-import {Badge, message as m, notification} from "antd";
+import { Badge, notification } from "antd";
 import SmileOutlined from "@ant-design/icons/lib/icons/SmileOutlined";
 import baseUrl from "./baseurl";
 
@@ -70,7 +64,7 @@ class App extends Component {
 
             this.props.getUserChatsApi(userData.id).then(data => {
                 data.map(chat => {
-                    socket.emit('join', {user: userData.id, room: chat.room}, (error) => {
+                    socket.emit('join', { user: userData.id, room: chat.room }, (error) => {
                         if (error) {
                             alert(error);
                         }
@@ -78,11 +72,11 @@ class App extends Component {
                 });
             }).then(() => {
                 socket.on('message', (message) => {
-                    const {room} = queryString.parse(window.location.search);
+                    const { room } = queryString.parse(window.location.search);
                     if (message.room === room) {
                         this.props.setMessageSocketAction(message)
-                    } 
-                    if (user.id !== message.from){
+                    }
+                    if (user.id !== message.from) {
                         this.props.setCounterFromSocket(message)
                         notification.info({
                             message: `${message.name}`,
@@ -91,7 +85,7 @@ class App extends Component {
                             onClick: () => this.setState({
                                 readyToRedirect: `/messages?room=${message.room}`
                             }),
-                            icon: <SmileOutlined style={{color: '#108ee9'}}/>,
+                            icon: <SmileOutlined style={{ color: '#108ee9' }}/>,
                         });
                     }
 
@@ -117,20 +111,18 @@ class App extends Component {
     }
 
     render() {
-        const {currentUser, showModeratorBoard, showAdminBoard} = this.state;
+        const { currentUser, showModeratorBoard, showAdminBoard } = this.state;
 
         return (
             <Router>
                 <div>
                     <Navbar bg="light" expand="lg">
-                        <Navbar.Brand href="/">#bergmanbar</Navbar.Brand>
+                        <Navbar.Brand href="/">RENT RUSSIA</Navbar.Brand>
                         <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                         <Navbar.Collapse id="basic-navbar-nav">
                             <Nav className="mr-auto">
-                                <NavLink to="/rent" className="nav-link" activeClassName="active">Аренда</NavLink>
-                                <NavLink to="/dating" className="nav-link" activeClassName="active">Доска
-                                    ообъявлений</NavLink>
-                                <NavLink to="/news" className="nav-link" activeClassName="active">Блог</NavLink>
+                                <NavLink to="/rent" className="nav-link" activeClassName="active">ЛЕНТА</NavLink>
+                                <NavLink to="/news" className="nav-link" activeClassName="active">БЛОГ</NavLink>
 
                                 {(showAdminBoard || showModeratorBoard || currentUser) &&
                                 <NavDropdown title='Мой кабинет' id="basic-nav-dropdown">
@@ -183,13 +175,13 @@ class App extends Component {
                                 <div className="navbar-nav ml-auto">
                                     <li className="nav-item">
                                         <Link to={"/login"} className="nav-link">
-                                            Вход
+                                            ВОЙТИ
                                         </Link>
                                     </li>
 
                                     <li className="nav-item">
                                         <Link to={"/register"} className="nav-link">
-                                            Регистрация
+                                            ЗАРЕГИСТРИРОВАТЬСЯ
                                         </Link>
                                     </li>
                                 </div>
@@ -209,11 +201,6 @@ class App extends Component {
                         <Route exact path={"/rent"} component={RentFilter}/>
                         <Route exact path={"/rent/create-ad"} component={CreateAdRent}/>
                         <Route exact path={"/rent/:id"} component={SingleRentAd}/>
-
-                        <Route exact path={"/dating"} component={DatingHomePage}/>
-                        <Route exact path={"/dating/create"} component={CreateDatingForm}/>
-                        <Route exact path={"/dating/single/:id"} component={SingleDatingAd}/>
-                        <Route exact path={"/dating/:id"} component={DatingList}/>
 
                         <Route exact path={"/news"} component={News}/>
                         <Route exact path={"/news/:id"} component={SingleNews}/>
@@ -240,7 +227,7 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-    getUserChatsApi: id => dispatch(getUserChatsApi({id})),
+    getUserChatsApi: id => dispatch(getUserChatsApi({ id })),
     setMessageSocketAction: message => dispatch(setMessageSocketAction(message)),
     setCounterFromSocket: message => dispatch(setCounterFromSocket(message)),
     setStatusRoom: room => dispatch(setStatusRoom(room))

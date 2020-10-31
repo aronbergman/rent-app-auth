@@ -1,6 +1,6 @@
 import axios from "axios";
-import {API_FETCH_LOAD_FILES} from "../../constants/api.constants";
-import {setLoadedFiles, setMetroStation} from "../reducers/app.reducer";
+import { API_FETCH_LOAD_FILES } from "../../constants/api.constants";
+import { setLoadedFiles, setMetroStation } from "../reducers/app.reducer";
 
 export const handlerLoadFiles = data => async dispatch => {
     await axios.post(API_FETCH_LOAD_FILES, data).then((res) => {
@@ -26,19 +26,35 @@ export const handlerCityForLoadingMetro = data => async dispatch => {
         case '66':
             cityId = '3'
             break
+        case '52':
+            cityId = '66'
+            break
+        case '54':
+            cityId = '4'
+            break
+        case '16':
+            cityId = '88'
+            break
+        case '63':
+            cityId = '78'
+            break
         default:
-            cityId = '1'
+            cityId = null
     }
 
-    const API_METRO_STATION = `https://api.hh.ru/metro/${cityId}`;
-    await axios.get(API_METRO_STATION).then(({data}) => {
-        const stations = []
-        data.lines.map(line => {
-            let color = line.hex_color
-            line.stations.map(station => {
-                stations.push({name: station.name, color})
+    if (cityId) {
+        const API_METRO_STATION = `https://api.hh.ru/metro/${cityId}`;
+        await axios.get(API_METRO_STATION).then(({ data }) => {
+            const stations = []
+            data.lines.map(line => {
+                let color = line.hex_color
+                line.stations.map(station => {
+                    stations.push({ name: station.name, color })
+                })
             })
+            dispatch(setMetroStation(stations))
         })
-        dispatch(setMetroStation(stations))
-    })
+    } else {
+        dispatch(setMetroStation([]))
+    }
 }

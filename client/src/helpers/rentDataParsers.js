@@ -1,8 +1,9 @@
 import React from "react";
-import {dateParser} from "./dateParser";
+import { dateParser } from "./dateParser";
+import { Cities } from "./createCitiesList";
 
 export const parseAds = (data) => {
-    const {ads} = data
+    const { ads } = data
     let parseAds = []
 
     if (ads) {
@@ -30,7 +31,7 @@ export const parseAds = (data) => {
             const all = []
             for (let i = 0; i < stations.length; i++) {
                 let parseColor = stations[i].split('|')
-                all.push({name: parseColor[0], color: parseColor[1]})
+                all.push({ name: parseColor[0], color: parseColor[1] })
             }
             parseAd.metroStations = all
         }
@@ -63,7 +64,7 @@ export const RENOVATION_0 = '📦 Голые стены'
 export const RENOVATION_1 = '👵 Бабушкин'
 export const RENOVATION_2 = '🛏 Косметический'
 export const RENOVATION_3 = '🛋 Евроремонт'
-export const RENOVATION_4 = 'Срем в кухне'
+export const RENOVATION_4 = '🚬 Курим в кухне'
 
 export const renovationParser = renovation => {
     switch (renovation) {
@@ -82,21 +83,11 @@ export const renovationParser = renovation => {
     }
 }
 
-export const CITY_77 = 'в Москве'
-export const CITY_78 = 'в Санкт-Петербурге'
-export const CITY_66 = 'в Екатеринбурге'
-
 export const cityParser = city => {
-    switch (city) {
-        case '77':
-            return CITY_77
-        case '78':
-            return CITY_78
-        case '66':
-            return CITY_66
-        default:
-            return 'не указан'
+    for (let i = 0; i < Cities.length; i++) {
+        if (Cities[i]['regionCode'] === String(city)) return Cities[i]['nameForTitle']
     }
+    return 'в любом городе'
 }
 
 export const INFRASTRUCTURE_A = 'Спортзал, качалка'

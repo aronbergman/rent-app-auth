@@ -17,7 +17,6 @@ const io = socketio(server);
 
 if (process.env.NODE_ENV === 'production') {
     Sentry.init({dsn: 'https://80ec2091533941ef80154e3220bae060@o392602.ingest.sentry.io/5240421'});
-// The request handler must be the first middleware on the app
     app.use(Sentry.Handlers.requestHandler());
 }
 
@@ -29,33 +28,18 @@ var corsOptions = {
 
 app.use(cors(corsOptions));
 
-// parse requests of content-type - application/json
 app.use(bodyParser.json());
 
-// parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: true}));
 
-// database
 const db = require("./app/models");
 const Role = db.role;
 
 db.sequelize.sync();
-// force: true will drop the table if it already exists
-// db.sequelize.sync({force: true}).then(() => {
-//   console.log('Drop and Resync Database with { force: true }');
-//   initial();
-// });
 
-// simple route
-// app.get("/", (req, res) => {
-//     res.json({message: "Welcome to aronbergman application."});
-// });
-
-// routes
 require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
 require('./app/routes/rent.routes')(app);
-require('./app/routes/dating.routes')(app);
 require('./app/routes/news.routes')(app);
 require('./app/routes/chats.routes')(app);
 
@@ -79,7 +63,7 @@ if (process.env.NODE_ENV === 'production') {
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
     })
 }
-// The error handler must be before any other error middleware and after all controllers
+
 if (process.env.NODE_ENV === 'production') {
     app.use(Sentry.Handlers.errorHandler({
         shouldHandleError(error) {
@@ -87,16 +71,10 @@ if (process.env.NODE_ENV === 'production') {
                 return true
             }
             return false
-            // if (error.status === 404 || error.status === 500) {
-            //     return true
-            // }
-            // return false
         }
     }));
 }
 
-// set port, listen for requests
-// const PORT = process.env.PORT || 8080;
 if (!module.parent) {
     server.listen(SERVER_PORT, () => {
         consola.info({
@@ -106,8 +84,8 @@ if (!module.parent) {
     });
 }
 
-// initial();
-function initial() {
+// initialRoles();
+function initialRoles() {
     Role.create({
         id: 1,
         name: "user"

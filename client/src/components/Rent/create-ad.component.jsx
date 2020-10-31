@@ -27,6 +27,7 @@ import {
 import DefaultLayout from "../Layouts/default.layout";
 import {handlerCityForLoadingMetro, handlerLoadFiles} from "../../redux/thunks/app.thunks";
 import Loader from "../Loader/Loader";
+import {Cities} from '../../helpers/createCitiesList'
 
 import io from "socket.io-client";
 import baseUrl from "../../baseurl";
@@ -97,7 +98,7 @@ class CreateAdForm extends React.Component {
         return (
             this.props.loaded ? <DefaultLayout>
                 <Header>
-                    <h2>Создать объявление для раздела Аренда</h2>
+                    <h2>Создать объявление</h2>
                 </Header>
                 <Form
                     className={classes.Content}
@@ -163,13 +164,11 @@ class CreateAdForm extends React.Component {
                         rules={[{required: true, message: 'Пожалуйста, выберите город!'}]}
                     >
                         <Select placeholder="Выбери город" onChange={this.cityHandler}>
-                            <Option value="77">{CITY_77}</Option>
-                            <Option value="78">{CITY_78}</Option>
-                            <Option value="66">{CITY_66}</Option>
+                            {Cities.map(city => <Option value={`${city.regionCode}`}>{city.name}</Option>)}
                         </Select>
                     </Form.Item>
 
-                    <Form.Item
+                    {!!this.props.stations.length && <Form.Item
                         name="metroStations"
                         rules={[{required: true, message: 'Пожалуйста, укажите сведения'}]}
                         label="Расположение"
@@ -185,9 +184,9 @@ class CreateAdForm extends React.Component {
                             </Option>)}
 
                         </Select>
-                    </Form.Item>
+                    </Form.Item>}
 
-                    <Form.Item
+                    {!!this.props.stations.length && <Form.Item
                         name="distanceMetro"
                         rules={[{required: true, message: 'Пожалуйста, укажите сведения'}]}
                         label="Расстояние до метро"
@@ -201,7 +200,7 @@ class CreateAdForm extends React.Component {
                             <Option value="5">{DISTANCE_TO_METRO_5}</Option>
                             <Option value="6">{DISTANCE_TO_METRO_6}</Option>
                         </Select>
-                    </Form.Item>
+                    </Form.Item>}
 
                     <Form.Item
                         rules={[{required: true, message: 'Пожалуйста, укажите сведения'}]}

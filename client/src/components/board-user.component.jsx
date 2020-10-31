@@ -4,13 +4,9 @@ import {USER} from "../constants/roles.constants";
 import DefaultLayout from "./Layouts/default.layout";
 import {Tab, Tabs} from "react-bootstrap";
 import UserRentAds from "./User/user-rent-ads/user-rent-ads";
-import UserDatingAds from "./User/user-dating-ads/user-dating-ads";
 import Header from "./Header/Header.component";
 
-const AdminPanel = props => {
-
-    const currentUser = JSON.parse(localStorage.getItem('user'))
-
+const AdminPanel = () => {
     return (<div>
             <Header>
                 <h2>Мои объявления</h2>
@@ -20,9 +16,6 @@ const AdminPanel = props => {
                 <Tabs defaultActiveKey="rent" id="uncontrolled-tab-example">
                     <Tab eventKey="rent" title="Аренда">
                         <UserRentAds/>
-                    </Tab>
-                    <Tab eventKey="dating" title="Доска объявлений">
-                        <UserDatingAds/>
                     </Tab>
                 </Tabs>
             </DefaultLayout>

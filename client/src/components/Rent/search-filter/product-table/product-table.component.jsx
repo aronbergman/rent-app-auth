@@ -74,7 +74,7 @@ const ProductTable = props => {
 
     return (
         <div className={classes.Container}>
-            <div className={classes.SearchLength}>Новые объявления загрузятся автоматически</div>
+            <div className={classes.SearchLength}>Новые объявления появятся в ленте автоматически</div>
             <InfiniteScroll
                 pageStart={0}
                 loadMore={loadFunc}

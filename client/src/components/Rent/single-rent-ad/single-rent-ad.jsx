@@ -114,7 +114,7 @@ const SingleRentAd = props => {
             <div className={classes.Body}>
 
                 <div className={classes.MetroContainer}>
-                    {props.ad.metroStations.length ? props.ad.metroStations.map((station, index) => {
+                    {props.ad.metroStations ? props.ad.metroStations.map((station, index) => {
                         return (
                             <div key={index} className={classes.MetroItem}>
                                 <div className={classes.MetroColor}
@@ -144,7 +144,7 @@ const SingleRentAd = props => {
 
                 <div className={classes.Section}>
 
-                    {!!props.ad.userId && <Button shape="round" size='large' onClick={handlePrivatMessage}>
+                    {!!props.ad.userId && !!user && <Button shape="round" size='large' onClick={handlePrivatMessage}>
                         Личное сообщение
                     </Button>}
 

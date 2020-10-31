@@ -1,0 +1,17 @@
+export const Cities = [
+    { regionCode: '77', name: 'Москва', nameForTitle: 'в Москве' },
+    { regionCode: '78', name: 'Санкт-Петербург', nameForTitle: 'в Санкт-Петербурге' },
+    { regionCode: '54', name: 'Новосибирск', nameForTitle: 'в Новосибирске' },
+    { regionCode: '66', name: 'Екатеринург', nameForTitle: 'в Екатеринург' },
+    { regionCode: '16', name: 'Казань', nameForTitle: 'в Казани' },
+    { regionCode: '52', name: 'Нижний Новгород', nameForTitle: 'в Нижнем Новгороде' },
+    { regionCode: '74', name: 'Челябинск', nameForTitle: 'в Челябинске' },
+    { regionCode: '63', name: 'Самара', nameForTitle: 'в Самаре' },
+    { regionCode: '55', name: 'Омск', nameForTitle: 'в Омске' },
+    { regionCode: '61', name: 'Ростов-на-Дону', nameForTitle: 'в Ростове-на-Дону' },
+    { regionCode: '02', name: 'Уфа', nameForTitle: 'в Уфе' },
+    { regionCode: '24', name: 'Красноярск', nameForTitle: 'в Красноярске' },
+    { regionCode: '36', name: 'Воронеж', nameForTitle: 'в Воронеже' },
+    { regionCode: '59', name: 'Пермь', nameForTitle: 'в Перми' },
+    { regionCode: '34', name: 'Волгоград', nameForTitle: 'в Волгограде' },
+]

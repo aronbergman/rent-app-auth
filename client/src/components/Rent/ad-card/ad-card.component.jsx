@@ -15,16 +15,16 @@ const AdCardComponent = ({ad}) => {
     )
 
     return (
-        <Link to={`/rent/${ad.id}`}>
+        <Link target={'blanc'} to={`/rent/${ad.id}`}>
             <Card title={title()} className={classes.Card}>
                 {!!ad.userId && <div className={classes.RegisterBage}><CheckCircleOutlined/> <span className={classes.Text}>Автор подтвержден</span></div>}
                 <Card.Grid hoverable={false} className={classes.Metro}>
                     <div className={classes.MetroContainer}>
-                        {ad.metroStations.length ? ad.metroStations.map((station, index) => {
+                        {ad.metroStations ? ad.metroStations.map((station, index) => {
                              return (
                                  index <4 ?<div key={index} className={classes.MetroItem}>
                                     <div className={classes.MetroColor}
-                                         style={{backgroundColor: `#${station.color}`,}}>&nbsp;</div>
+                                               style={{backgroundColor: `#${station.color}`,}}>&nbsp;</div>
                                     {station.name}
                                 </div>: null
                             )

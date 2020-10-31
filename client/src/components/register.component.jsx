@@ -139,7 +139,7 @@ export default class Register extends Component {
                         {!this.state.successful && (
                             <div>
                                 <div className="form-group">
-                                    <label htmlFor="username">Telegram username</label>
+                                    <label htmlFor="username">Твой ник в Telegram</label>
                                     <Input
                                         type="text"
                                         className="form-control"
@@ -151,7 +151,7 @@ export default class Register extends Component {
                                 </div>
 
                                 <div className="form-group">
-                                    <label htmlFor="email">Email</label>
+                                    <label htmlFor="email">Email (нужен для входа)</label>
                                     <Input
                                         type="text"
                                         className="form-control"
@@ -171,6 +171,18 @@ export default class Register extends Component {
                                         value={this.state.password}
                                         onChange={this.onChangePassword}
                                         validations={[required, vpassword]}
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="password">Как тебя зовут?</label>
+                                    <Input
+                                        type="text"
+                                        className="form-control"
+                                        name="username"
+                                        value={this.state.username}
+                                        onChange={this.onChangeUsername}
+                                        validations={[required,vusername]}
                                     />
                                 </div>
 
